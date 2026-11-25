@@ -11,7 +11,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SkullBlock;
@@ -120,26 +119,13 @@ public final class AnomalyFeatures {
             RandomSource r = ctx.random();
             BlockPos base = ctx.origin();
             if (!groundOk(level, base)) return false;
-            Block fence = r.nextBoolean() ? Blocks.DARK_OAK_FENCE : Blocks.SPRUCE_FENCE;
+            BlockState at = level.getBlockState(base);
+            if (!at.isAir() && !at.canBeReplaced()) return false;
+            // a single wooden cross stuck into the ground, sometimes leaning
+            setBlock(level, base, com.unholymc.registry.ModBlocks.GRAVE_CROSS.defaultBlockState()
+                    .setValue(com.unholymc.block.GraveCrossBlock.FACING, net.minecraft.core.Direction.Plane.HORIZONTAL.getRandomDirection(r))
+                    .setValue(com.unholymc.block.GraveCrossBlock.TILTED, r.nextInt(3) == 0));
             boolean alongX = r.nextBoolean();
-            for (int y = 0; y < 3; y++) {
-                BlockState at = level.getBlockState(base.above(y));
-                if (!at.isAir() && !at.canBeReplaced()) return false;
-            }
-            // driven into the ground like a stake: the post starts one block below the surface
-            BlockState post = fence.defaultBlockState();
-            for (int y = -1; y < 3; y++) {
-                BlockState s = post;
-                if (y == 1) s = alongX ? s.setValue(FenceBlock.EAST, true).setValue(FenceBlock.WEST, true)
-                        : s.setValue(FenceBlock.NORTH, true).setValue(FenceBlock.SOUTH, true);
-                setBlock(level, base.above(y), s);
-            }
-            BlockPos armA = alongX ? base.above(1).east() : base.above(1).north();
-            BlockPos armB = alongX ? base.above(1).west() : base.above(1).south();
-            if (level.getBlockState(armA).isAir() || level.getBlockState(armA).canBeReplaced())
-                setBlock(level, armA, alongX ? post.setValue(FenceBlock.WEST, true) : post.setValue(FenceBlock.SOUTH, true));
-            if (level.getBlockState(armB).isAir() || level.getBlockState(armB).canBeReplaced())
-                setBlock(level, armB, alongX ? post.setValue(FenceBlock.EAST, true) : post.setValue(FenceBlock.NORTH, true));
             if (r.nextInt(3) == 0) {
                 BlockPos front = alongX ? base.south() : base.east();
                 if (groundOk(level, front)) setBlock(level, front, Blocks.WITHER_ROSE.defaultBlockState());

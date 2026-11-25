@@ -260,6 +260,8 @@ public class UnholyConfig {
         public int guaranteedRainDurationTicks = 6000;
         /** Chance that a naturally spawned zombie wears a carved pumpkin (world anomaly). */
         public float zombiePumpkinChance = 0.12f;
+        /** Surface anomalies (crosses, skulls, dead trees...): about one per grid cell of this many blocks. */
+        public int anomalyGridSize = 128;
     }
 
     public static class BloodMoon {

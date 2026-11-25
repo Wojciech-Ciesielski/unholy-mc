@@ -144,5 +144,6 @@
   "commands.unholymc.dark_corner.night": "Najbliższy ciemny zakątek jest aktywny (noc) przez 5 minut",
   "commands.unholymc.dark_corner.day": "Najbliższy ciemny zakątek jest nieaktywny (dzień) przez 5 minut - kopiec z węglem odbudowany",
   "commands.unholymc.dark_corner.located": "Najbliższy ciemny zakątek: %1$s. Najbliższy las Slendermana: %2$s",
-  "commands.unholymc.dark_corner.not_found": "nic w pobliżu"
+  "commands.unholymc.dark_corner.not_found": "nic w pobliżu",
+  "block.unholymc.grave_cross": "Krzyż nagrobny"
 }

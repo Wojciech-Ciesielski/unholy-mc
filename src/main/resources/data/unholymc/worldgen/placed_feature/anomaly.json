@@ -1,0 +1,8 @@
+{
+  "feature": "unholymc:anomaly",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

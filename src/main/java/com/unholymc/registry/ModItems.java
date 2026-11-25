@@ -43,6 +43,7 @@ public final class ModItems {
     public static Item FLASHLIGHT;
     public static Item UNHOLY_SWORD;
     public static Item THERMOS;
+    public static Item GRAVE_CROSS;
 
     /** Holy water carries a water potion internally (for brewing); don't show "No Effects". */
     private static final TooltipDisplay HIDE_POTION = new TooltipDisplay(false,
@@ -52,6 +53,7 @@ public final class ModItems {
 
     public static void init() {
         var cfg = ConfigManager.get();
+        GRAVE_CROSS = register("grave_cross", p -> new net.minecraft.world.item.BlockItem(ModBlocks.GRAVE_CROSS, p), new Item.Properties().useBlockDescriptionPrefix());
         NIGHTMARE_GEM = register("nightmare_gem", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
         HOLY_WATER = register("holy_water", HolyWaterItem::new, new Item.Properties().stacksTo(1)
                 .component(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
@@ -82,6 +84,7 @@ public final class ModItems {
                 .icon(() -> new ItemStack(CRUCIFIX))
                 .displayItems((params, output) -> {
                     output.accept(NIGHTMARE_GEM);
+                    output.accept(GRAVE_CROSS);
                     output.accept(HOLY_WATER);
                     output.accept(SPLASH_HOLY_WATER);
                     output.accept(CRUCIFIX);

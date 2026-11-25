@@ -37,42 +37,57 @@ public class TreeNotesFeature extends Feature<NoneFeatureConfiguration> {
         return decoy ? placeDecoy(ctx) : placeOnTrees(ctx);
     }
 
-    /** 2-15 notes on trunks around the origin. */
+    /** Forest: 1-3 notes, each on a different random tree somewhere in this chunk. */
     private boolean placeOnTrees(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
-        WorldGenLevel level = ctx.level();
-        RandomSource r = ctx.random();
-        int wanted = 2 + r.nextInt(14);
-        int placed = 0;
-        for (int attempt = 0; attempt < wanted * 6 && placed < wanted; attempt++) {
-            int x = ctx.origin().getX() + r.nextInt(16) - 8, z = ctx.origin().getZ() + r.nextInt(16) - 8;
-            int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) - 1;
-            if (!level.getBlockState(new BlockPos(x, top, z)).is(BlockTags.LOGS)) continue;
-            int ground = top;
-            while (ground > top - 24 && level.getBlockState(new BlockPos(x, ground - 1, z)).is(BlockTags.LOGS)) ground--;
-            BlockPos log = new BlockPos(x, ground + r.nextInt(3), z); // 1-3 blocks above the ground, eye height
-            if (!level.getBlockState(log).is(BlockTags.LOGS)) continue;
-            Direction face = Direction.Plane.HORIZONTAL.getRandomDirection(r);
-            BlockPos at = log.relative(face);
-            if (level.getBlockState(at).isAir()) {
-                level.setBlock(at, note(r, face), Block.UPDATE_CLIENTS);
-                placed++;
-            }
-        }
-        return placed > 0;
+        return pinToRandomTrees(ctx.level(), ctx.random(), ctx.origin(), 1 + ctx.random().nextInt(3)) > 0;
     }
 
-    /** Decoy: a lone note on a dead stump in the open, >= 200 blocks from any Slenderman forest. */
+    /** Decoy: a single note on a random tree out in the open, >= 200 blocks from any Slenderman forest. */
     private boolean placeDecoy(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
-        WorldGenLevel level = ctx.level();
-        RandomSource r = ctx.random();
-        BlockPos base = ctx.origin();
-        if (!AnomalyFeatures.groundOk(level, base) || !AnomalyFeatures.groundOk(level, base)) return false;
-        if (SlenderForests.slenderForestWithin(level.getLevel(), base.getX(), base.getZ(), 200)) return false;
-        int h = 1 + r.nextInt(2);
-        for (int y = 0; y < h; y++) setBlock(level, base.above(y), Blocks.DARK_OAK_LOG.defaultBlockState());
-        Direction face = Direction.Plane.HORIZONTAL.getRandomDirection(r);
-        BlockPos at = base.above(h - 1).relative(face);
-        if (level.getBlockState(at).isAir() || level.getBlockState(at).canBeReplaced()) setBlock(level, at, note(r, face));
-        return true;
+        BlockPos o = ctx.origin();
+        if (SlenderForests.slenderForestWithin(ctx.level().getLevel(), o.getX(), o.getZ(), 200)) return false;
+        return pinToRandomTrees(ctx.level(), ctx.random(), o, 1) > 0;
+    }
+
+    /**
+     * Finds natural trees (a log column standing on the ground with leaves at its top) at random columns of the
+     * origin's chunk and pins one note per tree, 1-3 blocks above the ground on a random free side of the trunk.
+     */
+    static int pinToRandomTrees(WorldGenLevel level, RandomSource r, BlockPos origin, int wanted) {
+        int cx = origin.getX() & ~15, cz = origin.getZ() & ~15;
+        java.util.Set<Long> used = new java.util.HashSet<>();
+        int placed = 0;
+        for (int attempt = 0; attempt < 64 && placed < wanted; attempt++) {
+            int x = cx + r.nextInt(16), z = cz + r.nextInt(16);
+            int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) - 1;
+            BlockPos topPos = new BlockPos(x, top, z);
+            if (!level.getBlockState(topPos).is(BlockTags.LOGS)) continue;
+            int ground = top;
+            while (ground > top - 32 && level.getBlockState(new BlockPos(x, ground - 1, z)).is(BlockTags.LOGS)) ground--;
+            if (top - ground < 2 || !level.getBlockState(new BlockPos(x, ground - 1, z)).is(BlockTags.DIRT)) continue;
+            if (!hasLeavesNear(level, topPos)) continue; // a real tree, not a log pile or a building
+            // one note per tree: neighbouring trunk columns (2x2 dark oaks) count as the same tree
+            long key = ((long) (x >> 2) << 32) ^ (z >> 2);
+            if (!used.add(key)) continue;
+            BlockPos log = new BlockPos(x, ground + 1 + r.nextInt(Math.min(3, top - ground)), z);
+            Direction start = Direction.Plane.HORIZONTAL.getRandomDirection(r);
+            for (int i = 0; i < 4; i++) {
+                Direction face = Direction.from2DDataValue((start.get2DDataValue() + i) & 3);
+                BlockPos at = log.relative(face);
+                if (level.getBlockState(at).isAir()) {
+                    level.setBlock(at, note(r, face), Block.UPDATE_CLIENTS);
+                    placed++;
+                    break;
+                }
+            }
+        }
+        return placed;
+    }
+
+    private static boolean hasLeavesNear(WorldGenLevel level, BlockPos top) {
+        for (BlockPos p : BlockPos.betweenClosed(top.offset(-2, -1, -2), top.offset(2, 2, 2))) {
+            if (level.getBlockState(p).is(BlockTags.LEAVES)) return true;
+        }
+        return false;
     }
 }

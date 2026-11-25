@@ -30,22 +30,23 @@ public final class ModFeatures {
 
     public static void init() {
         register("holy_pond", new HolyPondFeature(NoneFeatureConfiguration.CODEC));
-        register("floating_leaves", new AnomalyFeatures.FloatingLeaves(NoneFeatureConfiguration.CODEC));
-        register("dead_tree", new AnomalyFeatures.DeadTree(NoneFeatureConfiguration.CODEC));
-        register("cross", new AnomalyFeatures.Cross(NoneFeatureConfiguration.CODEC));
-        register("skull", new AnomalyFeatures.Skull(NoneFeatureConfiguration.CODEC));
-        register("blood", new AnomalyFeatures.Blood(NoneFeatureConfiguration.CODEC));
-        register("abomination", new AnomalyFeatures.Abomination(NoneFeatureConfiguration.CODEC));
+        var leaves = register("floating_leaves", new AnomalyFeatures.FloatingLeaves(NoneFeatureConfiguration.CODEC));
+        var deadTree = register("dead_tree", new AnomalyFeatures.DeadTree(NoneFeatureConfiguration.CODEC));
+        var cross = register("cross", new AnomalyFeatures.Cross(NoneFeatureConfiguration.CODEC));
+        var skull = register("skull", new AnomalyFeatures.Skull(NoneFeatureConfiguration.CODEC));
+        var blood = register("blood", new AnomalyFeatures.Blood(NoneFeatureConfiguration.CODEC));
+        var abomination = register("abomination", new AnomalyFeatures.Abomination(NoneFeatureConfiguration.CODEC));
+        register("scattered_anomaly", new ScatteredAnomalyFeature(NoneFeatureConfiguration.CODEC,
+                java.util.List.of(() -> leaves, () -> deadTree, () -> cross, () -> skull, () -> blood, () -> abomination)));
         register("tree_notes", new TreeNotesFeature(NoneFeatureConfiguration.CODEC, false));
         register("decoy_note", new TreeNotesFeature(NoneFeatureConfiguration.CODEC, true));
 
         BiomeModifications.addFeature(BiomeSelectors.tag(HOLY_POND_BIOMES), GenerationStep.Decoration.LAKES, placed("holy_pond"));
-        for (String anomaly : new String[]{"floating_leaves", "dead_tree", "cross", "skull", "blood", "abomination"}) {
-            BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.VEGETAL_DECORATION, placed("anomaly_" + anomaly));
-        }
+        // single anomaly roughly every 100-150 blocks; the individual anomaly_* features stay available for /place
+        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.TOP_LAYER_MODIFICATION, placed("anomaly"));
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.UNDERGROUND_ORES, placed("anomaly_infested"));
         BiomeModifications.addFeature(BiomeSelectors.tag(com.unholymc.entity.SlopSpawning.FOREST), GenerationStep.Decoration.TOP_LAYER_MODIFICATION, placed("tree_notes"));
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld().and(BiomeSelectors.tag(com.unholymc.entity.SlopSpawning.FOREST).negate()),
-                GenerationStep.Decoration.VEGETAL_DECORATION, placed("decoy_note"));
+                GenerationStep.Decoration.TOP_LAYER_MODIFICATION, placed("decoy_note"));
     }
 }
