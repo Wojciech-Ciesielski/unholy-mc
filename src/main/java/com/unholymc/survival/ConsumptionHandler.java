@@ -36,6 +36,13 @@ public final class ConsumptionHandler {
             return;
         }
 
+        if (stack.is(com.unholymc.registry.ModItems.HOLY_WATER)) {
+            var holy = ConfigManager.get().holyWater;
+            StatsHelper.addHydration(player, holy.drinkHydration);
+            StatsHelper.addSanity(player, holy.drinkSanity);
+            return;
+        }
+
         if (stack.is(Items.POTION)) {
             PotionContents contents = stack.get(DataComponents.POTION_CONTENTS);
             if (contents != null && contents.is(Potions.WATER)) {

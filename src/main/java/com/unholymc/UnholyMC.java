@@ -5,6 +5,12 @@ import com.unholymc.command.ThmCommand;
 import com.unholymc.config.ConfigManager;
 import com.unholymc.network.ModNetworking;
 import com.unholymc.registry.ModEffects;
+import com.unholymc.registry.ModComponents;
+import com.unholymc.registry.ModEntities;
+import com.unholymc.registry.ModItems;
+import com.unholymc.item.ItemHooks;
+import com.unholymc.light.DynamicLights;
+import com.unholymc.command.ItemCommands;
 import com.unholymc.registry.ModSounds;
 import com.unholymc.survival.SurvivalSystem;
 import net.fabricmc.api.ModInitializer;
@@ -25,9 +31,15 @@ public class UnholyMC implements ModInitializer {
         ConfigManager.load();
         ModSounds.init();
         ModEffects.init();
+        ModComponents.init();
+        ModItems.init();
+        ModEntities.init();
         ModAttachments.init();
         ModNetworking.init();
         SurvivalSystem.init();
+        DynamicLights.init();
+        ItemHooks.init();
+        ItemCommands.init();
         ThmCommand.init();
         LOGGER.info("The Unholy Minecraft is waking up...");
     }
