@@ -135,5 +135,14 @@
   "commands.unholymc.blood_moon.check": "Krwawy Księżyc: %1$s. Dni do najbliższej pełni: %2$s %3$s",
   "commands.unholymc.blood_moon.active": "aktywny",
   "commands.unholymc.blood_moon.inactive": "nieaktywny",
-  "commands.unholymc.blood_moon.holy": "(tej nocy bajorka są święcone)"
+  "commands.unholymc.blood_moon.holy": "(tej nocy bajorka są święcone)",
+  "entity.unholymc.slenderman": "Slenderman",
+  "entity.unholymc.deadly_slenderman": "Śmiertelny Slenderman",
+  "block.unholymc.tree_note": "Kartka",
+  "commands.unholymc.dark_corner.spawned": "Ciemny zakątek czai się teraz w %1$s, %2$s",
+  "commands.unholymc.dark_corner.none_near": "Brak ciemnego zakątka w promieniu 64 kratek",
+  "commands.unholymc.dark_corner.night": "Najbliższy ciemny zakątek jest aktywny (noc) przez 5 minut",
+  "commands.unholymc.dark_corner.day": "Najbliższy ciemny zakątek jest nieaktywny (dzień) przez 5 minut - kopiec z węglem odbudowany",
+  "commands.unholymc.dark_corner.located": "Najbliższy ciemny zakątek: %1$s. Najbliższy las Slendermana: %2$s",
+  "commands.unholymc.dark_corner.not_found": "nic w pobliżu"
 }

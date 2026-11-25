@@ -15,6 +15,10 @@ public final class WorldCommands {
                 .then(Commands.literal("start").executes(c -> set(c.getSource(), true)))
                 .then(Commands.literal("stop").executes(c -> set(c.getSource(), false)))
                 .then(Commands.literal("check").executes(c -> check(c.getSource())))));
+        ThmCommand.addSubcommand(root -> root.then(Commands.literal("dark_corner")
+                .then(Commands.literal("spawn").executes(c -> spawnCorner(c.getSource())))
+                .then(Commands.literal("toggle_day_cycle").executes(c -> toggleCorner(c.getSource())))
+                .then(Commands.literal("locate").executes(c -> locate(c.getSource())))));
     }
 
     private static int set(CommandSourceStack source, boolean active) {
@@ -32,5 +36,36 @@ public final class WorldCommands {
                 Component.translatable(active ? "commands.unholymc.blood_moon.active" : "commands.unholymc.blood_moon.inactive"),
                 days, BloodMoon.isHolyNight(overworld) ? Component.translatable("commands.unholymc.blood_moon.holy") : Component.empty()), false);
         return days;
+    }
+
+    private static int spawnCorner(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        var p = source.getPlayerOrException();
+        com.unholymc.world.DarkCorners.addManual(source.getServer().overworld(), p.blockPosition());
+        source.sendSuccess(() -> Component.translatable("commands.unholymc.dark_corner.spawned", p.getBlockX(), p.getBlockZ()), true);
+        return 1;
+    }
+
+    private static int toggleCorner(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        var p = source.getPlayerOrException();
+        ServerLevel ow = source.getServer().overworld();
+        var near = com.unholymc.world.DarkCorners.cornersNear(ow, p.blockPosition(), 64);
+        if (near.isEmpty()) {
+            source.sendFailure(Component.translatable("commands.unholymc.dark_corner.none_near"));
+            return 0;
+        }
+        boolean active = com.unholymc.world.DarkCorners.toggle(ow, near.getFirst());
+        source.sendSuccess(() -> Component.translatable(active ? "commands.unholymc.dark_corner.night" : "commands.unholymc.dark_corner.day"), true);
+        return 1;
+    }
+
+    private static int locate(CommandSourceStack source) {
+        ServerLevel ow = source.getServer().overworld();
+        net.minecraft.core.BlockPos from = net.minecraft.core.BlockPos.containing(source.getPosition());
+        var corner = com.unholymc.world.DarkCorners.locate(ow, from, 6);
+        var forest = com.unholymc.world.SlenderForests.locate(ow, from, 3000);
+        source.sendSuccess(() -> Component.translatable("commands.unholymc.dark_corner.located",
+                corner == null ? Component.translatable("commands.unholymc.dark_corner.not_found") : Component.literal(corner.getX() + ", " + corner.getZ()),
+                forest == null ? Component.translatable("commands.unholymc.dark_corner.not_found") : Component.literal(forest.getX() + ", " + forest.getZ())), false);
+        return 1;
     }
 }

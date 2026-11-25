@@ -36,11 +36,16 @@ public final class ModFeatures {
         register("skull", new AnomalyFeatures.Skull(NoneFeatureConfiguration.CODEC));
         register("blood", new AnomalyFeatures.Blood(NoneFeatureConfiguration.CODEC));
         register("abomination", new AnomalyFeatures.Abomination(NoneFeatureConfiguration.CODEC));
+        register("tree_notes", new TreeNotesFeature(NoneFeatureConfiguration.CODEC, false));
+        register("decoy_note", new TreeNotesFeature(NoneFeatureConfiguration.CODEC, true));
 
         BiomeModifications.addFeature(BiomeSelectors.tag(HOLY_POND_BIOMES), GenerationStep.Decoration.LAKES, placed("holy_pond"));
         for (String anomaly : new String[]{"floating_leaves", "dead_tree", "cross", "skull", "blood", "abomination"}) {
             BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.VEGETAL_DECORATION, placed("anomaly_" + anomaly));
         }
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.UNDERGROUND_ORES, placed("anomaly_infested"));
+        BiomeModifications.addFeature(BiomeSelectors.tag(com.unholymc.entity.SlopSpawning.FOREST), GenerationStep.Decoration.TOP_LAYER_MODIFICATION, placed("tree_notes"));
+        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld().and(BiomeSelectors.tag(com.unholymc.entity.SlopSpawning.FOREST).negate()),
+                GenerationStep.Decoration.VEGETAL_DECORATION, placed("decoy_note"));
     }
 }

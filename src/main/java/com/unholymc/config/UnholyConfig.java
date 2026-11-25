@@ -28,6 +28,8 @@ public class UnholyConfig {
     public BloodMoon bloodMoon = new BloodMoon();
     public HolyPonds holyPonds = new HolyPonds();
     public Ambience ambience = new Ambience();
+    public Slenderman slenderman = new Slenderman();
+    public DarkCorners darkCorners = new DarkCorners();
 
     public static class General {
         /** How often (ticks) aura scans and threshold effects are evaluated. Rates are still applied every tick. */
@@ -292,5 +294,45 @@ public class UnholyConfig {
         public float musicCaveBoost = 1.15f;
         /** Vanilla cave "mood" sounds come this many times more often. */
         public float moodSoundMultiplier = 3f;
+    }
+
+    public static class Slenderman {
+        public float health = 150f;
+        /** "Iron armor" level of natural protection. */
+        public float armor = 15f;
+        public float damage = 16f;
+        public float speed = 0.3f;
+        /** DECISIONS #13: Deadly Slenderman (Blood Moon) = +200% health, 24 damage. */
+        public float deadlyHealthMultiplier = 3f;
+        public float deadlyDamage = 24f;
+        public int summonIntervalTicks = 1200;
+        public int hallucinationsPerPlayer = 2;
+        public double summonRadius = 100;
+        public double teleportWhenFartherThan = 14;
+        public int teleportCooldownTicks = 100;
+        public int experience = 160;
+        /** DECISIONS #20: each connected Dark Forest area has this chance to be a Slenderman forest. */
+        public float forestChance = 0.10f;
+        public int forestFloodFillStep = 32;
+        public int forestFloodFillMaxCells = 6000;
+        public double spawnMinDistance = 24, spawnMaxDistance = 40;
+    }
+
+    public static class DarkCorners {
+        /** GDD 2.1: only in forests, >= 500 blocks from the world spawn, >= 750 blocks from each other. */
+        public int minSpawnDistance = 500;
+        /** Grid cell size; with the jitter below, candidates are always >= 750 blocks apart. */
+        public int gridSize = 1000;
+        public int jitter = 125;
+        /** Centre aura -50 / 2 min, weakening by 5 per block (0 at 10 blocks). */
+        public float centerAuraPer2Min = -50f;
+        public float auraFalloffPerBlock = 5f;
+        public double activeRange = 64;
+        public double cloudRadius = 6;
+        public int slopSpawnIntervalTicks = 200;
+        public int maxSlopsNearby = 4;
+        public double slopSpawnRadius = 12;
+        public int moundRadius = 3;
+        public float coalChance = 0.4f;
     }
 }

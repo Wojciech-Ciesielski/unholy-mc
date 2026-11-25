@@ -26,7 +26,7 @@ public final class SummonCommands {
             "hallucination", "slenderman_hallucination", "slenderman", "deadly_slenderman");
     private static final SimpleCommandExceptionType UNKNOWN = new SimpleCommandExceptionType(Component.translatable("commands.unholymc.summon.unknown"));
     private static final SimpleCommandExceptionType FAILED = new SimpleCommandExceptionType(Component.translatable("commands.unholymc.summon.failed"));
-    private static final SimpleCommandExceptionType NOT_YET = new SimpleCommandExceptionType(Component.translatable("commands.unholymc.summon.not_yet"));
+
 
     private SummonCommands() {}
 
@@ -53,7 +53,13 @@ public final class SummonCommands {
                 if (!Jumpscares.screamer(player)) throw FAILED.create();
             }
             case "spooky_jumpscare" -> Jumpscares.spooky(player);
-            case "slenderman", "deadly_slenderman" -> throw NOT_YET.create();
+            case "slenderman", "deadly_slenderman" -> {
+                net.minecraft.world.phys.Vec3 look = player.getViewVector(1f).multiply(1, 0, 1).normalize().scale(6);
+                net.minecraft.core.BlockPos at = net.minecraft.core.BlockPos.containing(player.position().add(look));
+                var s = com.unholymc.world.SlenderForests.spawn(player.level(), at);
+                if (s == null) throw FAILED.create();
+                if (type.equals("deadly_slenderman")) s.setDeadly(true);
+            }
             default -> throw UNKNOWN.create();
         }
         source.sendSuccess(() -> Component.translatable("commands.unholymc.summon.success", type, player.getDisplayName()), true);

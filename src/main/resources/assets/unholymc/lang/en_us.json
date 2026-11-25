@@ -135,5 +135,14 @@
   "commands.unholymc.blood_moon.check": "Blood Moon: %1$s. Days until the next full moon: %2$s %3$s",
   "commands.unholymc.blood_moon.active": "active",
   "commands.unholymc.blood_moon.inactive": "inactive",
-  "commands.unholymc.blood_moon.holy": "(holy ponds are holy tonight)"
+  "commands.unholymc.blood_moon.holy": "(holy ponds are holy tonight)",
+  "entity.unholymc.slenderman": "Slenderman",
+  "entity.unholymc.deadly_slenderman": "Deadly Slenderman",
+  "block.unholymc.tree_note": "Note",
+  "commands.unholymc.dark_corner.spawned": "A dark corner now lurks at %1$s, %2$s",
+  "commands.unholymc.dark_corner.none_near": "No dark corner within 64 blocks",
+  "commands.unholymc.dark_corner.night": "The nearest dark corner is now active (night) for 5 minutes",
+  "commands.unholymc.dark_corner.day": "The nearest dark corner is now inactive (day) for 5 minutes - its coal mound was rebuilt",
+  "commands.unholymc.dark_corner.located": "Nearest dark corner: %1$s. Nearest Slenderman forest: %2$s",
+  "commands.unholymc.dark_corner.not_found": "none found nearby"
 }

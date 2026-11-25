@@ -27,6 +27,9 @@ public class UnholyMCClient implements ClientModInitializer {
         EntityRenderers.register(ModEntities.HALLUCINATION, ctx -> new BillboardRenderer<>(ctx, 0f));
         EntityRenderers.register(ModEntities.SLENDERMAN_HALLUCINATION, ctx -> new BillboardRenderer<>(ctx, 0f));
         JumpscareOverlay.init();
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                com.unholymc.client.render.SlendermanModel.LAYER, com.unholymc.client.render.SlendermanModel::createLayer);
+        EntityRenderers.register(ModEntities.SLENDERMAN, com.unholymc.client.render.SlendermanRenderer::new);
         ClientWorldEffects.init();
         ElevenLoop.init();
         ClientPlayNetworking.registerGlobalReceiver(ClientSettingsPayload.TYPE, (payload, context) -> payload.apply());

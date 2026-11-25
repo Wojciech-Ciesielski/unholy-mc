@@ -8,6 +8,9 @@ import com.unholymc.registry.ModEffects;
 import com.unholymc.registry.ModComponents;
 import com.unholymc.registry.ModEntities;
 import com.unholymc.registry.ModItems;
+import com.unholymc.registry.ModBlocks;
+import com.unholymc.world.SlenderForests;
+import com.unholymc.world.DarkCorners;
 import com.unholymc.item.ItemHooks;
 import com.unholymc.light.DynamicLights;
 import com.unholymc.command.ItemCommands;
@@ -42,6 +45,7 @@ public class UnholyMC implements ModInitializer {
         ModSounds.init();
         ModEffects.init();
         ModComponents.init();
+        ModBlocks.init();
         ModItems.init();
         ModEntities.init();
         ModAttachments.init();
@@ -60,6 +64,8 @@ public class UnholyMC implements ModInitializer {
         HolyPonds.init();
         ModFeatures.init();
         WorldCommands.init();
+        SlenderForests.init();
+        DarkCorners.init();
         ThmCommand.init();
         LOGGER.info("The Unholy Minecraft is waking up...");
     }

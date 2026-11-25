@@ -33,6 +33,9 @@ public final class ModEntities {
     public static final EntityType<SlenderHallucination> SLENDERMAN_HALLUCINATION = register("slenderman_hallucination",
             EntityType.Builder.of(SlenderHallucination::new, MobCategory.MONSTER).noLootTable().sized(0.9f, 2.0f).clientTrackingRange(10));
 
+    public static final EntityType<com.unholymc.entity.Slenderman> SLENDERMAN = register("slenderman",
+            EntityType.Builder.of(com.unholymc.entity.Slenderman::new, MobCategory.MONSTER).sized(0.7f, 3.2f).eyeHeight(2.9f).clientTrackingRange(16).fireImmune());
+
     private ModEntities() {}
 
     private static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder) {
@@ -46,5 +49,6 @@ public final class ModEntities {
         FabricDefaultAttributeRegistry.register(UNHOLY_SLOP, UnholySlop.createAttributes());
         FabricDefaultAttributeRegistry.register(HALLUCINATION, Hallucination.createAttributes());
         FabricDefaultAttributeRegistry.register(SLENDERMAN_HALLUCINATION, SlenderHallucination.createAttributes());
+        FabricDefaultAttributeRegistry.register(SLENDERMAN, com.unholymc.entity.Slenderman.createAttributes());
     }
 }
