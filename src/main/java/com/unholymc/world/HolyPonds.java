@@ -35,18 +35,32 @@ import java.util.List;
  * Pond positions live in a chunk attachment that is synced to clients (for the look and the particles).
  */
 public final class HolyPonds {
-    public record Pond(BlockPos center, int radius) {
+    /**
+     * @param center the pond's centre water block (surface level)
+     * @param radius bounding radius (for quick distance checks)
+     * @param cells  horizontal water cells, packed as (dx + 128) << 8 | (dz + 128); empty = plain circle (old saves)
+     */
+    public record Pond(BlockPos center, int radius, List<Integer> cells) {
         public static final Codec<Pond> CODEC = RecordCodecBuilder.create(i -> i.group(
                 BlockPos.CODEC.fieldOf("center").forGetter(Pond::center),
-                Codec.INT.fieldOf("radius").forGetter(Pond::radius)
+                Codec.INT.fieldOf("radius").forGetter(Pond::radius),
+                Codec.INT.listOf().optionalFieldOf("cells", List.of()).forGetter(Pond::cells)
         ).apply(i, Pond::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, Pond> STREAM_CODEC = StreamCodec.composite(
-                BlockPos.STREAM_CODEC, Pond::center, ByteBufCodecs.VAR_INT, Pond::radius, Pond::new);
+                BlockPos.STREAM_CODEC, Pond::center, ByteBufCodecs.VAR_INT, Pond::radius,
+                ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()), Pond::cells, Pond::new);
 
-        /** Horizontal ellipse test plus the 2-block depth of the pond. */
+        public static int pack(int dx, int dz) {
+            return (dx + 128) << 8 | (dz + 128);
+        }
+
+        /** Inside the pond's shape and within its 2-block depth. */
         public boolean contains(BlockPos pos) {
+            if (pos.getY() > center.getY() + 1 || pos.getY() < center.getY() - 2) return false;
             int dx = pos.getX() - center.getX(), dz = pos.getZ() - center.getZ();
-            return dx * dx + dz * dz <= radius * radius + 0.5 && pos.getY() <= center.getY() + 1 && pos.getY() >= center.getY() - 2;
+            if (cells.isEmpty()) return dx * dx + dz * dz <= radius * radius + 0.5;
+            if (Math.abs(dx) > radius || Math.abs(dz) > radius) return false;
+            return cells.contains(pack(dx, dz));
         }
     }
 

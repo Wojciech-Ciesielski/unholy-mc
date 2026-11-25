@@ -68,16 +68,27 @@ public final class ClientWorldEffects {
             }
         }
 
-        if (mc.player.tickCount % 5 == 0) {
+        if (mc.player.tickCount % 4 == 0) {
             for (HolyPonds.Pond p : nearbyPonds) {
-                if (p.center().distSqr(mc.player.blockPosition()) > 40 * 40) continue;
-                double x = p.center().getX() + 0.5 + (RANDOM.nextDouble() * 2 - 1) * p.radius();
-                double z = p.center().getZ() + 0.5 + (RANDOM.nextDouble() * 2 - 1) * p.radius();
-                double y = p.center().getY() + 1.1;
+                if (p.center().distSqr(mc.player.blockPosition()) > 48 * 48) continue;
+                int dx, dz;
+                if (p.cells().isEmpty()) {
+                    dx = RANDOM.nextInt(p.radius() * 2 + 1) - p.radius();
+                    dz = RANDOM.nextInt(p.radius() * 2 + 1) - p.radius();
+                } else {
+                    int cell = p.cells().get(RANDOM.nextInt(p.cells().size()));
+                    dx = (cell >> 8) - 128;
+                    dz = (cell & 0xFF) - 128;
+                }
+                double x = p.center().getX() + dx + RANDOM.nextDouble();
+                double z = p.center().getZ() + dz + RANDOM.nextDouble();
+                double y = p.center().getY() + 1.05;
                 if (holy) {
                     level.addParticle(RANDOM.nextBoolean() ? ParticleTypes.END_ROD : ParticleTypes.GLOW, x, y, z, 0, 0.02, 0);
-                } else if (RANDOM.nextInt(3) == 0) {
-                    level.addParticle(ParticleTypes.WHITE_ASH, x, y + 0.3, z, 0, 0.01, 0);
+                } else {
+                    // a small, constant tell that there is a pond here (day and night)
+                    level.addParticle(ParticleTypes.WHITE_ASH, x, y + 0.2, z, 0, 0.01, 0);
+                    if (RANDOM.nextInt(4) == 0) level.addParticle(ParticleTypes.BUBBLE_POP, x, y - 0.1, z, 0, 0.04, 0);
                 }
             }
         }
