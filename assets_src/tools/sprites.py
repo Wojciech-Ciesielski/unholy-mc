@@ -32,7 +32,7 @@ def preview(items, path, scale=8, cols=8, bg=(54, 54, 60, 255)):
     rows = (len(items) + cols - 1) // cols
     sheet = Image.new("RGBA", (cols * cell, rows * cell), bg)
     for i, (_, im) in enumerate(items):
-        fr = im.crop((0, 0, im.width, min(im.height, im.width)))
+        fr = im.convert("RGBA").crop((0, 0, im.width, min(im.height, im.width)))
         s = (16 * scale) // fr.width
         fr = fr.resize((fr.width * s, fr.height * s), Image.NEAREST)
         sheet.alpha_composite(fr, ((i % cols) * cell + 4, (i // cols) * cell + 4))

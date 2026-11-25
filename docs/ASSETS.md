@@ -72,17 +72,17 @@ Deadly Slenderman: ta sama tekstura, tint `0xFFB02020` (czerwonawy) i skala ×1,
 
 ---
 
-## 2. Itemy (16×16, styl mroczny/brudny)
+## 2. Itemy (16×16, styl vanilla)
 
 | Item id | Tekstury (`textures/item/`) | Model / wybór wariantu |
 |---|---|---|
-| `holy_water` | `holy_water.png` | prosty |
-| `splash_holy_water` | `splash_holy_water.png` | prosty |
-| `crucifix` | `crucifix.png` | prosty; glint enchantu vanilla |
-| `nightmare_gem` | `nightmare_gem.png` | prosty |
+| `holy_water` | **vanilla** `minecraft:item/potion_overlay` + `minecraft:item/potion` | butelka identyczna z vanilla; płyn = tint warstwy 0 `0x9CE4FF` (stała w `items/holy_water.json`) |
+| `splash_holy_water` | **vanilla** `minecraft:item/potion_overlay` + `minecraft:item/splash_potion` | jw. |
+| `crucifix` | `crucifix.png` (drewno w palecie vanilla patyka, łza ghasta w środku) | prosty; glint enchantu vanilla |
+| `nightmare_gem` | `nightmare_gem.png` (kształt jak emerald, fiolet z czerwonym rdzeniem) | prosty |
 | `flashlight` | `flashlight_<rdzeń>.png` + nakładka `flashlight_beam.png` / `flashlight_beam_dark.png` | `custom_model_data.strings[0]` = rdzeń, `flags[0]` = włączona |
-| `unholy_sword` | `unholy_sword.png` (animowany, 8 klatek, `frametime 3`, interpolacja) / `unholy_sword_discharged.png` | `custom_model_data.flags[0]` = rozładowany |
-| `thermos` | `thermos_{empty,water,holy_water,honey,milk}.png` | `custom_model_data.strings[0]` = płyn |
+| `unholy_sword` | `unholy_sword.png` (sylwetka jak miecze vanilla, karmazynowe ostrze, kościany jelec; 12 klatek, `frametime 2`: pulsująca żyła + unoszące się żarzące drobinki) / `unholy_sword_discharged.png` (popielate, spękane, bez cząsteczek) | `custom_model_data.flags[0]` = rozładowany |
+| `thermos` | `thermos_{empty,water,holy_water,honey,milk}.png` (zielona piersiówka; kolor etykiety-kropli = płyn, pusty = bez etykiety) | `custom_model_data.strings[0]` = płyn |
 
 Rdzenie latarki (`strings[0]`): `lapis`, `redstone`, `emerald`, `diamond`, `netherite`, `nether_star`, `nightmare_gem`. Brak wartości lub nieznana wartość daje `none`. Kolor soczewki = kolor rdzenia. Przy `nightmare_gem` nakładka „włączona” to **ciemna** poświata (`flashlight_beam_dark`).
 Płyny termosu (`strings[0]`): `water`, `holy_water`, `honey`, `milk`. Brak wartości = pusty.

@@ -18,7 +18,15 @@ def ref(name):
     return {"type": "minecraft:model", "model": f"{NS}:item/{name}"}
 
 # proste
-for n in ("holy_water", "splash_holy_water", "crucifix", "nightmare_gem"):
+# woda święcona: identyczna butelka jak vanilla (tekstury minecraft), płyn barwiony tintem warstwy 0
+HOLY_TINT = 0x9CE4FF
+for n, bottle in (("holy_water", "minecraft:item/potion"), ("splash_holy_water", "minecraft:item/splash_potion")):
+    w(f"models/item/{n}.json", {"parent": "minecraft:item/generated",
+      "textures": {"layer0": "minecraft:item/potion_overlay", "layer1": bottle}})
+    w(f"items/{n}.json", {"model": {"type": "minecraft:model", "model": f"{NS}:item/{n}",
+      "tints": [{"type": "minecraft:constant", "value": HOLY_TINT}]}})
+
+for n in ("crucifix", "nightmare_gem"):
     model(n, [n]); w(f"items/{n}.json", {"model": ref(n)})
 
 # latarka: custom_model_data.strings[0] = rdzeń, flags[0] = włączona

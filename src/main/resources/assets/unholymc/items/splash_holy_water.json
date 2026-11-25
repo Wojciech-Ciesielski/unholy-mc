@@ -1,6 +1,12 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "unholymc:item/splash_holy_water"
+    "model": "unholymc:item/splash_holy_water",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": 10282239
+      }
+    ]
   }
 }
