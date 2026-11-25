@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": "minecraft:stone_button",
+    "I": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "B  ",
+    "III"
+  ],
+  "result": {
+    "id": "unholymc:flashlight"
+  }
+}
