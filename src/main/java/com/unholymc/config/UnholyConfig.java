@@ -281,7 +281,9 @@ public class UnholyConfig {
     }
 
     public static class HolyPonds {
-        /** DECISIONS #16: aura +20 / 2 min within 10 blocks, wading +1 / s; only while the water is holy. */
+        /** DECISIONS #16: aura +20 / 2 min within 10 blocks, wading +1 / s. Works on any night/day (user decision);
+         *  bottling holy water still needs the full moon. Set true to limit both to holy nights. */
+        public boolean auraOnlyWhenHoly = false;
         public float auraPer2Min = 20f;
         public double auraRadius = 10;
         public float wadingPerSecond = 1f;

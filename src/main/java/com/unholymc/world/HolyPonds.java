@@ -73,7 +73,7 @@ public final class HolyPonds {
     public static void init() {
         ThermosItem.holyWaterSource = HolyPonds::isHolyWater;
         SanityAuras.register((player, out) -> {
-            if (!BloodMoon.isHolyNight(player.level())) return;
+            if (ConfigManager.get().holyPonds.auraOnlyWhenHoly && !BloodMoon.isHolyNight(player.level())) return;
             double r = ConfigManager.get().holyPonds.auraRadius;
             for (Pond p : pondsNear(player.level(), player.blockPosition(), 1)) {
                 if (p.center().distSqr(player.blockPosition()) <= r * r) {
@@ -94,7 +94,9 @@ public final class HolyPonds {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             float perTick = ConfigManager.get().holyPonds.wadingPerSecond / 20f;
             for (ServerPlayer p : server.getPlayerList().getPlayers()) {
-                if (p.isInWater() && StatsHelper.isActive(p) && isHolyWater(p.level(), p.blockPosition())) {
+                boolean pond = ConfigManager.get().holyPonds.auraOnlyWhenHoly ? isHolyWater(p.level(), p.blockPosition())
+                        : p.level().getFluidState(p.blockPosition()).is(FluidTags.WATER) && pondAt(p.level(), p.blockPosition()) != null;
+                if (p.isInWater() && StatsHelper.isActive(p) && pond) {
                     StatsHelper.addSanity(p, perTick);
                 }
             }
