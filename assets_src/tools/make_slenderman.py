@@ -1,4 +1,4 @@
-"""Tekstura modelu 3D Slendermana (64x64, box UV) + wariant glitch na teleport.
+"""Tekstura modelu 3D Slendermana (64x64, box UV) + 4 klatki statyki na teleport.
 Geometria (dla wątku implementacji) jest opisana w docs/ASSETS.md, sekcja Slenderman."""
 import random
 from pathlib import Path
@@ -33,12 +33,12 @@ def px(p, x, y, c): img.putpixel((p[0] + x, p[1] + y), c + (255,))
 # głowa 8x10x8 @ (0,0)
 H = box(0, 0, 8, 10, 8, SKIN, SKIN_D)
 f = H["front"]
-for x, y in [(1, 3), (2, 3), (1, 4), (2, 4), (5, 3), (6, 3), (5, 4), (6, 4)]: px(f, x, y, BLACK_D)   # puste oczodoły
-for x, y in [(1, 5), (6, 5)]: px(f, x, y, SKIN_D)                                                  # cienie pod oczami
-px(f, 2, 4, (120, 8, 12))                                                                          # czerwony błysk w lewym oku
-for x in range(2, 6): px(f, x, 8, SKIN_D)                                                          # linia ust
-px(f, 3, 9, SKIN_D); px(f, 4, 9, SKIN_D)
-for x in range(8): px(f, x, 0, SKIN_L)                                                             # jaśniejsze czoło
+# twarz bez rysów: gładka, blada, tylko ledwo widoczne zapadnięte oczodoły i cień pod kośćmi policzkowymi
+for y in range(10):
+    for x in range(8): px(f, x, y, SKIN)
+for x, y in [(1, 4), (2, 4), (5, 4), (6, 4)]: px(f, x, y, (172, 168, 162))
+for x, y in [(1, 3), (2, 3), (5, 3), (6, 3)]: px(f, x, y, (186, 182, 175))
+for x in range(8): px(f, x, 0, SKIN_L); px(f, x, 9, SKIN_D)
 # szyja/ciało 8x14x4 @ (32,0) – wychudzony tors z żebrami
 B = box(32, 0, 8, 14, 4, BLACK, BLACK_D)
 for y in (3, 5, 7, 9):
@@ -57,18 +57,20 @@ for u in (16, 24):
 OUT.mkdir(parents=True, exist_ok=True)
 img.save(OUT / "slenderman.png", optimize=True)
 
-# wariant glitch: przesunięte poziome pasy + kanał czerwony/cyjan (podmieniany na 2-4 klatki przy teleporcie)
-a = np.asarray(img).copy()
-g = a.copy()
-for y in range(64):
-    if rnd.random() < 0.3:
-        g[y] = np.roll(a[y], rnd.choice([-3, -2, 2, 3]), axis=0)
-        tint = rnd.choice([(0, 1.0, 0.35, 0.35), (2, 0.35, 0.9, 1.0)])     # czerwony lub cyjan
-        k = g[y, :, 3] > 0
-        for ch, m in zip((0, 1, 2), tint[1:]):
-            g[y, k, ch] = np.clip(g[y, k, ch] * m + (90 if m == 1.0 else 0), 0, 255)
-Image.fromarray(g).save(OUT / "slenderman_glitch.png", optimize=True)
-
+# teleport: 4 klatki czarno-białej statyki w kształcie modelu (kod podmienia teksturę co tick)
+a = np.asarray(img)
+statics = []
+for i in range(4):
+    r = np.random.default_rng(100 + i)
+    v = r.integers(0, 256, (64, 64))
+    v = np.where(r.random((64, 64)) < 0.5, v // 4, v)            # więcej czerni niż bieli
+    al = a[..., 3].copy()
+    for y in range(64):                                             # wypadające poziome pasy
+        if r.random() < 0.15: al[y] = 0
+    st = np.dstack([v, v, v, al]).astype(np.uint8)
+    Image.fromarray(st).save(OUT / f"slenderman_static_{i}.png", optimize=True)
+    statics.append(st)
+g = statics[0]
 # złożony front postaci (ortho), skala 4
 def face(im, x, y, w, h): return im.crop((x, y, x + w, y + h))
 def front(im):

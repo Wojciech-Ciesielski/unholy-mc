@@ -53,7 +53,13 @@ Decyzja użytkownika: **osobne PNG** `textures/entity/slop/<id>_hallucination.pn
 - Widoczność per gracz to logika kodu (patrz DECISIONS 22–23).
 
 ### 1.3 Slenderman (jedyny mob 3D)
-Tekstura `textures/entity/slenderman/slenderman.png` (64×64, box UV) + `slenderman_glitch.png`. Kod podmienia ją na **2–4 klatki** przy teleporcie, razem z jitterem pozycji modelu ±0,15 bloku i dźwiękiem `entity.slenderman.teleport`.
+Tekstura `textures/entity/slenderman/slenderman.png` (64×64, box UV). Twarz jest **pusta** (bez ust i oczu, tylko ledwo widoczne zapadnięte oczodoły), ciało czarne i wychudzone, z żebrami.
+
+**Teleport:** tekstury `slenderman_static_0..3.png` to czarno-biała statyka TV w kształcie modelu, z wypadającymi poziomymi pasami. Przebieg (ok. 10 ticków):
+1. W starym miejscu model przez 4–6 ticków renderuje się na zmianę jako statyka (klatka = `tick % 4`) i normalnie, z jitterem pozycji ±0,1 bloku.
+2. Znika, a w nowym miejscu pojawia się od razu jako statyka przez 3–4 ticki, potem normalnie.
+3. Dźwięk `entity.slenderman.teleport` odtwarza się w obu miejscach.
+Tekstury encji nie obsługują `.mcmeta`, więc klatki przełącza kod.
 
 Geometria (jednostki modelu = px, y w dół, ziemia = 24, jak w modelach vanilla):
 
@@ -80,7 +86,7 @@ Deadly Slenderman: ta sama tekstura, tint `0xFFB02020` (czerwonawy) i skala ×1,
 | `splash_holy_water` | **vanilla** `minecraft:item/potion_overlay` + `minecraft:item/splash_potion` | jw. |
 | `crucifix` | `crucifix.png` (drewno w palecie vanilla patyka, łza ghasta w środku) | prosty; glint enchantu vanilla |
 | `nightmare_gem` | `nightmare_gem.png` (kształt jak emerald, fiolet z czerwonym rdzeniem) | prosty |
-| `flashlight` | `flashlight_<rdzeń>.png` + nakładka `flashlight_beam.png` / `flashlight_beam_dark.png` | `custom_model_data.strings[0]` = rdzeń, `flags[0]` = włączona |
+| `flashlight` | `flashlight_<rdzeń>.png` (styl lunety vanilla: żelazny korpus, gumowy uchwyt, okrągła soczewka w kolorze rdzenia) + nakładka `flashlight_beam.png` / `flashlight_beam_dark.png` (rozbłysk przed soczewką) | `custom_model_data.strings[0]` = rdzeń, `flags[0]` = włączona |
 | `unholy_sword` | `unholy_sword.png` (sylwetka jak miecze vanilla, karmazynowe ostrze, kościany jelec; 12 klatek, `frametime 2`: pulsująca żyła + unoszące się żarzące drobinki) / `unholy_sword_discharged.png` (popielate, spękane, bez cząsteczek) | `custom_model_data.flags[0]` = rozładowany |
 | `thermos` | `thermos_{empty,water,holy_water,honey,milk}.png` (zielona piersiówka; kolor etykiety-kropli = płyn, pusty = bez etykiety) | `custom_model_data.strings[0]` = płyn |
 

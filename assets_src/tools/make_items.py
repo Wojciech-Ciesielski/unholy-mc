@@ -63,20 +63,56 @@ def diag(fn, size=16):
                     g[y][x] = "o"; break
     return "\n".join("".join(r) for r in g)
 
-def flashlight_fn(a, c):
-    if -13 <= a <= -1 and abs(c) <= 2:                 # trzonek (3 px)
-        if a in (-5, -6) and c <= -1: return "P"      # przycisk
-        if a in (-11, -9) : return "r"                # rowki uchwytu
-        return "B" if c < 0 else ("b" if c == 0 else "d")
-    if 0 <= a <= 8 and abs(c) <= (3 if a < 4 else 4):  # głowica (rozszerzona)
-        if a >= 7: return "L" if c > -3 else "l"        # soczewka (rdzeń)
-        if a in (3, 4): return "h" if c < 2 else "d"    # pierścień
-        return "H" if c < 0 else ("h" if c <= 1 else "d")
-    return None
+def flashlight_grid():
+    """Latarka po skosie jak luneta vanilla: oś od (1.5,13.5) do (11,4), okrągła soczewka w (11,4)."""
+    x0, y0, x1, y1 = 1.5, 13.5, 11.0, 4.0
+    L = math.hypot(x1 - x0, y1 - y0); ux, uy = (x1 - x0) / L, (y1 - y0) / L
+    g = [["." for _ in range(16)] for _ in range(16)]
+    for y in range(16):
+        for x in range(16):
+            px_, py_ = x + 0.0, y + 0.0
+            t = (px_ - x0) * ux + (py_ - y0) * uy
+            d = -(px_ - x0) * uy + (py_ - y0) * ux         # >0 = strona prawa-dolna (cień)
+            rl = math.hypot(px_ - x1, py_ - y1)
+            ch = None
+            if rl <= 1.5: ch = "h" if (x, y) == (10, 3) else ("L" if px_ - x1 - (py_ - y1) <= 0.5 else "l")
+            elif rl <= 2.6 and t >= L - 2.6: ch = "W" if d < 0 else "D"
+            elif 0 <= t <= L - 1.0 and abs(d) <= (wd := (1.3 if t < L - 5.0 else min(2.6, 1.3 + (t - (L - 5.0)) * 0.6))):
+                if t < 5.5: ch = ("R" if int(t) % 2 == 0 else ("r" if d <= 0 else "q"))
+                elif abs(t - 7.2) < 0.6 and d < -0.6: ch = "P"
+                elif abs(t - (L - 4.4)) < 0.5: ch = "D"         # pierścień
+                else: ch = "W" if d < -wd / 3 else ("M" if d <= wd / 3 else "D")
+            if ch: g[y][x] = ch
+    rows = ["".join(r) for r in g]
+    out = [list(r) for r in rows]
+    for y in range(16):
+        for x in range(16):
+            if rows[y][x] != ".": continue
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                xx, yy = x + dx, y + dy
+                if 0 <= xx < 16 and 0 <= yy < 16 and rows[yy][xx] != ".":
+                    out[y][x] = "o"; break
+    return "\n".join("".join(r) for r in out)
 
-FLASH = diag(flashlight_fn)
-FL_PAL = {"o": O, "B": hexc("6b6a6e"), "b": hexc("4c4b50"), "d": hexc("2e2d32"), "r": hexc("26252a"),
-          "P": hexc("7d1f1f"), "H": hexc("8a8580"), "h": hexc("5f5a56")}
+FLASH = """
+................
+..........ooo...
+.........oWWWo..
+........oWhLLDo.
+.......oWLLLlDo.
+......oWWLLllDo.
+......oMWDllDo..
+.....oWMMDDDo...
+....oWPMDDDo....
+...oWMMDDoo.....
+..oRrRDDo.......
+.oRrRqo.........
+oRrRqo..........
+oRRqo...........
+.ooo............
+................"""  # ręcznie dopracowana (flashlight_grid() zostaje jako punkt wyjścia)
+FL_PAL = {"o": hexc("1c1c1c"), "W": hexc("d8d8d8"), "M": hexc("a8a8a8"), "D": hexc("6b6b6b"),
+          "r": hexc("2f2f2f"), "q": hexc("1f1f1f"), "R": hexc("4a4a4a"), "P": hexc("8a8a8a"), "h": hexc("ffffff")}
 CORES = {  # nazwa: (soczewka jasna, soczewka ciemna)
     "none":         ("cfd3c8", "8e9389"),
     "lapis":        ("3d64d8", "22398a"),
@@ -89,19 +125,16 @@ CORES = {  # nazwa: (soczewka jasna, soczewka ciemna)
 }
 for core, (hi, lo) in CORES.items():
     pal = dict(FL_PAL, L=hexc(hi), l=hexc(lo))
-    save(render(FLASH, pal, grime=0.14, seed=4, protect="oLlP"), f"item/flashlight_{core}.png")
+    save(render(FLASH, pal, grime=0.05, seed=4, protect="oLlPh"), f"item/flashlight_{core}.png")
 # nakładka "włączona": poświata przed soczewką, osobna warstwa (layer1)
 def glow_layer(color):
-    rows = FLASH.split("\n")
-    lens = [(x, y) for y in range(16) for x in range(16) if rows[y][x] in "Ll"]
-    amax = max(x - y for x, y in lens)
+    """Rozbłysk przed soczewką (prawy-górny róg)."""
+    burst = {(14, 1): 210, (13, 1): 160, (14, 2): 160, (15, 0): 130, (14, 0): 110, (15, 1): 110,
+             (13, 0): 70, (15, 2): 70, (12, 0): 35, (15, 3): 35}
+    rows = FLASH.strip("\n").split("\n")
     img = Image.new("RGBA", (16, 16))
-    for y in range(16):
-        for x in range(16):
-            if rows[y][x] != "." or x - y < amax: continue
-            d = min(max(abs(x - lx), abs(y - ly)) for lx, ly in lens)
-            if d <= 3:
-                img.putpixel((x, y), hexc(color, (190, 120, 60)[d - 1] if d >= 1 else 190))
+    for (x, y), al in burst.items():
+        if rows[y][x] == ".": img.putpixel((x, y), hexc(color, al))
     return img
 save(glow_layer("fff6c8"), "item/flashlight_beam.png")
 save(glow_layer("12001a"), "item/flashlight_beam_dark.png")
