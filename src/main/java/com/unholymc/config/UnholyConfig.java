@@ -15,6 +15,12 @@ public class UnholyConfig {
     public Auras auras = new Auras();
     public Consumption consumption = new Consumption();
     public Sleep sleep = new Sleep();
+    public HolyWater holyWater = new HolyWater();
+    public Crucifix crucifix = new Crucifix();
+    public Flashlight flashlight = new Flashlight();
+    public UnholySword unholySword = new UnholySword();
+    public Thermos thermos = new Thermos();
+    public Loot loot = new Loot();
 
     public static class General {
         /** How often (ticks) aura scans and threshold effects are evaluated. Rates are still applied every tick. */
@@ -106,5 +112,81 @@ public class UnholyConfig {
         public float hungerCost = 10f;
         public float hydrationCost = 10f;
         public int deadlyStreak = 10;
+    }
+
+    public static class HolyWater {
+        public float drinkHydration = 8f;
+        public float drinkSanity = 6f;
+        /** "Thrown under yourself": players this close to the impact get the self-splash bonus. */
+        public double selfSplashRadius = 2.5;
+        public float selfSplashHydration = 8f;
+        public float selfSplashSanity = 2f;
+        public double splashRadius = 5;
+        public int blindnessTicks = 200;
+        public int repelTicks = 100;
+        /** Damage to Unholy Slops per splash, already including the 150% holy multiplier (DECISIONS #11). */
+        public float unholySlopDamage = 6f;
+    }
+
+    public static class Crucifix {
+        /** Registration-time value (restart needed). */
+        public int durability = 20;
+        public int cooldownTicks = 40;
+        public double radius = 5;
+        public int blindnessTicks = 200;
+        public int repelTicks = 100;
+        /** Holiness I..III damage (HP) to mod creatures (before the unholy multiplier). */
+        public float[] modMobDamage = {6f, 8f, 10f};
+        /** Holiness I..III damage (HP) to ordinary hostile mobs. */
+        public float[] regularMobDamage = {4f, 6f, 7f};
+        public float unholyMultiplier = 1.5f;
+        public float passiveSanityPer2Min = 6f;
+        public int lightLevel = 6;
+        /** DECISIONS #24 (to confirm): passive effects also work in the off hand. The totem never does. */
+        public boolean passiveInOffhand = true;
+        public int repairPerHolyWater = 10;
+        public float totemHealth = 1f;
+    }
+
+    public static class Flashlight {
+        public double rangeNone = 3;
+        public double rangeLapisRedstoneEmerald = 6;
+        public double rangeDiamondNetherite = 11.5;
+        public double radiusNetherStar = 14;
+        public double rangeNightmareGem = 6;
+        /** Half-angle of the light cone (degrees), used for the nightmare gem effect. */
+        public double coneHalfAngle = 30;
+        public int beamLightLevel = 13;
+        public int nearLightLevel = 9;
+        public int updateIntervalTicks = 2;
+    }
+
+    public static class UnholySword {
+        /** Registration-time values (restart needed). */
+        public int durability = 666;
+        public float attackDamage = 10f;
+        public float attackSpeed = -2.4f;
+        public float dischargedAttackDamage = 4f;
+        public int repairPerGem = 50;
+        public float slopDamageBonus = 0.5f;
+        public float passiveSanityPer2Min = -4f;
+    }
+
+    public static class Thermos {
+        public int waterPortions = 20;
+        public int holyWaterPortions = 15;
+        public int honeyPortions = 5;
+        public int milkPortions = 5;
+        public float waterHydration = 4f;
+        public float holyWaterHydration = 8f;
+        public float holyWaterSanity = 6f;
+        public float honeyHydration = 2f;
+        public float milkHydration = 10f;
+        public int drinkTicks = 32;
+    }
+
+    public static class Loot {
+        /** Chance that a Woodland Mansion / End City / Mineshaft chest contains a Holiness book. */
+        public float holinessBookChance = 0.15f;
     }
 }
