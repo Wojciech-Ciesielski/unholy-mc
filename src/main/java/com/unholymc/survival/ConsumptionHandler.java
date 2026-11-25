@@ -3,11 +3,11 @@ package com.unholymc.survival;
 import com.unholymc.attachment.ModAttachments;
 import com.unholymc.attachment.PlayerStats;
 import com.unholymc.config.ConfigManager;
-import com.unholymc.registry.ModSounds;
 import com.unholymc.registry.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
@@ -77,7 +77,7 @@ public final class ConsumptionHandler {
 
         s.lastSourceSip = now;
         StatsHelper.addHydration(player, cfg.consumption.sourceSipHydration);
-        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.DRINK_SOURCE, SoundSource.PLAYERS, 0.6f, 0.9f + player.getRandom().nextFloat() * 0.2f);
+        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 0.6f, 0.9f + player.getRandom().nextFloat() * 0.2f);
         player.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
     }
 }

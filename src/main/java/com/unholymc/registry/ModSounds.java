@@ -7,38 +7,58 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
 
 /**
- * All mod sound events. sounds.json currently points them at vanilla placeholder events;
- * see docs/SOUNDS.md for the .ogg files the user will provide.
+ * All mod sound events; ids mirror assets/unholymc/sounds.json (owned by the design thread,
+ * spec in docs/ASSETS.md section 6). Missing .ogg files only log a warning.
  */
 public final class ModSounds {
-    public static final Holder.Reference<SoundEvent> JUMPSCARE = register("jumpscare");
-    public static final Holder.Reference<SoundEvent> SPOOKY_JUMPSCARE = register("spooky_jumpscare");
-    public static final Holder.Reference<SoundEvent> AMBIENT_ELEVEN_REVERSED = register("ambient.eleven_reversed");
+    public static final Holder.Reference<SoundEvent> JUMPSCARE_SCREAMER = register("jumpscare.screamer");
+    public static final Holder.Reference<SoundEvent> JUMPSCARE_SPOOKY_BUILDUP = register("jumpscare.spooky_buildup");
+    public static final Holder.Reference<SoundEvent> JUMPSCARE_SPOOKY = register("jumpscare.spooky");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_AGGRESSIVE_AMBIENT = register("entity.slop.aggressive.ambient");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_AGGRESSIVE_CHASE = register("entity.slop.aggressive.chase");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_AGGRESSIVE_HURT = register("entity.slop.aggressive.hurt");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_AGGRESSIVE_DEATH = register("entity.slop.aggressive.death");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_NEUTRAL_AMBIENT = register("entity.slop.neutral.ambient");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_NEUTRAL_SCARE = register("entity.slop.neutral.scare");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_NEUTRAL_FLEE = register("entity.slop.neutral.flee");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_NEUTRAL_HURT = register("entity.slop.neutral.hurt");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_NEUTRAL_DEATH = register("entity.slop.neutral.death");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_UNHOLY_AMBIENT = register("entity.slop.unholy.ambient");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_UNHOLY_ATTACK = register("entity.slop.unholy.attack");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_UNHOLY_HURT = register("entity.slop.unholy.hurt");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_UNHOLY_IMMUNE = register("entity.slop.unholy.immune");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_UNHOLY_DEATH = register("entity.slop.unholy.death");
+    public static final Holder.Reference<SoundEvent> ENTITY_HALLUCINATION_SPAWN = register("entity.hallucination.spawn");
+    public static final Holder.Reference<SoundEvent> ENTITY_HALLUCINATION_AMBIENT = register("entity.hallucination.ambient");
+    public static final Holder.Reference<SoundEvent> ENTITY_HALLUCINATION_HURT = register("entity.hallucination.hurt");
+    public static final Holder.Reference<SoundEvent> ENTITY_HALLUCINATION_DISSOLVE = register("entity.hallucination.dissolve");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLENDERMAN_AMBIENT = register("entity.slenderman.ambient");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLENDERMAN_PROXIMITY = register("entity.slenderman.proximity");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLENDERMAN_TELEPORT = register("entity.slenderman.teleport");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLENDERMAN_SUMMON = register("entity.slenderman.summon");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLENDERMAN_HURT = register("entity.slenderman.hurt");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLENDERMAN_DEATH = register("entity.slenderman.death");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLENDERMAN_VANISH = register("entity.slenderman.vanish");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLENDERMAN_DEADLY_ROAR = register("entity.slenderman.deadly_roar");
+    public static final Holder.Reference<SoundEvent> MUSIC_ELEVEN_REVERSED = register("music.eleven_reversed");
     public static final Holder.Reference<SoundEvent> AMBIENT_LOW_SANITY = register("ambient.low_sanity");
-    public static final Holder.Reference<SoundEvent> DRINK_SOURCE = register("player.drink_source");
-    public static final Holder.Reference<SoundEvent> HEARTBEAT = register("player.heartbeat");
-    public static final Holder.Reference<SoundEvent> SLOP_AGGRESSIVE_AMBIENT = register("entity.slop_aggressive.ambient");
-    public static final Holder.Reference<SoundEvent> SLOP_AGGRESSIVE_HURT = register("entity.slop_aggressive.hurt");
-    public static final Holder.Reference<SoundEvent> SLOP_AGGRESSIVE_DEATH = register("entity.slop_aggressive.death");
-    public static final Holder.Reference<SoundEvent> SLOP_NEUTRAL_SCREAM = register("entity.slop_neutral.scream");
-    public static final Holder.Reference<SoundEvent> SLOP_NEUTRAL_HURT = register("entity.slop_neutral.hurt");
-    public static final Holder.Reference<SoundEvent> SLOP_UNHOLY_AMBIENT = register("entity.slop_unholy.ambient");
-    public static final Holder.Reference<SoundEvent> SLOP_UNHOLY_HURT = register("entity.slop_unholy.hurt");
-    public static final Holder.Reference<SoundEvent> SLOP_UNHOLY_DEATH = register("entity.slop_unholy.death");
-    public static final Holder.Reference<SoundEvent> HALLUCINATION_AMBIENT = register("entity.hallucination.ambient");
-    public static final Holder.Reference<SoundEvent> HALLUCINATION_VANISH = register("entity.hallucination.vanish");
-    public static final Holder.Reference<SoundEvent> SLENDERMAN_AMBIENT = register("entity.slenderman.ambient");
-    public static final Holder.Reference<SoundEvent> SLENDERMAN_TELEPORT = register("entity.slenderman.teleport");
-    public static final Holder.Reference<SoundEvent> SLENDERMAN_SUMMON = register("entity.slenderman.summon");
-    public static final Holder.Reference<SoundEvent> SLENDERMAN_DEATH = register("entity.slenderman.death");
-    public static final Holder.Reference<SoundEvent> CRUCIFIX_USE = register("item.crucifix.use");
-    public static final Holder.Reference<SoundEvent> CRUCIFIX_SAVE = register("item.crucifix.save");
-    public static final Holder.Reference<SoundEvent> FLASHLIGHT_TOGGLE = register("item.flashlight.toggle");
-    public static final Holder.Reference<SoundEvent> THERMOS_DRINK = register("item.thermos.drink");
-    public static final Holder.Reference<SoundEvent> THERMOS_FILL = register("item.thermos.fill");
-    public static final Holder.Reference<SoundEvent> UNHOLY_SWORD_HUM = register("item.unholy_sword.hum");
-    public static final Holder.Reference<SoundEvent> BLOOD_MOON_START = register("event.blood_moon.start");
-    public static final Holder.Reference<SoundEvent> DARK_CORNER_AMBIENT = register("block.dark_corner.ambient");
+    public static final Holder.Reference<SoundEvent> AMBIENT_HEARTBEAT = register("ambient.heartbeat");
+    public static final Holder.Reference<SoundEvent> AMBIENT_DARK_CORNER = register("ambient.dark_corner");
+    public static final Holder.Reference<SoundEvent> AMBIENT_BLOOD_MOON_RISE = register("ambient.blood_moon.rise");
+    public static final Holder.Reference<SoundEvent> AMBIENT_FULL_MOON_BLESS = register("ambient.full_moon.bless");
+    public static final Holder.Reference<SoundEvent> ITEM_HOLY_WATER_SIZZLE = register("item.holy_water.sizzle");
+    public static final Holder.Reference<SoundEvent> ITEM_CRUCIFIX_USE = register("item.crucifix.use");
+    public static final Holder.Reference<SoundEvent> ITEM_CRUCIFIX_SAVE = register("item.crucifix.save");
+    public static final Holder.Reference<SoundEvent> ITEM_FLASHLIGHT_TOGGLE_ON = register("item.flashlight.toggle_on");
+    public static final Holder.Reference<SoundEvent> ITEM_FLASHLIGHT_TOGGLE_OFF = register("item.flashlight.toggle_off");
+    public static final Holder.Reference<SoundEvent> ITEM_FLASHLIGHT_INSERT_CORE = register("item.flashlight.insert_core");
+    public static final Holder.Reference<SoundEvent> ITEM_FLASHLIGHT_REMOVE_CORE = register("item.flashlight.remove_core");
+    public static final Holder.Reference<SoundEvent> ITEM_UNHOLY_SWORD_CHARGE = register("item.unholy_sword.charge");
+    public static final Holder.Reference<SoundEvent> ITEM_UNHOLY_SWORD_DISCHARGED = register("item.unholy_sword.discharged");
+    public static final Holder.Reference<SoundEvent> ITEM_THERMOS_DRINK = register("item.thermos.drink");
+    public static final Holder.Reference<SoundEvent> ITEM_THERMOS_FILL = register("item.thermos.fill");
+    public static final Holder.Reference<SoundEvent> BLOCK_TREE_NOTE_RIP = register("block.tree_note.rip");
+    public static final Holder.Reference<SoundEvent> PLAYER_DEHYDRATED = register("player.dehydrated");
 
     private ModSounds() {}
 
