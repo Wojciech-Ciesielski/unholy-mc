@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/ladder",
+  "textures": {
+    "particle": "unholymc:block/tree_note_he_is_here",
+    "texture": "unholymc:block/tree_note_he_is_here"
+  }
+}

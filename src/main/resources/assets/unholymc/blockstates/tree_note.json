@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=north,variant=help": {
+      "model": "unholymc:block/tree_note_help"
+    },
+    "facing=north,variant=he_is_here": {
+      "model": "unholymc:block/tree_note_he_is_here"
+    },
+    "facing=north,variant=blood": {
+      "model": "unholymc:block/tree_note_blood"
+    },
+    "facing=north,variant=symbol": {
+      "model": "unholymc:block/tree_note_symbol"
+    },
+    "facing=east,variant=help": {
+      "model": "unholymc:block/tree_note_help",
+      "y": 90
+    },
+    "facing=east,variant=he_is_here": {
+      "model": "unholymc:block/tree_note_he_is_here",
+      "y": 90
+    },
+    "facing=east,variant=blood": {
+      "model": "unholymc:block/tree_note_blood",
+      "y": 90
+    },
+    "facing=east,variant=symbol": {
+      "model": "unholymc:block/tree_note_symbol",
+      "y": 90
+    },
+    "facing=south,variant=help": {
+      "model": "unholymc:block/tree_note_help",
+      "y": 180
+    },
+    "facing=south,variant=he_is_here": {
+      "model": "unholymc:block/tree_note_he_is_here",
+      "y": 180
+    },
+    "facing=south,variant=blood": {
+      "model": "unholymc:block/tree_note_blood",
+      "y": 180
+    },
+    "facing=south,variant=symbol": {
+      "model": "unholymc:block/tree_note_symbol",
+      "y": 180
+    },
+    "facing=west,variant=help": {
+      "model": "unholymc:block/tree_note_help",
+      "y": 270
+    },
+    "facing=west,variant=he_is_here": {
+      "model": "unholymc:block/tree_note_he_is_here",
+      "y": 270
+    },
+    "facing=west,variant=blood": {
+      "model": "unholymc:block/tree_note_blood",
+      "y": 270
+    },
+    "facing=west,variant=symbol": {
+      "model": "unholymc:block/tree_note_symbol",
+      "y": 270
+    }
+  }
+}
