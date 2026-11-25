@@ -40,6 +40,12 @@ public class Hallucination extends PathfinderMob implements BillboardEntity, Hol
     private static final EntityDataAccessor<Boolean> DATA_CHASING = SynchedEntityData.defineId(Hallucination.class, EntityDataSerializers.BOOLEAN);
 
     private @Nullable UUID owner;
+    /** Summoned by /thm summon: ignores the owner's sanity and game mode (test command). */
+    private boolean forced;
+
+    public void setForced() {
+        this.forced = true;
+    }
     private int age;
 
     public Hallucination(EntityType<? extends Hallucination> type, Level level) {
@@ -131,11 +137,24 @@ public class Hallucination extends PathfinderMob implements BillboardEntity, Hol
         ServerPlayer p = ownerPlayer();
         var cfg = ConfigManager.get().hallucinations;
         if (p == null || !p.isAlive() || p.level() != level || p.distanceToSqr(this) > cfg.vanishDistance * cfg.vanishDistance
-                || age > cfg.lifetimeTicks || CrucifixItem.isHeldForPassive(p) || !StatsHelper.isActive(p)) {
+                || age > cfg.lifetimeTicks || CrucifixItem.isHeldForPassive(p)
+                || (!forced && (!StatsHelper.isActive(p) || com.unholymc.attachment.ModAttachments.hud(p).sanity() > ConfigManager.get().sanity.lowSanityThreshold))) {
             vanish();
             return;
         }
         if (getTarget() != p) setTarget(p);
+    }
+
+    /** Only the owner sees the hallucination, so only the owner may hear it. */
+    @Override
+    public void playSound(SoundEvent sound, float volume, float pitch) {
+        if (isSilent() || !(level() instanceof ServerLevel)) return;
+        ServerPlayer p = ownerPlayer();
+        if (p != null) {
+            p.connection.send(new net.minecraft.network.protocol.game.ClientboundSoundPacket(
+                    net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), getSoundSource(),
+                    getX(), getY(), getZ(), volume, pitch, random.nextLong()));
+        }
     }
 
     @Override
@@ -168,7 +187,8 @@ public class Hallucination extends PathfinderMob implements BillboardEntity, Hol
 
     public void vanish() {
         if (level() instanceof ServerLevel level) {
-            level.sendParticles(ParticleTypes.SMOKE, getX(), getY() + getBbHeight() / 2, getZ(), 12, 0.3, 0.5, 0.3, 0.01);
+            ServerPlayer p = ownerPlayer();
+            if (p != null) level.sendParticles(p, ParticleTypes.SMOKE, false, false, getX(), getY() + getBbHeight() / 2, getZ(), 12, 0.3, 0.5, 0.3, 0.01);
             playSound(ModSounds.ENTITY_HALLUCINATION_DISSOLVE.value(), 0.8f, 1f);
         }
         discard();

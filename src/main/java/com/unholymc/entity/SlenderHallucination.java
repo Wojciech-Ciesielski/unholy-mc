@@ -152,4 +152,13 @@ public class SlenderHallucination extends Monster implements BillboardEntity, Ho
     protected SoundEvent getDeathSound() {
         return ModSounds.ENTITY_HALLUCINATION_DISSOLVE.value();
     }
+
+    /** GDD 5.2: killing a hallucination restores +2 sanity - Slenderman's ones included. */
+    @Override
+    public void die(DamageSource source) {
+        super.die(source);
+        if (source.getEntity() instanceof net.minecraft.server.level.ServerPlayer p && com.unholymc.survival.StatsHelper.isActive(p)) {
+            com.unholymc.survival.StatsHelper.addSanity(p, ConfigManager.get().hallucinations.killSanity);
+        }
+    }
 }

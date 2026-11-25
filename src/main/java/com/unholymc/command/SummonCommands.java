@@ -47,10 +47,10 @@ public final class SummonCommands {
             case "unholy" -> spawnInFront(player, ModEntities.UNHOLY_SLOP);
             case "slenderman_hallucination" -> spawnInFront(player, ModEntities.SLENDERMAN_HALLUCINATION);
             case "hallucination" -> {
-                if (HallucinationSpawner.spawnFor(player) == null) throw FAILED.create();
+                if (HallucinationSpawner.spawnFor(player, true) == null) throw FAILED.create();
             }
             case "jumpscare" -> {
-                if (!Jumpscares.screamer(player)) throw FAILED.create();
+                if (!Jumpscares.screamer(player, true)) throw FAILED.create();
             }
             case "spooky_jumpscare" -> Jumpscares.spooky(player);
             case "slenderman", "deadly_slenderman" -> {

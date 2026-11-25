@@ -23,6 +23,10 @@ public final class WorldCommands {
 
     private static int set(CommandSourceStack source, boolean active) {
         ServerLevel overworld = source.getServer().overworld();
+        if (active && !overworld.isDarkOutside()) {
+            // a Blood Moon only lives at night: "start" by day jumps straight to the evening
+            source.getServer().getCommands().performPrefixedCommand(source.withSuppressedOutput(), "time set night");
+        }
         BloodMoon.set(overworld, active);
         source.sendSuccess(() -> Component.translatable(active ? "commands.unholymc.blood_moon.started" : "commands.unholymc.blood_moon.stopped"), true);
         return 1;

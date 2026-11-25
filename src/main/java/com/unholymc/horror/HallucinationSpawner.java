@@ -59,6 +59,11 @@ public final class HallucinationSpawner {
     }
 
     public static @Nullable Hallucination spawnFor(ServerPlayer p) {
+        return spawnFor(p, false);
+    }
+
+    /** {@code forced}: summoned by a command, stays regardless of the player's sanity or game mode. */
+    public static @Nullable Hallucination spawnFor(ServerPlayer p, boolean forced) {
         ServerLevel level = p.level();
         var cfg = ConfigManager.get().hallucinations;
         BlockPos pos = findSpot(level, p, cfg.minSpawnDistance, cfg.spawnRadius);
@@ -66,6 +71,7 @@ public final class HallucinationSpawner {
         Hallucination h = ModEntities.HALLUCINATION.create(level, EntitySpawnReason.EVENT);
         if (h == null) return null;
         h.setup(p, SlopVariant.random(SlopKind.AGGRESSIVE, p.getRandom()));
+        if (forced) h.setForced();
         h.snapTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, p.getRandom().nextFloat() * 360f, 0f);
         level.addFreshEntity(h);
         Jumpscares.playBehind(p, ModSounds.ENTITY_HALLUCINATION_SPAWN, 0.8f);

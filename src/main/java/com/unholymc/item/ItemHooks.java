@@ -24,11 +24,20 @@ public final class ItemHooks {
     private ItemHooks() {}
 
     public static void init() {
+        // GDD 1.2: the crucifix takes only Mending, Unbreaking and Holiness. The durability tag it is in also feeds
+        // Curse of Vanishing (vanilla #enchantable/vanishing includes #enchantable/durability), so block the rest.
+        net.fabricmc.fabric.api.item.v1.EnchantmentEvents.ALLOW_ENCHANTING.register((enchantment, stack, context) -> {
+            if (!stack.is(com.unholymc.registry.ModItems.CRUCIFIX)) return net.fabricmc.fabric.api.util.TriState.DEFAULT;
+            boolean ok = enchantment.is(net.minecraft.world.item.enchantment.Enchantments.MENDING)
+                    || enchantment.is(net.minecraft.world.item.enchantment.Enchantments.UNBREAKING)
+                    || enchantment.is(com.unholymc.registry.ModEnchantments.HOLINESS);
+            return ok ? net.fabricmc.fabric.api.util.TriState.DEFAULT : net.fabricmc.fabric.api.util.TriState.FALSE;
+        });
         // --- continuous sanity auras ---
         SanityAuras.register((player, out) -> {
             if (CrucifixItem.isHeldForPassive(player)) out.add("crucifix", ConfigManager.get().crucifix.passiveSanityPer2Min);
             if (UnholySwordItem.isHeld(player)) {
-                out.add("unholy_sword", ConfigManager.get().unholySword.passiveSanityPer2Min);
+                out.addUnscaled("unholy_sword", ConfigManager.get().unholySword.passiveSanityPer2Min);
                 out.multiplyNegative(ConfigManager.get().auras.unholySwordNegativeMultiplier);
             }
         });

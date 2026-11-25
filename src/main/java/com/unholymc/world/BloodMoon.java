@@ -49,6 +49,9 @@ public final class BloodMoon {
         return level.dimension() == Level.OVERWORLD && state(level).bloodMoon();
     }
 
+    /** Set while the Overworld runs natural spawning (server thread only, see ServerChunkCacheMixin). */
+    public static volatile boolean spawningInOverworld;
+
     public static boolean activeOnServer() {
         return activeOnServer;
     }

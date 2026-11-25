@@ -16,10 +16,14 @@ public abstract class PlayerMixin {
     @Shadow
     public abstract boolean isSleepingLongEnough();
 
-    /** A normal (non-forceful) wake-up after a full sleep counts as a slept night. */
+    /**
+     * A normal (non-forceful) wake-up after a full sleep counts as a slept night - but only once the night is over
+     * (skipped or slept until dawn). "Leave Bed" in the middle of the night is also a non-forceful wake-up, so it must
+     * not count, or the reward could be farmed on servers where the night is never skipped.
+     */
     @Inject(method = "stopSleepInBed", at = @At("HEAD"))
     private void unholymc$onWakeUp(boolean forcefulWakeUp, boolean updateLevelList, CallbackInfo ci) {
-        if (!forcefulWakeUp && (Object) this instanceof ServerPlayer player && isSleepingLongEnough()) {
+        if (!forcefulWakeUp && (Object) this instanceof ServerPlayer player && isSleepingLongEnough() && !player.level().isDarkOutside()) {
             SleepTracker.onWokeUp(player);
         }
     }

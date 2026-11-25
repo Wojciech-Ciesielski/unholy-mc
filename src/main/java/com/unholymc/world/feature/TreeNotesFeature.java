@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-/** Notes pinned to tree trunks (GDD 2.2): {@code decoy} = a lone note on a stump out in the open. */
+/** Notes pinned to random natural trees (GDD 2.2): {@code decoy} = a lone note on a tree outside the forests. */
 public class TreeNotesFeature extends Feature<NoneFeatureConfiguration> {
     private final boolean decoy;
 

@@ -49,6 +49,11 @@ public final class SlenderForests {
 
     public static void init() {
         ServerTickEvents.END_SERVER_TICK.register(SlenderForests::tick);
+        // the caches belong to one world (seed): drop them when singleplayer switches worlds
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            CELL_TO_ANCHOR.clear();
+            ACTIVE.clear();
+        });
     }
 
     public static long cellKey(int cx, int cz) {

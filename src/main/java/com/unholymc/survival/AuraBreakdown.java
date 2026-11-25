@@ -9,7 +9,12 @@ import java.util.List;
  * DECISIONS #9: one entry per aura kind (no stacking within a kind); different kinds add up.
  */
 public final class AuraBreakdown {
-    public record Entry(String key, float per2Min) {}
+    /** {@code scaled}: affected by the negative multiplier (all auras except the Unholy Sword's own drain). */
+    public record Entry(String key, float per2Min, boolean scaled) {
+        public Entry(String key, float per2Min) {
+            this(key, per2Min, true);
+        }
+    }
 
     private final List<Entry> entries = new ArrayList<>();
     private float negativeMultiplier = 1f;
@@ -18,6 +23,13 @@ public final class AuraBreakdown {
     public void add(String key, float per2Min) {
         if (per2Min != 0f) {
             entries.add(new Entry(key, per2Min));
+        }
+    }
+
+    /** An aura not scaled by the negative multiplier (GDD 5.2: the sword's own -4 plus +50% to every other aura). */
+    public void addUnscaled(String key, float per2Min) {
+        if (per2Min != 0f) {
+            entries.add(new Entry(key, per2Min, false));
         }
     }
 
@@ -50,9 +62,13 @@ public final class AuraBreakdown {
 
     public float negativeTotal() {
         if (negativeImmune) return 0f;
-        float sum = 0f;
-        for (Entry e : entries) if (e.per2Min < 0f) sum += e.per2Min;
-        return sum * negativeMultiplier;
+        float scaled = 0f, unscaled = 0f;
+        for (Entry e : entries) {
+            if (e.per2Min >= 0f) continue;
+            if (e.scaled) scaled += e.per2Min;
+            else unscaled += e.per2Min;
+        }
+        return scaled * negativeMultiplier + unscaled;
     }
 
     /** Net change in points per 2 minutes. */

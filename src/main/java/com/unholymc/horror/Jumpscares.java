@@ -52,7 +52,12 @@ public final class Jumpscares {
 
     /** A full-screen screamer. Returns false if the player is immune. */
     public static boolean screamer(ServerPlayer player) {
-        if (immune(player)) return false;
+        return screamer(player, false);
+    }
+
+    /** {@code forced} (test command): plays even in creative/spectator or with a crucifix. */
+    public static boolean screamer(ServerPlayer player, boolean forced) {
+        if (!forced && immune(player)) return false;
         int variant = player.getRandom().nextInt(SlopVariant.values().length);
         ServerPlayNetworking.send(player, new JumpscarePayload(JumpscarePayload.SCREAMER, variant));
         loseSanity(player);
