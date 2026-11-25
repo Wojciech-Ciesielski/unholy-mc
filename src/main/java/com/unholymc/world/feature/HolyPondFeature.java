@@ -40,7 +40,10 @@ public class HolyPondFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
 
-        BlockState border = ground.is(Blocks.GRASS_BLOCK) ? Blocks.DIRT.defaultBlockState() : ground;
+        BlockState border = ground.is(Blocks.GRASS_BLOCK) ? Blocks.DIRT.defaultBlockState()
+                : ground.is(Blocks.SAND) ? Blocks.SANDSTONE.defaultBlockState()
+                : ground.is(Blocks.RED_SAND) ? Blocks.RED_SANDSTONE.defaultBlockState()
+                : ground.getBlock() instanceof net.minecraft.world.level.block.FallingBlock ? Blocks.STONE.defaultBlockState() : ground;
         for (int dx = -r; dx <= r; dx++) {
             for (int dz = -r; dz <= r; dz++) {
                 int d2 = dx * dx + dz * dz;
