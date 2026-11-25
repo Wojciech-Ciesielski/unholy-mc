@@ -29,17 +29,16 @@ for n, bottle in (("holy_water", "minecraft:item/potion"), ("splash_holy_water",
 for n in ("crucifix", "nightmare_gem"):
     model(n, [n]); w(f"items/{n}.json", {"model": ref(n)})
 
-# latarka: custom_model_data.strings[0] = rdzeń, flags[0] = włączona
-cores = ["none", "lapis", "redstone", "emerald", "diamond", "netherite", "nether_star", "nightmare_gem"]
-def fl(core):
-    beam = "flashlight_beam_dark" if core == "nightmare_gem" else "flashlight_beam"
-    model(f"flashlight_{core}", [f"flashlight_{core}"], "minecraft:item/handheld")
-    model(f"flashlight_{core}_on", [f"flashlight_{core}", beam], "minecraft:item/handheld")
+# latarka: dwa wyglądy – jasna (każdy rdzeń / brak) i ciemna (rdzeń z koszmarnego klejnotu)
+#   custom_model_data.strings[0] = id rdzenia (tylko "nightmare_gem" zmienia wygląd), flags[0] = włączona
+def fl(name, beam):
+    model(name, [name], "minecraft:item/handheld")
+    model(f"{name}_on", [name, beam], "minecraft:item/handheld")
     return {"type": "minecraft:condition", "property": "minecraft:custom_model_data", "index": 0,
-            "on_true": ref(f"flashlight_{core}_on"), "on_false": ref(f"flashlight_{core}")}
-cases = [{"when": c, "model": fl(c)} for c in cores if c != "none"]
+            "on_true": ref(f"{name}_on"), "on_false": ref(name)}
 w("items/flashlight.json", {"model": {"type": "minecraft:select", "property": "minecraft:custom_model_data",
-                                      "index": 0, "cases": cases, "fallback": fl("none")}})
+    "index": 0, "cases": [{"when": "nightmare_gem", "model": fl("flashlight_dark", "flashlight_beam_dark")}],
+    "fallback": fl("flashlight", "flashlight_beam")}})
 
 # Unholy Sword: custom_model_data.flags[0] = rozładowany
 model("unholy_sword", ["unholy_sword"], "minecraft:item/handheld")

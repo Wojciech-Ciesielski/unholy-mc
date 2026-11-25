@@ -5,102 +5,6 @@
     "index": 0,
     "cases": [
       {
-        "when": "lapis",
-        "model": {
-          "type": "minecraft:condition",
-          "property": "minecraft:custom_model_data",
-          "index": 0,
-          "on_true": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_lapis_on"
-          },
-          "on_false": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_lapis"
-          }
-        }
-      },
-      {
-        "when": "redstone",
-        "model": {
-          "type": "minecraft:condition",
-          "property": "minecraft:custom_model_data",
-          "index": 0,
-          "on_true": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_redstone_on"
-          },
-          "on_false": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_redstone"
-          }
-        }
-      },
-      {
-        "when": "emerald",
-        "model": {
-          "type": "minecraft:condition",
-          "property": "minecraft:custom_model_data",
-          "index": 0,
-          "on_true": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_emerald_on"
-          },
-          "on_false": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_emerald"
-          }
-        }
-      },
-      {
-        "when": "diamond",
-        "model": {
-          "type": "minecraft:condition",
-          "property": "minecraft:custom_model_data",
-          "index": 0,
-          "on_true": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_diamond_on"
-          },
-          "on_false": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_diamond"
-          }
-        }
-      },
-      {
-        "when": "netherite",
-        "model": {
-          "type": "minecraft:condition",
-          "property": "minecraft:custom_model_data",
-          "index": 0,
-          "on_true": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_netherite_on"
-          },
-          "on_false": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_netherite"
-          }
-        }
-      },
-      {
-        "when": "nether_star",
-        "model": {
-          "type": "minecraft:condition",
-          "property": "minecraft:custom_model_data",
-          "index": 0,
-          "on_true": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_nether_star_on"
-          },
-          "on_false": {
-            "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_nether_star"
-          }
-        }
-      },
-      {
         "when": "nightmare_gem",
         "model": {
           "type": "minecraft:condition",
@@ -108,11 +12,11 @@
           "index": 0,
           "on_true": {
             "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_nightmare_gem_on"
+            "model": "unholymc:item/flashlight_dark_on"
           },
           "on_false": {
             "type": "minecraft:model",
-            "model": "unholymc:item/flashlight_nightmare_gem"
+            "model": "unholymc:item/flashlight_dark"
           }
         }
       }
@@ -123,11 +27,11 @@
       "index": 0,
       "on_true": {
         "type": "minecraft:model",
-        "model": "unholymc:item/flashlight_none_on"
+        "model": "unholymc:item/flashlight_on"
       },
       "on_false": {
         "type": "minecraft:model",
-        "model": "unholymc:item/flashlight_none"
+        "model": "unholymc:item/flashlight"
       }
     }
   }

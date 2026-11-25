@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "unholymc:item/flashlight_nightmare_gem",
+    "layer0": "unholymc:item/flashlight_dark",
     "layer1": "unholymc:item/flashlight_beam_dark"
   }
 }

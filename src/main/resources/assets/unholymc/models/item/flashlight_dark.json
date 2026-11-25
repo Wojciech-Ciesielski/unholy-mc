@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "unholymc:item/flashlight_emerald"
+    "layer0": "unholymc:item/flashlight_dark"
   }
 }

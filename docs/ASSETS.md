@@ -86,11 +86,11 @@ Deadly Slenderman: ta sama tekstura, tint `0xFFB02020` (czerwonawy) i skala ×1,
 | `splash_holy_water` | **vanilla** `minecraft:item/potion_overlay` + `minecraft:item/splash_potion` | jw. |
 | `crucifix` | `crucifix.png` (drewno w palecie vanilla patyka, łza ghasta w środku) | prosty; glint enchantu vanilla |
 | `nightmare_gem` | `nightmare_gem.png` (kształt jak emerald, fiolet z czerwonym rdzeniem) | prosty |
-| `flashlight` | `flashlight_<rdzeń>.png` (styl lunety vanilla: żelazny korpus, gumowy uchwyt, okrągła soczewka w kolorze rdzenia) + nakładka `flashlight_beam.png` / `flashlight_beam_dark.png` (rozbłysk przed soczewką) | `custom_model_data.strings[0]` = rdzeń, `flags[0]` = włączona |
+| `flashlight` | `flashlight.png` (jasna: ciemny metal, radełkowany uchwyt, czerwony przycisk, srebrny bezel, ciepła soczewka) / `flashlight_dark.png` (soczewka z koszmarnego klejnotu) + nakładki `flashlight_beam.png` / `flashlight_beam_dark.png` (stożek światła) | `custom_model_data.strings[0]` = rdzeń (wygląd zmienia tylko `nightmare_gem`), `flags[0]` = włączona |
 | `unholy_sword` | `unholy_sword.png` (sylwetka jak miecze vanilla, karmazynowe ostrze, kościany jelec; 12 klatek, `frametime 2`: pulsująca żyła + unoszące się żarzące drobinki) / `unholy_sword_discharged.png` (popielate, spękane, bez cząsteczek) | `custom_model_data.flags[0]` = rozładowany |
 | `thermos` | `thermos_{empty,water,holy_water,honey,milk}.png` (zielona piersiówka; kolor etykiety-kropli = płyn, pusty = bez etykiety) | `custom_model_data.strings[0]` = płyn |
 
-Rdzenie latarki (`strings[0]`): `lapis`, `redstone`, `emerald`, `diamond`, `netherite`, `nether_star`, `nightmare_gem`. Brak wartości lub nieznana wartość daje `none`. Kolor soczewki = kolor rdzenia. Przy `nightmare_gem` nakładka „włączona” to **ciemna** poświata (`flashlight_beam_dark`).
+Latarka ma **dwa wyglądy**: jasny (bez rdzenia lub dowolny rdzeń: lapis, redstone, emerald, diament, netheryt, gwiazda Netheru) i ciemny (`strings[0] = "nightmare_gem"`). Rdzeń dalej zmienia zasięg w logice, ale nie teksturę.
 Płyny termosu (`strings[0]`): `water`, `holy_water`, `honey`, `milk`. Brak wartości = pusty.
 
 Przykład (Java, 26.x):
