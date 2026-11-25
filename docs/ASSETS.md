@@ -146,6 +146,36 @@ Na serwerze dedykowanym kod wysyła pakiet start → klient odgrywa sekwencję, 
 
 ---
 
+## 5a. Krwawy Księżyc – wygląd
+
+Tekstura: `textures/environment/celestial/blood_moon.png` (32×32). Format jest taki sam jak vanilla `environment/celestial/moon/*.png`: obraz nieprzezroczysty, czarne tło = brak światła (niebo rysuje księżyc addytywnie), tarcza 8×8 w środku i poświata dookoła. Krwawy Księżyc jest zawsze w pełni, bo wypada w pełnię, więc wystarczy jedna klatka. Podgląd: `assets_src/preview/blood_moon_preview.png`.
+
+Co kod podmienia na kliencie, gdy serwer zsynchronizuje „Krwawy Księżyc aktywny”:
+
+| Element | Wartość | Uwagi |
+|---|---|---|
+| Tekstura księżyca | `unholymc:textures/environment/celestial/blood_moon.png` | zamiast `full_moon.png` (mixin w renderze nieba) |
+| Rozmiar księżyca | ×1,6 względem vanilla | ma wisieć nad graczem, wyraźnie większy |
+| Kolor nieba (noc) | mnożony / mieszany do `#3A0608` | zmiana stopniowo przez **200 ticków** o zmierzchu i z powrotem o świcie |
+| Mgła | `#2A0505`, zasięg ×0,8 | nocą świat robi się ciaśniejszy |
+| Chmury | tint `#5A1010` | |
+| Gwiazdy | kolor `#FF5A50`, jasność ×0,6 | |
+| Światło świata | lekko czerwony odcień oświetlenia nocnego (lightmap, ok. +15% R) | opcjonalnie, jeśli łatwo |
+| Start eventu | tytuł `title.unholymc.blood_moon` + podtytuł `title.unholymc.blood_moon.sub` (kolor `#C8281C`), dźwięk `ambient.blood_moon.rise` | tylko dla graczy w Overworldzie |
+| Próba snu | komunikat na pasku akcji `message.unholymc.blood_moon.no_sleep` | łóżko się nie aktywuje |
+
+Teksty:
+
+| klucz | en_us | pl_pl |
+|---|---|---|
+| `title.unholymc.blood_moon` | The Blood Moon rises | Wschodzi Krwawy Księżyc |
+| `title.unholymc.blood_moon.sub` | No one sleeps tonight | Tej nocy nikt nie zaśnie |
+| `message.unholymc.blood_moon.no_sleep` | You can't sleep under the Blood Moon | Nie zaśniesz pod Krwawym Księżycem |
+
+Bajorka nie stają się święcone (patrz DECISIONS 16), więc nie mają cząsteczek ani poświaty.
+
+---
+
 ## 6. Dźwięki
 
 **Format:** OGG Vorbis, 44,1/48 kHz, jakość ~q5. **Mono** dla wszystkiego, co ma pozycję w świecie (inaczej MC nie zrobi panoramy ani tłumienia z dystansu). **Stereo** tylko dla `music.eleven_reversed`, `jumpscare.*` i `ambient.blood_moon.rise` (dźwięki „w głowie”). Normalizacja do ok. −14 LUFS; jumpscare'y mogą być głośniejsze (−9 LUFS), żeby naprawdę straszyły. Brak ciszy na początku pliku (opóźnia jumpscare). Pętle (`music.eleven_reversed`, `ambient.dark_corner`, `entity.slenderman.proximity`, `ambient.heartbeat`) muszą łączyć się bez kliku.
