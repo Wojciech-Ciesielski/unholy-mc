@@ -27,6 +27,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -43,6 +44,10 @@ public final class ModItems {
     public static Item UNHOLY_SWORD;
     public static Item THERMOS;
 
+    /** Holy water carries a water potion internally (for brewing); don't show "No Effects". */
+    private static final TooltipDisplay HIDE_POTION = new TooltipDisplay(false,
+            new java.util.LinkedHashSet<>(List.of(DataComponents.POTION_CONTENTS)));
+
     private ModItems() {}
 
     public static void init() {
@@ -50,10 +55,12 @@ public final class ModItems {
         NIGHTMARE_GEM = register("nightmare_gem", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
         HOLY_WATER = register("holy_water", HolyWaterItem::new, new Item.Properties().stacksTo(1)
                 .component(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
+                .component(DataComponents.TOOLTIP_DISPLAY, HIDE_POTION)
                 .component(DataComponents.CONSUMABLE, Consumables.DEFAULT_DRINK)
                 .usingConvertsTo(Items.GLASS_BOTTLE));
         SPLASH_HOLY_WATER = register("splash_holy_water", SplashHolyWaterItem::new, new Item.Properties().stacksTo(1)
-                .component(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER)));
+                .component(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
+                .component(DataComponents.TOOLTIP_DISPLAY, HIDE_POTION));
         CRUCIFIX = register("crucifix", CrucifixItem::new, new Item.Properties()
                 .durability(cfg.crucifix.durability).enchantable(15).repairable(ModTags.CRUCIFIX_REPAIR).rarity(Rarity.UNCOMMON));
         FLASHLIGHT = register("flashlight", FlashlightItem::new, new Item.Properties().stacksTo(1)

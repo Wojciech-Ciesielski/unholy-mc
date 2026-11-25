@@ -96,17 +96,11 @@ public class ThermosItem extends Item {
             BlockPos pos = hit.getBlockPos();
             String fluid = holyWaterSource.test(level, pos) ? HOLY_WATER
                     : level.getFluidState(pos).is(FluidTags.WATER) && level.getFluidState(pos).isSource() ? WATER : null;
-            if (fluid != null) {
-                if (fill(stack, fluid)) {
-                    if (!level.isClientSide()) playFill(level, player);
-                    return InteractionResult.SUCCESS;
-                }
-                if (!contents(stack).isEmpty() && !contents(stack).fluid().equals(fluid)) {
-                    // different fluid inside: drink instead
-                } else {
-                    return InteractionResult.FAIL;
-                }
+            if (fluid != null && fill(stack, fluid)) {
+                if (!level.isClientSide()) playFill(level, player);
+                return InteractionResult.SUCCESS;
             }
+            // full (or holding another fluid): fall through and drink
         }
         if (contents(stack).isEmpty()) return InteractionResult.PASS;
         player.startUsingItem(hand);
