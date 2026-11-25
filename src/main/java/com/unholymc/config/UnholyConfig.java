@@ -21,6 +21,9 @@ public class UnholyConfig {
     public UnholySword unholySword = new UnholySword();
     public Thermos thermos = new Thermos();
     public Loot loot = new Loot();
+    public Slops slops = new Slops();
+    public Hallucinations hallucinations = new Hallucinations();
+    public Jumpscares jumpscares = new Jumpscares();
 
     public static class General {
         /** How often (ticks) aura scans and threshold effects are evaluated. Rates are still applied every tick. */
@@ -77,6 +80,8 @@ public class UnholyConfig {
         public float nightPer2Min = -2f;
         public float darknessPer2Min = -4f;
         public int darknessLightBelow = 5;
+        public float slopsPer2Min = -8f;
+        public double slopsRadius = 30;
         public float monstersPer2Min = -5f;
         public double monstersRadius = 10;
         public float bossesPer2Min = -8f;
@@ -188,5 +193,56 @@ public class UnholyConfig {
     public static class Loot {
         /** Chance that a Woodland Mansion / End City / Mineshaft chest contains a Holiness book. */
         public float holinessBookChance = 0.15f;
+    }
+
+    public static class Slops {
+        /** Registration-time values (restart needed). Category shares 60/30/10 via spawn weights. */
+        public int aggressiveSpawnWeight = 12;
+        public int neutralSpawnWeight = 6;
+        public int unholySpawnWeight = 2;
+        public float aggressiveHealth = 20f, aggressiveDamage = 6f, aggressiveSpeed = 0.27f;
+        public float neutralHealth = 10f, neutralSpeed = 0.36f;
+        public float unholyHealth = 30f, unholyDamage = 10f, unholySpeed = 0.31f;
+        public int unholyDarknessTicks = 200;
+        public double aggressiveDespawnDistance = 80;
+        public double neutralDespawnDistance = 160;
+        public double unholyDespawnDistance = 80;
+        /** Neutral slops: approach, scare (one-off sanity loss), then run away. */
+        public double neutralScareTriggerRange = 3.5;
+        public double neutralScareNoticeRange = 16;
+        public int neutralScareCooldownTicks = 900;
+        public int neutralFleeTicks = 120;
+    }
+
+    public static class Hallucinations {
+        /** DECISIONS #4: one spawn attempt every 15 s within 20 blocks of a player with low sanity. */
+        public int spawnIntervalTicks = 300;
+        public double spawnRadius = 20;
+        public double minSpawnDistance = 8;
+        /** GDD 2.4: hallucinations are 4x as frequent in the End (interval divided). */
+        public float endFrequencyMultiplier = 4f;
+        public int maxPerPlayer = 3;
+        public int lifetimeTicks = 1800;
+        public float health = 10f, damage = 2f, speed = 0.28f;
+        public float killSanity = 2f;
+        public double vanishDistance = 48;
+        /** Slenderman's summoned hallucinations (GDD 3.2). */
+        public float slenderHealth = 24f, slenderDamage = 8f, slenderSpeed = 0.3f;
+        public int slenderLifetimeTicks = 2400;
+    }
+
+    public static class Jumpscares {
+        public int rollIntervalTicks = 60;
+        /** Chance per roll for sanity stages unsettled (14-10), disturbed (9-5), broken (<=4). */
+        public float unsettledChance = 0.005f;
+        public float disturbedChance = 0.03f;
+        public float brokenChance = 0.10f;
+        public float sanityLoss = -10f;
+        /** Background noises at 9-5: random interval range (ticks). */
+        public int lowSanitySoundMinTicks = 400;
+        public int lowSanitySoundMaxTicks = 1200;
+        public int heartbeatIntervalTicks = 40;
+        /** Spooky Jumpscare: the server kills the player this many ticks after it starts. */
+        public int spookyDeathDelayTicks = 110;
     }
 }

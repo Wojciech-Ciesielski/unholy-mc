@@ -2,8 +2,8 @@
   "effect.unholymc.wellbeing": "Wellbeing",
   "death.attack.unholymc.dehydration": "%1$s died of thirst",
   "death.attack.unholymc.dehydration.player": "%1$s died of thirst while fighting %2$s",
-  "death.attack.unholymc.spooky_jumpscare": "%1$s slept too well",
-  "death.attack.unholymc.spooky_jumpscare.player": "%1$s slept too well",
+  "death.attack.unholymc.spooky_jumpscare": "%1$s never woke up",
+  "death.attack.unholymc.spooky_jumpscare.player": "%1$s never woke up",
   "stat.unholymc.sanity": "Sanity",
   "stat.unholymc.hunger": "Hunger",
   "stat.unholymc.hydration": "Hydration",
@@ -116,5 +116,15 @@
   "tag.item.unholymc.enchantable.crucifix": "Crucifix Enchantable",
   "tag.item.unholymc.sanity.cooked_food": "Cooked Food (Sanity)",
   "tag.item.unholymc.sanity.sweet_food": "Sweet Food (Sanity)",
-  "tag.item.unholymc.sanity.raw_food": "Raw Food (Sanity)"
+  "tag.item.unholymc.sanity.raw_food": "Raw Food (Sanity)",
+  "entity.unholymc.aggressive_slop": "Aggressive Slop",
+  "entity.unholymc.neutral_slop": "Neutral Slop",
+  "entity.unholymc.unholy_slop": "Unholy Slop",
+  "entity.unholymc.hallucination": "Hallucination",
+  "entity.unholymc.slenderman_hallucination": "Slenderman's Hallucination",
+  "jumpscare.unholymc.spooky_text": "you slept too long",
+  "commands.unholymc.summon.success": "Summoned %1$s for %2$s",
+  "commands.unholymc.summon.unknown": "Unknown type",
+  "commands.unholymc.summon.failed": "Could not summon it here (no space, or the player is immune)",
+  "commands.unholymc.summon.not_yet": "Slenderman arrives in a later stage of the mod"
 }

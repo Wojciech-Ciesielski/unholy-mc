@@ -11,6 +11,10 @@ import com.unholymc.registry.ModItems;
 import com.unholymc.item.ItemHooks;
 import com.unholymc.light.DynamicLights;
 import com.unholymc.command.ItemCommands;
+import com.unholymc.command.SummonCommands;
+import com.unholymc.entity.SlopSpawning;
+import com.unholymc.horror.HallucinationSpawner;
+import com.unholymc.horror.Jumpscares;
 import com.unholymc.registry.ModSounds;
 import com.unholymc.survival.SurvivalSystem;
 import net.fabricmc.api.ModInitializer;
@@ -40,6 +44,10 @@ public class UnholyMC implements ModInitializer {
         DynamicLights.init();
         ItemHooks.init();
         ItemCommands.init();
+        SlopSpawning.init();
+        Jumpscares.init();
+        HallucinationSpawner.init();
+        SummonCommands.init();
         ThmCommand.init();
         LOGGER.info("The Unholy Minecraft is waking up...");
     }

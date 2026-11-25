@@ -2,8 +2,8 @@
   "effect.unholymc.wellbeing": "Dobre samopoczucie",
   "death.attack.unholymc.dehydration": "%1$s umarł z pragnienia",
   "death.attack.unholymc.dehydration.player": "%1$s umarł z pragnienia, walcząc z %2$s",
-  "death.attack.unholymc.spooky_jumpscare": "%1$s spał zbyt dobrze",
-  "death.attack.unholymc.spooky_jumpscare.player": "%1$s spał zbyt dobrze",
+  "death.attack.unholymc.spooky_jumpscare": "%1$s już się nie obudził(a)",
+  "death.attack.unholymc.spooky_jumpscare.player": "%1$s już się nie obudził(a)",
   "stat.unholymc.sanity": "Poczytalność",
   "stat.unholymc.hunger": "Głód",
   "stat.unholymc.hydration": "Nawodnienie",
@@ -116,5 +116,15 @@
   "tag.item.unholymc.enchantable.crucifix": "Zaklinalne: krucyfiks",
   "tag.item.unholymc.sanity.cooked_food": "Upieczone jedzenie (poczytalność)",
   "tag.item.unholymc.sanity.sweet_food": "Słodycze i owoce (poczytalność)",
-  "tag.item.unholymc.sanity.raw_food": "Surowe jedzenie (poczytalność)"
+  "tag.item.unholymc.sanity.raw_food": "Surowe jedzenie (poczytalność)",
+  "entity.unholymc.aggressive_slop": "Agresywny slop",
+  "entity.unholymc.neutral_slop": "Neutralny slop",
+  "entity.unholymc.unholy_slop": "Bluźnierczy slop",
+  "entity.unholymc.hallucination": "Halucynacja",
+  "entity.unholymc.slenderman_hallucination": "Halucynacja Slendermana",
+  "jumpscare.unholymc.spooky_text": "spałeś za długo",
+  "commands.unholymc.summon.success": "Przywołano %1$s dla %2$s",
+  "commands.unholymc.summon.unknown": "Nieznany typ",
+  "commands.unholymc.summon.failed": "Nie udało się przywołać (brak miejsca albo gracz jest odporny)",
+  "commands.unholymc.summon.not_yet": "Slenderman pojawi się w kolejnym etapie moda"
 }

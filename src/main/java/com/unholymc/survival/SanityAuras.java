@@ -2,6 +2,7 @@ package com.unholymc.survival;
 
 import com.unholymc.attachment.ModAttachments;
 import com.unholymc.config.ConfigManager;
+import com.unholymc.entity.AuraFilter;
 import com.unholymc.registry.ModTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -60,10 +61,10 @@ public final class SanityAuras {
             out.add("darkness", cfg.darknessPer2Min);
         }
 
-        double maxR = Math.max(Math.max(cfg.monstersRadius, cfg.bossesRadius),
+        double maxR = Math.max(Math.max(Math.max(cfg.monstersRadius, cfg.slopsRadius), cfg.bossesRadius),
                 Math.max(cfg.friendlyAnimalsRadius, Math.max(cfg.tamedRadius, cfg.playersRadius)));
         AABB box = player.getBoundingBox().inflate(maxR);
-        boolean monsters = false, bosses = false, animals = false, tamed = false;
+        boolean monsters = false, bosses = false, animals = false, tamed = false, slops = false;
         int players = 0;
         for (Entity e : level.getEntities(player, box, Entity::isAlive)) {
             double d2 = e.distanceToSqr(player);
@@ -71,9 +72,11 @@ public final class SanityAuras {
                 if (!other.isSpectator() && d2 <= cfg.playersRadius * cfg.playersRadius) players++;
                 continue;
             }
-            if (e.is(ModTags.BOSSES)) {
+            if (e.is(ModTags.SLOPS)) {
+                if (d2 <= cfg.slopsRadius * cfg.slopsRadius && (!(e instanceof AuraFilter f) || f.affects(player))) slops = true;
+            } else if (e.is(ModTags.BOSSES)) {
                 if (d2 <= cfg.bossesRadius * cfg.bossesRadius) bosses = true;
-            } else if (e instanceof Enemy && !e.is(ModTags.SLOPS)) {
+            } else if (e instanceof Enemy) {
                 if (d2 <= cfg.monstersRadius * cfg.monstersRadius) monsters = true;
             } else if (isTamed(e)) {
                 if (d2 <= cfg.tamedRadius * cfg.tamedRadius) tamed = true;
@@ -81,6 +84,7 @@ public final class SanityAuras {
                 if (d2 <= cfg.friendlyAnimalsRadius * cfg.friendlyAnimalsRadius) animals = true;
             }
         }
+        if (slops) out.add("slops", cfg.slopsPer2Min);
         if (monsters) out.add("monsters", cfg.monstersPer2Min);
         if (bosses) out.add("bosses", cfg.bossesPer2Min);
         if (animals) out.add("friendly_animals", cfg.friendlyAnimalsPer2Min);
