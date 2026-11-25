@@ -94,6 +94,7 @@ public final class ThmCommand {
         // /thm reload
         root.then(Commands.literal("reload").executes(c -> {
             boolean ok = ConfigManager.load();
+            for (var p : c.getSource().getServer().getPlayerList().getPlayers()) com.unholymc.network.ClientSettingsPayload.send(p);
             c.getSource().sendSuccess(() -> Component.translatable(ok ? "commands.unholymc.reload.success" : "commands.unholymc.reload.failed"), true);
             return ok ? 1 : 0;
         }));

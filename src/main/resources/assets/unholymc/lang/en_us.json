@@ -126,5 +126,14 @@
   "commands.unholymc.summon.success": "Summoned %1$s for %2$s",
   "commands.unholymc.summon.unknown": "Unknown type",
   "commands.unholymc.summon.failed": "Could not summon it here (no space, or the player is immune)",
-  "commands.unholymc.summon.not_yet": "Slenderman arrives in a later stage of the mod"
+  "commands.unholymc.summon.not_yet": "Slenderman arrives in a later stage of the mod",
+  "title.unholymc.blood_moon": "The Blood Moon rises",
+  "title.unholymc.blood_moon.sub": "No one sleeps tonight",
+  "message.unholymc.blood_moon.no_sleep": "You can't sleep under the Blood Moon",
+  "commands.unholymc.blood_moon.started": "The Blood Moon has been started",
+  "commands.unholymc.blood_moon.stopped": "The Blood Moon has been stopped",
+  "commands.unholymc.blood_moon.check": "Blood Moon: %1$s. Days until the next full moon: %2$s %3$s",
+  "commands.unholymc.blood_moon.active": "active",
+  "commands.unholymc.blood_moon.inactive": "inactive",
+  "commands.unholymc.blood_moon.holy": "(holy ponds are holy tonight)"
 }

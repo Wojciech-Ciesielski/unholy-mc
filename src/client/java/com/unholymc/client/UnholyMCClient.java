@@ -4,6 +4,9 @@ import com.unholymc.client.hud.DehydrationOverlay;
 import com.unholymc.client.hud.JumpscareOverlay;
 import com.unholymc.client.render.BillboardRenderer;
 import com.unholymc.network.JumpscarePayload;
+import com.unholymc.network.ClientSettingsPayload;
+import com.unholymc.client.world.ClientWorldEffects;
+import com.unholymc.client.sound.ElevenLoop;
 import com.unholymc.client.hud.SurvivalHud;
 import com.unholymc.network.CrucifixSavePayload;
 import com.unholymc.registry.ModEntities;
@@ -24,6 +27,9 @@ public class UnholyMCClient implements ClientModInitializer {
         EntityRenderers.register(ModEntities.HALLUCINATION, ctx -> new BillboardRenderer<>(ctx, 0f));
         EntityRenderers.register(ModEntities.SLENDERMAN_HALLUCINATION, ctx -> new BillboardRenderer<>(ctx, 0f));
         JumpscareOverlay.init();
+        ClientWorldEffects.init();
+        ElevenLoop.init();
+        ClientPlayNetworking.registerGlobalReceiver(ClientSettingsPayload.TYPE, (payload, context) -> payload.apply());
         ClientPlayNetworking.registerGlobalReceiver(JumpscarePayload.TYPE, (payload, context) -> JumpscareOverlay.start(payload));
         ClientPlayNetworking.registerGlobalReceiver(CrucifixSavePayload.TYPE,
                 (payload, context) -> context.client().gameRenderer.displayItemActivation(payload.stack()));

@@ -12,6 +12,12 @@ import com.unholymc.item.ItemHooks;
 import com.unholymc.light.DynamicLights;
 import com.unholymc.command.ItemCommands;
 import com.unholymc.command.SummonCommands;
+import com.unholymc.command.WorldCommands;
+import com.unholymc.world.BloodMoon;
+import com.unholymc.world.HolyPonds;
+import com.unholymc.world.WeatherControl;
+import com.unholymc.world.WorldState;
+import com.unholymc.world.feature.ModFeatures;
 import com.unholymc.entity.SlopSpawning;
 import com.unholymc.horror.HallucinationSpawner;
 import com.unholymc.horror.Jumpscares;
@@ -48,6 +54,12 @@ public class UnholyMC implements ModInitializer {
         Jumpscares.init();
         HallucinationSpawner.init();
         SummonCommands.init();
+        WorldState.init();
+        BloodMoon.init();
+        WeatherControl.init();
+        HolyPonds.init();
+        ModFeatures.init();
+        WorldCommands.init();
         ThmCommand.init();
         LOGGER.info("The Unholy Minecraft is waking up...");
     }

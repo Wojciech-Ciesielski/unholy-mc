@@ -24,6 +24,10 @@ public class UnholyConfig {
     public Slops slops = new Slops();
     public Hallucinations hallucinations = new Hallucinations();
     public Jumpscares jumpscares = new Jumpscares();
+    public World world = new World();
+    public BloodMoon bloodMoon = new BloodMoon();
+    public HolyPonds holyPonds = new HolyPonds();
+    public Ambience ambience = new Ambience();
 
     public static class General {
         /** How often (ticks) aura scans and threshold effects are evaluated. Rates are still applied every tick. */
@@ -244,5 +248,49 @@ public class UnholyConfig {
         public int heartbeatIntervalTicks = 40;
         /** Spooky Jumpscare: the server kills the player this many ticks after it starts. */
         public int spookyDeathDelayTicks = 110;
+    }
+
+    public static class World {
+        /** GDD 5.4: rain/storms +50% more often (the clear-weather countdown runs this many times faster). */
+        public float rainFrequencyMultiplier = 1.5f;
+        /** At least one rain or storm every N days. */
+        public int guaranteedRainEveryDays = 3;
+        public int guaranteedRainDurationTicks = 6000;
+        /** Chance that a naturally spawned zombie wears a carved pumpkin (world anomaly). */
+        public float zombiePumpkinChance = 0.12f;
+    }
+
+    public static class BloodMoon {
+        /** DECISIONS #17: full moon every 8 days (vanilla phases); chance of a Blood Moon on each full moon. */
+        public float chance = 0.25f;
+        /** "+200% spawns": monster caps are multiplied during a Blood Moon. */
+        public float spawnCapMultiplier = 3f;
+        /** Client visuals (ASSETS 5a). */
+        public int transitionTicks = 200;
+        public int skyColor = 0x3A0608;
+        public int fogColor = 0x2A0505;
+        public float fogDistanceMultiplier = 0.8f;
+        public int cloudColor = 0x5A1010;
+        public float starBrightnessMultiplier = 0.6f;
+        public int skyLightTint = 0xFFB8B0;
+        public float moonScale = 1.6f;
+    }
+
+    public static class HolyPonds {
+        /** DECISIONS #16: aura +20 / 2 min within 10 blocks, wading +1 / s; only while the water is holy. */
+        public float auraPer2Min = 20f;
+        public double auraRadius = 10;
+        public float wadingPerSecond = 1f;
+        public int glowLightLevel = 7;
+        public double lightRange = 48;
+    }
+
+    public static class Ambience {
+        /** Looping slowed / reversed disc 11 (client-side; values sent to clients on join). */
+        public float musicVolume = 0.35f;
+        public float musicNightBoost = 1.10f;
+        public float musicCaveBoost = 1.15f;
+        /** Vanilla cave "mood" sounds come this many times more often. */
+        public float moodSoundMultiplier = 3f;
     }
 }

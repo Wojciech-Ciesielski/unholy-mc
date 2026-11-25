@@ -11,6 +11,8 @@ public final class ModNetworking {
         PayloadTypeRegistry.serverboundPlay().register(DrinkFromSourcePayload.TYPE, DrinkFromSourcePayload.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(CrucifixSavePayload.TYPE, CrucifixSavePayload.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(JumpscarePayload.TYPE, JumpscarePayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(ClientSettingsPayload.TYPE, ClientSettingsPayload.CODEC);
+        net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents.JOIN.register(ClientSettingsPayload::send);
         ServerPlayNetworking.registerGlobalReceiver(DrinkFromSourcePayload.TYPE,
                 (payload, context) -> ConsumptionHandler.tryDrinkFromSource(context.player()));
     }

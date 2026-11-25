@@ -126,5 +126,14 @@
   "commands.unholymc.summon.success": "Przywołano %1$s dla %2$s",
   "commands.unholymc.summon.unknown": "Nieznany typ",
   "commands.unholymc.summon.failed": "Nie udało się przywołać (brak miejsca albo gracz jest odporny)",
-  "commands.unholymc.summon.not_yet": "Slenderman pojawi się w kolejnym etapie moda"
+  "commands.unholymc.summon.not_yet": "Slenderman pojawi się w kolejnym etapie moda",
+  "title.unholymc.blood_moon": "Wschodzi Krwawy Księżyc",
+  "title.unholymc.blood_moon.sub": "Tej nocy nikt nie zaśnie",
+  "message.unholymc.blood_moon.no_sleep": "Nie zaśniesz pod Krwawym Księżycem",
+  "commands.unholymc.blood_moon.started": "Krwawy Księżyc rozpoczęty",
+  "commands.unholymc.blood_moon.stopped": "Krwawy Księżyc zakończony",
+  "commands.unholymc.blood_moon.check": "Krwawy Księżyc: %1$s. Dni do najbliższej pełni: %2$s %3$s",
+  "commands.unholymc.blood_moon.active": "aktywny",
+  "commands.unholymc.blood_moon.inactive": "nieaktywny",
+  "commands.unholymc.blood_moon.holy": "(tej nocy bajorka są święcone)"
 }
