@@ -39,7 +39,8 @@ public final class AnomalyFeatures {
 
     static boolean groundOk(WorldGenLevel level, BlockPos surface) {
         BlockState below = level.getBlockState(surface.below());
-        return below.isSolidRender() && below.getFluidState().isEmpty() && level.getBlockState(surface).isAir();
+        BlockState at = level.getBlockState(surface);
+        return below.isSolidRender() && below.getFluidState().isEmpty() && (at.isAir() || at.canBeReplaced()) && at.getFluidState().isEmpty();
     }
 
     static <T> T pick(List<T> list, RandomSource r) {
@@ -89,7 +90,8 @@ public final class AnomalyFeatures {
             Block log = pick(LOGS, r);
             int height = 4 + r.nextInt(5);
             for (int y = 0; y < height; y++) {
-                if (!level.getBlockState(base.above(y)).isAir()) return y > 2;
+                BlockState at = level.getBlockState(base.above(y));
+                if (!at.isAir() && !at.canBeReplaced()) return y > 2;
                 setBlock(level, base.above(y), log.defaultBlockState());
             }
             int branches = 1 + r.nextInt(3);
@@ -120,7 +122,10 @@ public final class AnomalyFeatures {
             if (!groundOk(level, base)) return false;
             Block fence = r.nextBoolean() ? Blocks.DARK_OAK_FENCE : Blocks.SPRUCE_FENCE;
             boolean alongX = r.nextBoolean();
-            for (int y = 0; y < 4; y++) if (!level.getBlockState(base.above(y)).isAir()) return false;
+            for (int y = 0; y < 4; y++) {
+                BlockState at = level.getBlockState(base.above(y));
+                if (!at.isAir() && !at.canBeReplaced()) return false;
+            }
             BlockState post = fence.defaultBlockState();
             for (int y = 0; y < 4; y++) {
                 BlockState s = post;
@@ -209,7 +214,8 @@ public final class AnomalyFeatures {
             do { leaf = pick(LEAVES, r); } while (sameWood(log, leaf));
             int height = 4 + r.nextInt(3);
             for (int y = 0; y < height; y++) {
-                if (!level.getBlockState(base.above(y)).isAir()) return false;
+                BlockState at = level.getBlockState(base.above(y));
+                if (!at.isAir() && !at.canBeReplaced()) return false;
             }
             for (int y = 0; y < height; y++) setBlock(level, base.above(y), log.defaultBlockState());
             blob(level, base.above(height), 2, leaves(leaf), r);

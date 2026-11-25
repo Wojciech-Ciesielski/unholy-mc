@@ -28,12 +28,15 @@ public class HolyPondFeature extends Feature<NoneFeatureConfiguration> {
         if (!ground.isSolidRender() || !ground.getFluidState().isEmpty()) return false;
         int r = 2 + random.nextInt(2);
 
-        // flat enough: every ground column of the pond within 1 block of the centre height
+        // flat enough: the ground of every column of the pond within 1 block of the centre height
         for (int dx = -r; dx <= r; dx++) {
             for (int dz = -r; dz <= r; dz++) {
                 if (dx * dx + dz * dz > r * r + 0.5) continue;
-                BlockPos col = center.offset(dx, 0, dz);
-                if (!level.getBlockState(col).isSolidRender() || level.getBlockState(col.above(2)).isSolidRender()) return false;
+                int top = Integer.MIN_VALUE;
+                for (int y = 2; y >= -2; y--) {
+                    if (level.getBlockState(center.offset(dx, y, dz)).isSolidRender()) { top = y; break; }
+                }
+                if (top < -1 || top > 1) return false;
             }
         }
 
