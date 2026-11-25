@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "unholymc",
+  "version": "${version}",
+  "name": "The Unholy Minecraft",
+  "description": "Survival-horror mod: sanity, hydration, slops and things in the dark.",
+  "authors": ["The Unholy MC team"],
+  "license": "All-Rights-Reserved",
+  "icon": "assets/unholymc/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.unholymc.UnholyMC"],
+    "client": ["com.unholymc.client.UnholyMCClient"]
+  },
+  "mixins": ["unholymc.mixins.json", {"config": "unholymc.client.mixins.json", "environment": "client"}],
+  "depends": {
+    "fabricloader": ">=0.20.0",
+    "minecraft": "~26.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
