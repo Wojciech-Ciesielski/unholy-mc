@@ -45,17 +45,17 @@ public class TreeNotesFeature extends Feature<NoneFeatureConfiguration> {
         int placed = 0;
         for (int attempt = 0; attempt < wanted * 6 && placed < wanted; attempt++) {
             int x = ctx.origin().getX() + r.nextInt(16) - 8, z = ctx.origin().getZ() + r.nextInt(16) - 8;
-            int ground = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
-            for (int y = ground; y < ground + 3 && placed < wanted; y++) {
-                BlockPos log = new BlockPos(x, y, z);
-                if (!level.getBlockState(log).is(BlockTags.LOGS)) continue;
-                Direction face = Direction.Plane.HORIZONTAL.getRandomDirection(r);
-                BlockPos at = log.relative(face);
-                if (level.getBlockState(at).isAir()) {
-                    level.setBlock(at, note(r, face), Block.UPDATE_CLIENTS);
-                    placed++;
-                    break;
-                }
+            int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) - 1;
+            if (!level.getBlockState(new BlockPos(x, top, z)).is(BlockTags.LOGS)) continue;
+            int ground = top;
+            while (ground > top - 24 && level.getBlockState(new BlockPos(x, ground - 1, z)).is(BlockTags.LOGS)) ground--;
+            BlockPos log = new BlockPos(x, ground + r.nextInt(3), z); // 1-3 blocks above the ground, eye height
+            if (!level.getBlockState(log).is(BlockTags.LOGS)) continue;
+            Direction face = Direction.Plane.HORIZONTAL.getRandomDirection(r);
+            BlockPos at = log.relative(face);
+            if (level.getBlockState(at).isAir()) {
+                level.setBlock(at, note(r, face), Block.UPDATE_CLIENTS);
+                placed++;
             }
         }
         return placed > 0;

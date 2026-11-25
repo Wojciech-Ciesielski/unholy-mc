@@ -60,6 +60,13 @@ public class Slenderman extends Monster {
     private int summonTimer;
     /** Forest this Slenderman belongs to (Long.MIN_VALUE = summoned by command). */
     private long forestAnchor = Long.MIN_VALUE;
+    /** /thm summon deadly_slenderman: stays deadly regardless of the moon. */
+    private boolean forcedDeadly;
+
+    public void forceDeadly() {
+        this.forcedDeadly = true;
+        setDeadly(true);
+    }
 
     public Slenderman(EntityType<? extends Slenderman> type, Level level) {
         super(type, level);
@@ -181,7 +188,7 @@ public class Slenderman extends Monster {
 
         // Blood Moon -> Deadly; dawn -> gone
         if (tickCount % 20 == 0) {
-            setDeadly(BloodMoon.isActive(level));
+            setDeadly(forcedDeadly || BloodMoon.isActive(level));
             if (level.dimension() == Level.OVERWORLD && level.isBrightOutside() && forestAnchor != Long.MIN_VALUE) {
                 vanish();
                 return;

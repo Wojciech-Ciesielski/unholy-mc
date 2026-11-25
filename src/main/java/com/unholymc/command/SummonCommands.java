@@ -58,7 +58,7 @@ public final class SummonCommands {
                 net.minecraft.core.BlockPos at = net.minecraft.core.BlockPos.containing(player.position().add(look));
                 var s = com.unholymc.world.SlenderForests.spawn(player.level(), at);
                 if (s == null) throw FAILED.create();
-                if (type.equals("deadly_slenderman")) s.setDeadly(true);
+                if (type.equals("deadly_slenderman")) s.forceDeadly();
             }
             default -> throw UNKNOWN.create();
         }
