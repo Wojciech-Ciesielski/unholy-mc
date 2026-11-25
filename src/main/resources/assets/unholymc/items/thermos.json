@@ -1,0 +1,41 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "cases": [
+      {
+        "when": "water",
+        "model": {
+          "type": "minecraft:model",
+          "model": "unholymc:item/thermos_water"
+        }
+      },
+      {
+        "when": "holy_water",
+        "model": {
+          "type": "minecraft:model",
+          "model": "unholymc:item/thermos_holy_water"
+        }
+      },
+      {
+        "when": "honey",
+        "model": {
+          "type": "minecraft:model",
+          "model": "unholymc:item/thermos_honey"
+        }
+      },
+      {
+        "when": "milk",
+        "model": {
+          "type": "minecraft:model",
+          "model": "unholymc:item/thermos_milk"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "unholymc:item/thermos_empty"
+    }
+  }
+}

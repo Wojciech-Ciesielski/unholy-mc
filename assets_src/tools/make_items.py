@@ -1,0 +1,226 @@
+"""Generuje tekstury itemów 16x16 (styl: mroczny / brudny) i animacje .mcmeta.
+
+Użycie: python3 assets_src/tools/make_items.py
+"""
+import json, math
+from pathlib import Path
+from PIL import Image
+from sprites import hexc, render, stack, preview
+
+ROOT = Path(__file__).resolve().parents[2]
+TEX = ROOT / "src/main/resources/assets/unholymc/textures"
+ITEM = TEX / "item"
+PREV = ROOT / "assets_src/preview"
+O = hexc("1a1416")
+OUT = []
+
+def save(img, rel, mcmeta=None):
+    p = TEX / rel; p.parent.mkdir(parents=True, exist_ok=True)
+    img.save(p, optimize=True)
+    if mcmeta:
+        (p.parent / (p.name + ".mcmeta")).write_text(json.dumps(mcmeta, indent=2) + "\n")
+    OUT.append((rel, img))
+
+# ------------------------------------------------------------------ woda święcona
+BOTTLE = """
+................
+......oooo......
+......oCco......
+......occo......
+......oLgo......
+......oLgo......
+.....oLggLo.....
+....oLBwBBgo....
+...oLBwBxBBgo...
+...oLBBxxxBbo...
+...oLBBBxBBbo...
+...ogBBBxBBbo...
+...ogbBBBBbbo...
+....ogbbbbgo....
+.....oooooo.....
+................"""
+SPLASH = """
+................
+................
+......oooo......
+.....oCccCo.....
+.....ooLgoo.....
+......oLgo......
+.....oLBBgo.....
+....oLBwBsgo....
+...oLBwBxBBgo...
+...oLBBxxxBbo...
+...oLsBBxBBbo...
+...ogBBBxBsbo...
+...ogbBBBBbbo...
+....ogbbbbgo....
+.....oooooo.....
+................"""
+GLASS = {"o": O, "g": hexc("5d6b70"), "L": hexc("b7c6c8"), "C": hexc("6e4d30"), "c": hexc("4a3221"),
+         "B": hexc("8fd3ee"), "b": hexc("5a9fc4"), "w": hexc("eefaff"), "x": hexc("ffffff"), "s": hexc("3a3d40")}
+save(render(BOTTLE, GLASS, grime=0.10, seed=1, protect="oxw"), "item/holy_water.png")
+save(render(SPLASH, GLASS, grime=0.10, seed=2, protect="oxw"), "item/splash_holy_water.png")
+
+# ------------------------------------------------------------------ krucyfiks
+CRUCIFIX = """
+.......oo.......
+......oWwo......
+......oWwo......
+......oWwo......
+..oooooWwooooo..
+.onWWWWTtWWWWno.
+.owwwwwtuwwwwwo.
+..oooooWwooooo..
+......oWwo......
+......oWwo......
+......oWwo......
+......onwo......
+......oWwo......
+......oWwo......
+......owwo......
+.......oo......."""
+save(render(CRUCIFIX, {"o": O, "W": hexc("6b4a30"), "w": hexc("47301f"), "n": hexc("8d8a86"),
+                       "T": hexc("e9f6f7"), "t": hexc("a9cfd5"), "u": hexc("6f9aa2")},
+            grime=0.18, seed=3, protect="oTtun"), "item/crucifix.png")
+
+# ------------------------------------------------------------------ diagonalne itemy (oś: lewy-dół -> prawy-góra)
+def diag(fn, size=16):
+    """fn(a, c) -> znak; a = wzdłuż osi (x - y), c = w poprzek (x + y - 15)."""
+    rows = []
+    for y in range(size):
+        rows.append("".join(fn(x - y, x + y - (size - 1)) or "." for x in range(size)))
+    # obrys
+    g = [list(r) for r in rows]
+    for y in range(size):
+        for x in range(size):
+            if g[y][x] != ".": continue
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                xx, yy = x + dx, y + dy
+                if 0 <= xx < size and 0 <= yy < size and rows[yy][xx] not in ".o":
+                    g[y][x] = "o"; break
+    return "\n".join("".join(r) for r in g)
+
+def flashlight_fn(a, c):
+    if -13 <= a <= -1 and abs(c) <= 2:                 # trzonek (3 px)
+        if a in (-5, -6) and c <= -1: return "P"      # przycisk
+        if a in (-11, -9) : return "r"                # rowki uchwytu
+        return "B" if c < 0 else ("b" if c == 0 else "d")
+    if 0 <= a <= 8 and abs(c) <= (3 if a < 4 else 4):  # głowica (rozszerzona)
+        if a >= 7: return "L" if c > -3 else "l"        # soczewka (rdzeń)
+        if a in (3, 4): return "h" if c < 2 else "d"    # pierścień
+        return "H" if c < 0 else ("h" if c <= 1 else "d")
+    return None
+
+FLASH = diag(flashlight_fn)
+FL_PAL = {"o": O, "B": hexc("6b6a6e"), "b": hexc("4c4b50"), "d": hexc("2e2d32"), "r": hexc("26252a"),
+          "P": hexc("7d1f1f"), "H": hexc("8a8580"), "h": hexc("5f5a56")}
+CORES = {  # nazwa: (soczewka jasna, soczewka ciemna)
+    "none":         ("cfd3c8", "8e9389"),
+    "lapis":        ("3d64d8", "22398a"),
+    "redstone":     ("e0261b", "8f140e"),
+    "emerald":      ("2ed46a", "137a3a"),
+    "diamond":      ("7fe8e0", "3aa8a1"),
+    "netherite":    ("6a5d63", "3b3237"),
+    "nether_star":  ("ffffff", "d8e4f0"),
+    "nightmare_gem": ("4a1a5c", "120818"),
+}
+for core, (hi, lo) in CORES.items():
+    pal = dict(FL_PAL, L=hexc(hi), l=hexc(lo))
+    save(render(FLASH, pal, grime=0.14, seed=4, protect="oLlP"), f"item/flashlight_{core}.png")
+# nakładka "włączona": poświata przed soczewką, osobna warstwa (layer1)
+def glow_layer(color):
+    rows = FLASH.split("\n")
+    lens = [(x, y) for y in range(16) for x in range(16) if rows[y][x] in "Ll"]
+    amax = max(x - y for x, y in lens)
+    img = Image.new("RGBA", (16, 16))
+    for y in range(16):
+        for x in range(16):
+            if rows[y][x] != "." or x - y < amax: continue
+            d = min(max(abs(x - lx), abs(y - ly)) for lx, ly in lens)
+            if d <= 3:
+                img.putpixel((x, y), hexc(color, (190, 120, 60)[d - 1] if d >= 1 else 190))
+    return img
+save(glow_layer("fff6c8"), "item/flashlight_beam.png")
+save(glow_layer("12001a"), "item/flashlight_beam_dark.png")
+
+# ------------------------------------------------------------------ Unholy Sword
+def sword_fn(a, c):
+    if -13 <= a <= -9 and abs(c) <= 0 + (1 if a == -13 else 0):   # rękojeść + głowica
+        return "G" if a == -13 else ("g" if a % 2 else "k")
+    if a == -13 and abs(c) <= 1: return "G"
+    if a in (-8, -7) and abs(c) <= 4:                               # jelec z rogami
+        if abs(c) >= 3: return "R"
+        return "Q" if c < 0 else "q"
+    if -6 <= a <= 12 and abs(c) <= (1 if a < 11 else 0):           # ostrze
+        if a >= 11: return "E"
+        if c == 0 and a % 3 == 0: return "V"                        # żyły
+        if c == 0: return "v"
+        return "E" if c < 0 else "e"
+    return None
+SWORD = diag(sword_fn)
+SW_BASE = {"o": O, "G": hexc("5a1d24"), "g": hexc("2b1a1c"), "k": hexc("3d2628"),
+           "Q": hexc("3c3440"), "q": hexc("231d27"), "R": hexc("cfc4b4"),
+           "E": hexc("766c80"), "e": hexc("2c2534")}
+frames = []
+for i in range(8):
+    t = (1 - math.cos(i / 8 * 2 * math.pi)) / 2          # 0..1..0
+    vein = tuple(int(lo + (hi - lo) * t) for lo, hi in zip((120, 10, 20), (255, 40, 60)))
+    vein2 = tuple(int(lo + (hi - lo) * t) for lo, hi in zip((70, 6, 14), (190, 20, 40)))
+    pal = dict(SW_BASE, V=vein + (255,), v=vein2 + (255,))
+    frames.append(render(SWORD, pal, grime=0.10, seed=5, protect="oVvR"))
+save(stack(frames), "item/unholy_sword.png",
+     {"animation": {"frametime": 3, "interpolate": True}})
+save(render(SWORD, dict(SW_BASE, V=hexc("4b3b3e"), v=hexc("33292c"), G=hexc("3a2a2c")),
+            grime=0.22, seed=6, protect="o"), "item/unholy_sword_discharged.png")
+
+# ------------------------------------------------------------------ termos
+THERMOS = """
+................
+......oooo......
+.....oKKkko.....
+.....okkkko.....
+....oooooooo....
+....oMmmmmdo....
+....oMmDmmdo....
+....oMmffmdo....
+....oMmFFmdo....
+....oMmFFmdo....
+....oMmFFmdo....
+....oMmFFmdo....
+....oMmmmmdo....
+....oSSSSsso....
+....oMmmrmdo....
+.....oooooo....."""
+TH_PAL = {"o": O, "K": hexc("7a2a22"), "k": hexc("4f1a15"), "M": hexc("a39e95"), "m": hexc("77726b"),
+          "d": hexc("4b4842"), "D": hexc("5b5751"), "S": hexc("3a2e24"), "s": hexc("261e18"), "r": hexc("7a4a26")}
+FILLS = {"empty": ("1d2022", "2c3134"), "water": ("3f76e4", "6f9cf0"), "holy_water": ("8fd3ee", "eefaff"),
+         "honey": ("e8a12a", "f8d36a"), "milk": ("e9e6dc", "ffffff")}
+for name, (body, top) in FILLS.items():
+    save(render(THERMOS, dict(TH_PAL, F=hexc(body), f=hexc(top)), grime=0.16, seed=7, protect="oFf"),
+         f"item/thermos_{name}.png")
+
+# ------------------------------------------------------------------ koszmarny klejnot
+GEM = """
+................
+................
+......oooo......
+.....oHhhpo.....
+....oHhppppo....
+...oHhpppppPo...
+...ohppvvvpPo...
+..ohppvRRvpPPo..
+..ohpvRrrRvpPo..
+..ophvRrrRvpPo..
+...oppvRRvpPo...
+...oPppvvpPPo...
+....oPpppPPo....
+.....oPPPPo.....
+......oooo......
+................"""
+save(render(GEM, {"o": hexc("0c0710"), "H": hexc("b07ccc"), "h": hexc("6f2a86"), "p": hexc("4b1a5c"),
+                  "P": hexc("2a0f33"), "v": hexc("0b0710"), "R": hexc("7a0a1c"), "r": hexc("e0213f")},
+            grime=0.12, seed=8, protect="oHrR"), "item/nightmare_gem.png")
+
+if __name__ == "__main__":
+    preview(OUT, PREV / "items_preview.png")
+    print("\n".join(r for r, _ in OUT))
