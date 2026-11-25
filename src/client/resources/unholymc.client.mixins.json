@@ -2,6 +2,6 @@
   "required": true,
   "package": "com.unholymc.mixin.client",
   "compatibilityLevel": "JAVA_25",
-  "client": [],
+  "client": ["MinecraftMixin"],
   "injectors": { "defaultRequire": 1 }
 }
