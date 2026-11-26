@@ -19,11 +19,11 @@ Prośba:
 
 ## 2. Jumpscare'y
 
-Użytkownik: „tragedia”. Szczegółów nie podał, dopytam go. Obecnie są dwa:
-- screamer: pełnoekranowy obraz slopa przez ~0,7 s, w trybie tytułu (obraz 248×248 w czcionce, rozmiar ograniczony atlasem czcionek),
+Użytkownik: „tragedia”. Powody: **tło jest dalej widać** (obraz nie przykrywa ekranu), **nie są dynamiczne** (statyczny obraz), brak dźwięku (osobny punkt 1). Obecnie są dwa:
+- screamer: pełnoekranowy obraz slopa przez ~0,7 s w trybie tytułu (obraz 248×248 w czcionce, rozmiar ograniczony atlasem czcionek),
 - Spooky Jumpscare: ciemność, czerwony napis „you slept too long”, twarz.
 
-Proszę o przegląd i propozycje poprawy: przeprojektowanie obrazu, krótka seria klatek zamiast jednej, dźwięk wchodzący przed obrazem, ewentualnie inne podejście, jeśli obecne ograniczenia (obraz w czcionce, bez ruchu kamery) są powodem słabego efektu.
+Prośba: przegląd i propozycje poprawy. Mile widziane: seria kilku klatek zamiast jednej (z różnymi wariantami lub przesunięciem obrazu), obraz przykrywający cały ekran (z przyciemnieniem), zmiany skali i drżenie, szum. Proszę o dostarczenie klatek w rozmiarze, który zmieści się w czcionce (obecnie 248×248 na znak), jeśli potrzebna jest większa rozdzielczość, dajcie znać.
 
 ## 3. Animacje
 
@@ -39,3 +39,19 @@ Użytkownik: slopy są za małe, trzeba je „troszkę powiększyć”. Rozmiary
 ## 5. Krwawy Księżyc
 
 Mamy teksturę `blood_moon.png`, ale na kliencie vanilla niebo i księżyc nie zmieniają wyglądu (czerwona winieta, tytuł i dźwięk są jedyną zmianą). Jeśli macie pomysł na wizualne wzmocnienie dostępne z resource packa (np. efekty post-process, zmiana tekstury księżyca w paczce), proszę o propozycję. Wykonalność sprawdzę po mojej stronie.
+
+## 6. Slopy i halucynacje jako moby 3D
+
+Nowa decyzja użytkownika: rezygnujemy ze „śmiesznych” slopów w formie obrazków PNG i budujemy na ich podstawie **prawdziwe moby 3D**. To samo dla halucynacji (czarne, półprzezroczyste wersje). Nadpisuje GDD 4 („slopy korzystają z grafik PNG zamiast modeli 3D”).
+- Które slopy są „śmieszne”, do potwierdzenia z użytkownikiem (w `ASSETS.md` oznaczone są `wig_guy` i `cigar_cat`). Straszne slopy (np. `shadow_watcher`, `hollow_screamer`, `locust`) prawdopodobnie zostają obrazkami, ale też do potwierdzenia.
+- Proszę o **modele 3D** (wielokąty w formacie, jaki da się podłączyć jako elementy modelu: prostokątne bryły jak model Slendermana) i tekstury, oraz wersje hallucination. Potrzebne zestawy części do animacji chodu.
+- Rozmiary i hitboxy z punktu 4 dotyczą też nowych modeli.
+
+## 7. Atmosfera i kolory
+
+- **Szarszy klimat w dzień:** kolory bardziej wyblakłe, niezbyt mocno. Jeśli macie pomysł, jak to osiągnąć z poziomu resource packa (np. wyblakłe tekstury trawy i liści, efekt post-process), proszę o propozycję.
+- **Shadery:** użytkownik chce użyć gotowej, niewymagającej paczki open source (licencja MIT lub podobna) i dodać kilka efektów. Jeśli znacie dobrych kandydatów, podajcie.
+
+## 8. Dźwięki przy niskim sanity (rozszerzenie punktu 1)
+
+Przy sanity **poniżej 15** (≤ 14) mają być słyszalne: fałszywe kroki, krzyk „zza ściany”, fałszywe creepery (syk). Proszę o pliki i krótki opis, kiedy mają grać (częstość, głośność, kierunek).
