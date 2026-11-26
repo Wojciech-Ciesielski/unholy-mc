@@ -126,23 +126,47 @@ Efekt **Wellbeing**: `textures/mob_effect/wellbeing.png` (18×18, koniczyna z is
 
 ---
 
-## 5. Jumpscare – koncept
+## 5. Jumpscare – klient vanilla (tytuł z glifów czcionki)
 
-Tekstury: `gui/jumpscare/spooky_face.png` (512×512), `gui/jumpscare/blood_vignette.png` (256×256, rozciągana), sprite `jumpscare/static` (128×128, animowany 8 klatek, kafelkowany).
+Od v0.1.1 jumpscare to **tytuł** (`ClientboundSetTitleTextPacket`) złożony z glifów czcionki `unholymc:jumpscare_frames` (`font/jumpscare_frames.json`, generator `assets_src/tools/make_jumpscare_frames.py`). Obrazy **nie pochodzą już z PNG slopów**: twarze są wycięte z surowych grafik i przerobione (czerń, krwista czerwień, trupia biel, ziarno, winieta wtapiająca się w czerń). Podgląd: `assets_src/preview/jumpscare_frames_preview.png`.
 
-### 5.1 Zwykły jumpscare (screamer), ok. 1 s
-1. **t = 0**: losowa tekstura slopa (pełny kolor) na środku ekranu, startowo 60% wysokości ekranu. Dźwięk `jumpscare.screamer`.
-2. **0–6 ticków**: szybki zoom do 140%, trzęsienie obrazu ±12 px co tick, aberracja chromatyczna (obraz rysowany 3× z tintami R/G/B i offsetem 3–6 px), nakładka `static` z alfą 0,5.
-3. **6–14 ticków**: `blood_vignette` na pełnym ekranie, obraz zanika (alfa → 0), static zanika.
-4. −10 Sanity (logika). Krucyfiks w ręce blokuje cały efekt.
+### 5.1 Glify
 
-### 5.2 Spooky Jumpscare (klątwa 10 przespanych nocy), ok. 6 s, kończy się śmiercią
-1. **Przebudzenie (0–1 s)**: gracz budzi się normalnie, ale wszystkie dźwięki gry cichną (master → 0, oprócz naszych).
-2. **Cisza (1–4 s)**: ekran powoli ciemnieje do 85% czerni. `jumpscare.spooky_buildup` (zwalniające serce + szept). Na środku miga 3× czerwony napis: EN „you slept too long” / PL „spałeś za długo” (klucz `jumpscare.unholymc.spooky_text`).
-3. **Uderzenie (4–5,5 s)**: `spooky_face` na pełnym ekranie (cover, bez marginesów), zoom 100% → 120%, bardzo mocne trzęsienie, static z alfą 0,8, co 2 ticki inwersja kolorów na 1 tick. Dźwięk `jumpscare.spooky`.
-4. **Śmierć (5,5 s)**: natychmiastowy czarny ekran i zabicie gracza. Komunikat śmierci `death.attack.unholymc.spooky_jumpscare`: EN „%1$s never woke up”, PL „%1$s już się nie obudził(a)”.
+Wszystkie klatki 248×248. W tytule vanilla skaluje tekst ×4, więc glif twarzy o `height` 96 ma ok. 384 px GUI, a tło o `height` 256 ma ok. 1024 px GUI i przykrywa cały ekran przy każdej skali GUI.
 
-Na serwerze dedykowanym kod wysyła pakiet start → klient odgrywa sekwencję, a śmierć zadaje serwer po 110 tickach (niezależnie od klienta).
+| Znak | Plik | height / ascent | Co to |
+|---|---|---|---|
+| `U+E300` | `backdrop.png` (8×8, czerń) | 256 / 128 | tło przykrywające ekran |
+| `U+E301` | `backdrop_red.png` (8×8, `#280002`) | 256 / 128 | tło na ostatnią klatkę / Spooky |
+| `U+E310`–`E315` | `screamer_1_0..5` – the_locust | 96 / 52 | klatki 0–5 |
+| `U+E318`–`E31D` | `screamer_2_0..5` – love_note | 96 / 52 | |
+| `U+E320`–`E325` | `screamer_3_0..5` – cień ze świecącymi oczami | 96 / 52 | |
+| `U+E328`–`E32D` | `screamer_4_0..5` – blada głowa (pobierz_4) | 96 / 52 | |
+| `U+E330`–`E337` | `spooky_0..7` – the_hollow_screamer, rozciągnięta paszcza | 96 / 52 | Spooky Jumpscare |
+| `U+E340`–`E343` | `static_0..3` (półprzezroczysty szum) | 96 / 52 | nakładka na twarz |
+| `U+E3F0` | space −257 | – | cofnięcie o szerokość tła |
+| `U+E3F1` | space −97 | – | cofnięcie o szerokość twarzy |
+| `U+E3F2` / `U+E3F3` | space +80 / +79 | – | wyśrodkowanie twarzy na tle |
+
+`ascent` to punkt wyjścia: wątek implementacji niech go dostroi, aż twarz będzie na środku ekranu (tytuł vanilla rysuje się trochę nad środkiem).
+
+**Złożenie jednej klatki** (warstwy nakładają się dzięki ujemnym spacjom, całość ma szerokość tła, więc tytuł jest wyśrodkowany):
+`E300 E3F0 E3F2 <twarz> E3F1 <static> E3F3`. Statykę można pominąć (wtedy `E3F2 <twarz> E3F3`, a po twarzy `+1` do wyrównania nie jest potrzebne).
+
+### 5.2 Zwykły jumpscare (screamer), ok. 12 ticków
+- `jumpscare.screamer<n>` (dźwięk) i twarz `n` (1–4) losowane razem, żeby wrzask pasował do twarzy.
+- Tytuł: `fadeIn 0, stay 2, fadeOut 0`, **nowy pakiet co 2 ticki** z kolejną klatką `screamer_n_0 … _5`, statyka `static_(tick % 4)` na klatkach 0, 2, 4 i 5.
+- Klatka 3 to błysk negatywu, a 5 to rozpad w szum. Po ostatniej klatce `ClientboundClearTitlesPacket`.
+- Drżenie: kamerę ruszyć się nie da, więc drżenie i najazd są **wypalone w klatkach**. Na serwerze można dodać krótkie `Nausea` (20 ticków) i `Darkness` 10 ticków po wszystkim.
+- −10 Sanity (logika bez zmian). Krucyfiks w ręce blokuje całość.
+
+### 5.3 Spooky Jumpscare, ok. 6 s, kończy się śmiercią
+1. **0–1 s:** cisza (`stopSound` wszystkiego), `Blindness` 3 s.
+2. **1–4 s:** dźwięk `jumpscare.spooky_buildup`, tytuł z tłem `E301` i czerwonym tekstem `jumpscare.unholymc.spooky_text` migającym 3×.
+3. **4–5,5 s:** dźwięk `jumpscare.spooky`, klatki `spooky_0 … _7` co 2 ticki (16 ticków), na wszystkich statyka, tło `E300`, na klatkach 3 i 5 tło `E301`.
+4. **5,5 s:** czarne tło `E300` (tytuł z samym tłem) i zabicie gracza przez serwer. Komunikat śmierci `death.attack.unholymc.spooky_jumpscare`.
+
+Stare `gui/jumpscare/*` (`spooky_face`, `blood_vignette`, sprite `static`) były dla klienta z modem i nie są potrzebne na kliencie vanilla. Zostają w repo na wypadek powrotu do wersji z klientem.
 
 ---
 

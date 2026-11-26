@@ -1,0 +1,355 @@
+{
+ "providers": [
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/backdrop.png",
+   "height": 256,
+   "ascent": 128,
+   "chars": [
+    "\ue300"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/backdrop_red.png",
+   "height": 256,
+   "ascent": 128,
+   "chars": [
+    "\ue301"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_1_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue310"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_1_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue311"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_1_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue312"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_1_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue313"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_1_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue314"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_1_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue315"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_2_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue318"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_2_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue319"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_2_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue31a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_2_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue31b"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_2_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue31c"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_2_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue31d"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_3_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue320"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_3_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue321"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_3_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue322"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_3_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue323"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_3_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue324"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_3_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue325"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_4_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue328"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_4_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue329"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_4_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue32a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_4_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue32b"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_4_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue32c"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_4_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue32d"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/spooky_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue330"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/spooky_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue331"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/spooky_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue332"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/spooky_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue333"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/spooky_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue334"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/spooky_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue335"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/spooky_6.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue336"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/spooky_7.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue337"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/static_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue340"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/static_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue341"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/static_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue342"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/static_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue343"
+   ]
+  },
+  {
+   "type": "space",
+   "advances": {
+    "\ue3f0": -257,
+    "\ue3f1": -97,
+    "\ue3f2": 80,
+    "\ue3f3": 79
+   }
+  }
+ ]
+}
