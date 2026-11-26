@@ -6,7 +6,15 @@ import com.unholymc.registry.ModSounds;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -25,6 +33,10 @@ import java.util.EnumSet;
 /** Neutral slop: the fastest one; sneaks up, screams at a player (a small jumpscare) and runs away. Never attacks. */
 public class NeutralSlop extends AbstractSlop {
     private int scareCooldown;
+    /** A watcher stares and attacks only after being looked at in the eyes (DECISIONS #38). */
+    private boolean watcher;
+    private int gazeTicks;
+    private int chaseUntil;
 
     public NeutralSlop(EntityType<? extends NeutralSlop> type, Level level) {
         super(type, level);
@@ -35,6 +47,7 @@ public class NeutralSlop extends AbstractSlop {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, cfg.neutralHealth)
                 .add(Attributes.MOVEMENT_SPEED, cfg.neutralSpeed)
+                .add(Attributes.ATTACK_DAMAGE, cfg.watcherDamage)
                 .add(Attributes.FOLLOW_RANGE, 24);
     }
 
@@ -53,8 +66,19 @@ public class NeutralSlop extends AbstractSlop {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new RepelGoal(this, 1.4, this::currentFleeSource));
         this.goalSelector.addGoal(2, new PanicGoal(this, 1.4));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, ConfigManager.get().slops.watcherSpeedMultiplier, true) {
+            @Override
+            public boolean canUse() {
+                return watcher && super.canUse();
+            }
+        });
         this.goalSelector.addGoal(3, new ScareGoal());
-        this.goalSelector.addGoal(5, new SlopWander(this, 0.7, com.unholymc.config.ConfigManager.get().slops.wanderIntervalTicks));
+        this.goalSelector.addGoal(5, new SlopWander(this, 0.7, com.unholymc.config.ConfigManager.get().slops.wanderIntervalTicks) {
+            @Override
+            public boolean canUse() {
+                return !watcher && super.canUse(); // watchers stand and stare
+            }
+        });
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 16f));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
@@ -63,6 +87,68 @@ public class NeutralSlop extends AbstractSlop {
     public void aiStep() {
         super.aiStep();
         if (scareCooldown > 0) scareCooldown--;
+        if (watcher && !level().isClientSide()) watcherTick();
+    }
+
+    public boolean isWatcher() {
+        return watcher;
+    }
+
+    @Override
+    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
+        watcher = level.getRandom().nextFloat() < ConfigManager.get().slops.neutralWatcherChance;
+        return super.finalizeSpawn(level, difficulty, reason, data);
+    }
+
+    @Override
+    protected void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putBoolean("Watcher", watcher);
+    }
+
+    @Override
+    protected void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+        watcher = input.getBooleanOr("Watcher", false);
+    }
+
+    /** True when {@code player} looks straight at this slop's face and could see it. */
+    private boolean isLookedAtBy(Player player) {
+        var cfg = ConfigManager.get().slops;
+        Vec3 eye = player.getEyePosition();
+        Vec3 toMe = getEyePosition().subtract(eye);
+        double dist = toMe.length();
+        if (dist > cfg.watcherRange || dist < 0.5) return false;
+        return player.getViewVector(1f).dot(toMe.scale(1.0 / dist)) >= cfg.watcherGazeCos && player.hasLineOfSight(this);
+    }
+
+    private void watcherTick() {
+        var cfg = ConfigManager.get().slops;
+        Player target = getTarget() instanceof Player t ? t : null;
+        if (target != null) {
+            if (!target.isAlive() || target.isCreative() || target.isSpectator() || tickCount > chaseUntil) {
+                setTarget(null);
+                gazeTicks = 0;
+            }
+            return;
+        }
+        if (tickCount % 5 != 0) return;
+        boolean looked = false;
+        for (Player p : level().players()) {
+            if (p.isCreative() || p.isSpectator() || !p.isAlive() || currentFleeSource() != null) continue;
+            if (isLookedAtBy(p)) {
+                looked = true;
+                gazeTicks += 5;
+                getLookControl().setLookAt(p);
+                if (gazeTicks >= cfg.watcherGazeTicks) {
+                    setTarget(p);
+                    chaseUntil = tickCount + cfg.watcherChaseTicks;
+                    playSound(ModSounds.ENTITY_SLOP_NEUTRAL_SCARE.value(), 2f, 1f);
+                    return;
+                }
+            }
+        }
+        if (!looked) gazeTicks = Math.max(0, gazeTicks - 5);
     }
 
     @Override
@@ -90,7 +176,7 @@ public class NeutralSlop extends AbstractSlop {
 
         @Override
         public boolean canUse() {
-            if (scareCooldown > 0 || currentFleeSource() != null) return false;
+            if (watcher || scareCooldown > 0 || currentFleeSource() != null) return false;
             var cfg = ConfigManager.get().slops;
             Player p = level().getNearestPlayer(NeutralSlop.this, cfg.neutralScareNoticeRange);
             if (p instanceof ServerPlayer sp && !sp.isCreative() && !sp.isSpectator()) {

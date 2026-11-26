@@ -230,6 +230,17 @@ public class UnholyConfig {
         public double unholyDespawnDistance = 80;
         /** Neutral slops: approach, scare (one-off sanity loss), then run away. */
         public double neutralScareTriggerRange = 3.5;
+        /**
+         * DECISIONS #38: some neutral slops are "watchers": they stand and stare, and attack only after a player looks
+         * them in the eyes (view direction within about 14 degrees, in line of sight) for a moment.
+         */
+        public float neutralWatcherChance = 0.3f;
+        public double watcherRange = 24;
+        public double watcherGazeCos = 0.97;
+        public int watcherGazeTicks = 10;
+        public float watcherDamage = 6f;
+        public double watcherSpeedMultiplier = 1.3;
+        public int watcherChaseTicks = 300;
         public double neutralScareNoticeRange = 16;
         public int neutralScareCooldownTicks = 900;
         public int neutralFleeTicks = 120;
