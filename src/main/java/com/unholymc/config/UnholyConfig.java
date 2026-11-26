@@ -238,6 +238,8 @@ public class UnholyConfig {
     }
 
     public static class Jumpscares {
+        /** How long the screamer image stays on screen (ticks; half of it fading out). */
+        public int screamerTicks = 14;
         public int rollIntervalTicks = 60;
         /** Chance per roll for sanity stages unsettled (14-10), disturbed (9-5), broken (<=4). */
         public float unsettledChance = 0.005f;
@@ -292,12 +294,14 @@ public class UnholyConfig {
     }
 
     public static class Ambience {
-        /** Looping slowed / reversed disc 11 (client-side; values sent to clients on join). */
+        /** Looping slowed / reversed disc 11, played to every player by the server. */
         public float musicVolume = 0.35f;
+        /** Length of the music track in ticks: it is started again after this long. */
+        public int musicLoopTicks = 2840;
+        /** Chance per second of an extra cave ambience sound while underground in the dark. */
+        public float caveSoundChancePerSecond = 0.02f;
         public float musicNightBoost = 1.10f;
         public float musicCaveBoost = 1.15f;
-        /** Vanilla cave "mood" sounds come this many times more often. */
-        public float moodSoundMultiplier = 3f;
     }
 
     public static class Slenderman {

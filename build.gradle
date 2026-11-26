@@ -7,20 +7,21 @@ group = project.maven_group
 
 base { archivesName = project.archives_base_name }
 
-loom {
-    splitEnvironmentSourceSets()
-    mods {
-        "unholymc" {
-            sourceSet sourceSets.main
-            sourceSet sourceSets.client
-        }
-    }
+
+repositories {
+    maven { url = 'https://maven.nucleoid.xyz' }
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    // Polymer: server-side content for vanilla clients (bundled into our jar, server needs only us + Fabric API)
+    for (String m : ['polymer-core', 'polymer-common', 'polymer-networking', 'polymer-reg-sync-manipulator', 'polymer-blocks', 'polymer-virtual-entity', 'polymer-resource-pack', 'polymer-autohost']) {
+        implementation "eu.pb4:${m}:${project.polymer_version}"
+        include "eu.pb4:${m}:${project.polymer_version}"
+    }
 }
 
 processResources {
@@ -38,4 +39,9 @@ java {
 
 jar {
     from("LICENSE") { rename { "${it}_${project.base.archivesName.get()}" } }
+}
+
+// test helper: prints the runtime classpath (used to start a plain vanilla client for multiplayer tests)
+tasks.register('printClasspath') {
+    doLast { println "CP=" + sourceSets.main.runtimeClasspath.asPath }
 }

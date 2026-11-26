@@ -79,7 +79,7 @@ public final class ModItems {
         THERMOS = register("thermos", ThermosItem::new, new Item.Properties().stacksTo(1)
                 .component(ModComponents.THERMOS, ModComponents.ThermosContents.EMPTY));
 
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, UnholyMC.id("main"), FabricCreativeModeTab.builder()
+        eu.pb4.polymer.core.api.item.PolymerCreativeModeTabUtils.registerPolymerCreativeModeTab(UnholyMC.id("main"), eu.pb4.polymer.core.api.item.PolymerCreativeModeTabUtils.builder()
                 .title(Component.translatable("itemGroup.unholymc"))
                 .icon(() -> new ItemStack(CRUCIFIX))
                 .displayItems((params, output) -> {

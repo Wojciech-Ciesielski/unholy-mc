@@ -4,13 +4,11 @@ import com.unholymc.attachment.ModAttachments;
 import com.unholymc.config.ConfigManager;
 import com.unholymc.entity.slop.SlopVariant;
 import com.unholymc.item.CrucifixItem;
-import com.unholymc.network.JumpscarePayload;
 import com.unholymc.registry.ModDamageTypes;
 import com.unholymc.registry.ModSounds;
 import com.unholymc.survival.SleepTracker;
 import com.unholymc.survival.StatsHelper;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.MinecraftServer;
@@ -59,7 +57,7 @@ public final class Jumpscares {
     public static boolean screamer(ServerPlayer player, boolean forced) {
         if (!forced && immune(player)) return false;
         int variant = player.getRandom().nextInt(SlopVariant.values().length);
-        ServerPlayNetworking.send(player, new JumpscarePayload(JumpscarePayload.SCREAMER, variant));
+        com.unholymc.polymer.ServerFx.screamer(player, SlopVariant.byId(variant));
         loseSanity(player);
         return true;
     }
@@ -72,7 +70,7 @@ public final class Jumpscares {
 
     /** The Spooky Jumpscare: ~5.5 s sequence on the client, the server kills the player afterwards. */
     public static void spooky(ServerPlayer player) {
-        ServerPlayNetworking.send(player, new JumpscarePayload(JumpscarePayload.SPOOKY, 0));
+        com.unholymc.polymer.ServerFx.spooky(player);
         SPOOKY_DEATHS.put(player.getUUID(), player.level().getGameTime() + ConfigManager.get().jumpscares.spookyDeathDelayTicks);
         SleepTracker.setStreak(player, 0);
     }

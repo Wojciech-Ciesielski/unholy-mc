@@ -33,7 +33,7 @@ public record WorldState(boolean bloodMoon, long rolledNight, long lastRainTime)
             WorldState::new);
 
     public static final AttachmentType<WorldState> TYPE = AttachmentRegistry.create(UnholyMC.id("world_state"),
-            b -> b.persistent(CODEC).initializer(() -> DEFAULT).syncWith(STREAM_CODEC, AttachmentSyncPredicate.all()));
+            b -> b.persistent(CODEC).initializer(() -> DEFAULT));
 
     public WorldState withBloodMoon(boolean v) {
         return new WorldState(v, rolledNight, lastRainTime);

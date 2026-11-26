@@ -1,10 +1,8 @@
 package com.unholymc.mixin;
 
 import com.unholymc.config.ConfigManager;
-import com.unholymc.network.CrucifixSavePayload;
 import com.unholymc.registry.ModItems;
 import com.unholymc.registry.ModSounds;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -39,7 +37,6 @@ public abstract class LivingEntityMixin {
         DeathProtection.TOTEM_OF_UNDYING.applyEffects(used, player);
         player.level().broadcastEntityEvent(player, (byte) 35);
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.ITEM_CRUCIFIX_SAVE, SoundSource.PLAYERS, 1f, 1f);
-        ServerPlayNetworking.send(player, new CrucifixSavePayload(used));
         cir.setReturnValue(true);
     }
 }

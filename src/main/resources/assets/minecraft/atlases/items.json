@@ -1,0 +1,14 @@
+{
+ "sources": [
+  {
+   "type": "minecraft:directory",
+   "source": "entity/slop",
+   "prefix": "entity/slop/"
+  },
+  {
+   "type": "minecraft:directory",
+   "source": "entity/slenderman",
+   "prefix": "entity/slenderman/"
+  }
+ ]
+}

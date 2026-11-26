@@ -5,8 +5,8 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
 /**
- * Client-visible snapshot of the survival stats. Synced (owner only) by the Fabric attachment API,
- * and only re-set on the server when one of the values actually changes.
+ * Snapshot of the survival stats shown in the HUD (ServerHud draws it for vanilla clients);
+ * only re-set on the server when one of the values actually changes.
  *
  * @param enabled         false in creative/spectator/peaceful: HUD hidden, no effects
  * @param sanity          0..20 (rounded up)

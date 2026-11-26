@@ -65,8 +65,7 @@ public final class HolyPonds {
     }
 
     public static final AttachmentType<List<Pond>> PONDS = AttachmentRegistry.create(UnholyMC.id("holy_ponds"),
-            b -> b.persistent(Pond.CODEC.listOf())
-                    .syncWith(Pond.STREAM_CODEC.apply(ByteBufCodecs.list()), AttachmentSyncPredicate.all()));
+            b -> b.persistent(Pond.CODEC.listOf()));
 
     private HolyPonds() {}
 

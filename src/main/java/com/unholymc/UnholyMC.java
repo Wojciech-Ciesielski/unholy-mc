@@ -3,7 +3,6 @@ package com.unholymc;
 import com.unholymc.attachment.ModAttachments;
 import com.unholymc.command.ThmCommand;
 import com.unholymc.config.ConfigManager;
-import com.unholymc.network.ModNetworking;
 import com.unholymc.registry.ModEffects;
 import com.unholymc.registry.ModComponents;
 import com.unholymc.registry.ModEntities;
@@ -49,8 +48,8 @@ public class UnholyMC implements ModInitializer {
         ModItems.init();
         ModEntities.init();
         ModAttachments.init();
-        ModNetworking.init();
         SurvivalSystem.init();
+        com.unholymc.survival.ConsumptionHandler.initSourceDrinking();
         DynamicLights.init();
         ItemHooks.init();
         ItemCommands.init();
@@ -67,6 +66,7 @@ public class UnholyMC implements ModInitializer {
         SlenderForests.init();
         DarkCorners.init();
         ThmCommand.init();
+        com.unholymc.polymer.PolymerSetup.init();
         LOGGER.info("The Unholy Minecraft is waking up...");
     }
 }

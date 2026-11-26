@@ -13,7 +13,7 @@ public final class ModAttachments {
 
     /** Compact HUD snapshot, synced to the owning client only. */
     public static final AttachmentType<HudState> HUD_STATE = AttachmentRegistry.create(UnholyMC.id("hud_state"),
-            b -> b.initializer(() -> HudState.DEFAULT).syncWith(HudState.STREAM_CODEC, AttachmentSyncPredicate.targetOnly()));
+            b -> b.initializer(() -> HudState.DEFAULT));
 
     private ModAttachments() {}
 

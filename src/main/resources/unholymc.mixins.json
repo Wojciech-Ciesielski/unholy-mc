@@ -16,6 +16,8 @@
     "PotionBrewingMixin",
     "PotionSlotMixin",
     "ServerChunkCacheMixin",
+    "ServerGamePacketListenerMixin",
+    "ServerPlayerMixin",
     "ZombieMixin"
   ],
   "injectors": {

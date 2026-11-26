@@ -65,26 +65,40 @@ public final class ConsumptionHandler {
         StatsHelper.addSanity(player, ConfigManager.get().consumption.cakeSliceSanity);
     }
 
-    /** DECISIONS #27: right-click a water source with an empty hand to drink (like a water bottle). */
-    public static void tryDrinkFromSource(ServerPlayer player) {
-        if (!StatsHelper.isActive(player) || !player.getMainHandItem().isEmpty()) return;
+    /**
+     * DECISIONS #27: drink from a water source with an empty hand (like a water bottle). A vanilla client sends
+     * nothing for a right click into open water, so both a right click on a block seen through the water and a
+     * left click (arm swing) at the water trigger it.
+     */
+    public static void initSourceDrinking() {
+        net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register((player, level, hand, hit) -> {
+            if (hand == net.minecraft.world.InteractionHand.MAIN_HAND && player instanceof ServerPlayer sp && tryDrinkFromSource(sp)) {
+                return net.minecraft.world.InteractionResult.SUCCESS_SERVER;
+            }
+            return net.minecraft.world.InteractionResult.PASS;
+        });
+    }
+
+    public static boolean tryDrinkFromSource(ServerPlayer player) {
+        if (!StatsHelper.isActive(player) || !player.getMainHandItem().isEmpty()) return false;
         var cfg = ConfigManager.get();
         PlayerStats s = ModAttachments.stats(player);
         long now = player.level().getGameTime();
-        if (now - s.lastSourceSip < cfg.consumption.sourceSipCooldownTicks) return;
-        if (s.hydration >= cfg.hydration.max) return;
+        if (now - s.lastSourceSip < cfg.consumption.sourceSipCooldownTicks) return false;
+        if (s.hydration >= cfg.hydration.max) return false;
 
         Vec3 from = player.getEyePosition();
         Vec3 to = from.add(player.getViewVector(1f).scale(cfg.consumption.sourceSipReach));
         BlockHitResult hit = player.level().clip(new ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.SOURCE_ONLY, player));
-        if (hit.getType() != HitResult.Type.BLOCK) return;
+        if (hit.getType() != HitResult.Type.BLOCK) return false;
         BlockPos pos = hit.getBlockPos();
         FluidState fluid = player.level().getFluidState(pos);
-        if (!fluid.is(FluidTags.WATER) || !fluid.isSource()) return;
+        if (!fluid.is(FluidTags.WATER) || !fluid.isSource()) return false;
 
         s.lastSourceSip = now;
         StatsHelper.addHydration(player, cfg.consumption.sourceSipHydration);
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 0.6f, 0.9f + player.getRandom().nextFloat() * 0.2f);
         player.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+        return true;
     }
 }

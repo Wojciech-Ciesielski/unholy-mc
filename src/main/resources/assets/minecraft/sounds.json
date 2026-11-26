@@ -1,0 +1,182 @@
+{
+ "music.creative": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.dragon": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.end": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.game": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.nether.basalt_deltas": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.nether.crimson_forest": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.nether.nether_wastes": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.nether.soul_sand_valley": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.nether.warped_forest": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.badlands": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.bamboo_jungle": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.cherry_grove": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.deep_dark": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.desert": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.dripstone_caves": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.flower_forest": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.forest": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.frozen_peaks": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.grove": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.jagged_peaks": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.jungle": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.lush_caves": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.meadow": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.old_growth_taiga": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.snowy_slopes": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.sparse_jungle": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.stony_peaks": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.sulfur_caves": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.overworld.swamp": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ },
+ "music.under_water": {
+  "replace": true,
+  "sounds": [
+   "minecraft:intentionally_empty"
+  ]
+ }
+}
