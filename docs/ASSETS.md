@@ -111,18 +111,46 @@ Definicje w `items/flashlight.json`, `items/thermos.json`, `items/unholy_sword.j
 
 ---
 
-## 4. HUD i efekty
+## 4. HUD i efekty (DECISIONS #34)
 
-Sprite'y GUI (atlas `gui`, id `unholymc:hud/...`), 9×9 px, rysowane jak serca/jedzenie vanilla:
+Czcionka `unholymc:hud_stats` (`font/hud_stats.json`, tekstury `textures/font/hud_stats/`, generator `assets_src/tools/make_hud.py`, podgląd `assets_src/preview/hud_stats_preview.png`). Wszystko to zwykłe glify, więc działa na kliencie vanilla bez shaderów. Stare sprite'y 10 ikon (`textures/gui/sprites/hud/*`) przestają być używane.
 
-| Pasek | Sprite'y | Rysowanie |
+### 4.1 Lewy górny róg: 4 statystyki
+
+Każda statystyka to wiersz: **panel** (półprzezroczyste tło) + **ikona 16×16** w stanie zależnym od wartości + **liczba punktów** z cyfr pixel-art.
+
+| Stan | Punkty | Kolor liczby |
 |---|---|---|
-| Sanity (mózgi) **nad sercami** | `hud/sanity/container`, `container_blinking`, `full`, `half`, `full_low`, `half_low` | 10 ikon od lewej, 1 mózg = 2 pkt. `half` = wypełniona lewa połowa. Przy Sanity ≤ 4 użyj wariantów `_low` (zgniłe, szarozielone) i trzęś ikonami jak serca przy niskim HP. `container_blinking` przez 10 ticków po stracie Sanity. |
-| Nawodnienie (krople) **nad głodem** | `hud/hydration/container`, `full`, `half`, `full_dehydrated`, `half_dehydrated` | 10 ikon od prawej (jak głód), 1 kropla = 2 pkt. `half` = wypełniona prawa połowa. Warianty `_dehydrated` (mętna woda) przy nawodnieniu ≤ 4. |
+| `full` | 15–20 (i więcej, np. zdrowie z efektami) | `#FFFFFF` |
+| `medium` | 10–14 | `#FFE070` |
+| `low` | 5–9 | `#FF9A30` |
+| `critical` | 0–4 | `#FF4040`; ikona na zmianę `critical` / `critical_blink` co 10 ticków (Sanity: `critical_jitter` losowo co 3–6 ticków, „drży”) |
 
-Kolizja z vanilla: pasek pancerza i bąbelki powietrza też siedzą nad sercami/głodem. Propozycja: rząd Sanity zajmuje miejsce pancerza, a pancerz przesuwa się o 10 px wyżej. Tak samo bąbelki powietrza idą nad rząd nawodnienia.
+| Znak | Glify |
+|---|---|
+| `U+E400–E408` | zdrowie: `full, medium, low, critical, critical_blink, poison, wither, frozen, absorption` |
+| `U+E410–E415` | głód (udko, coraz bardziej obgryzione): `full, medium, low, critical, critical_blink, effect` (efekt Hunger) |
+| `U+E420–E424` | nawodnienie (kropla opróżnia się): `full, medium, low, critical, critical_blink` |
+| `U+E430–E435` | Sanity (mózg, coraz bardziej zgniły; w krytycznym oko i czarne krople): `full, medium, low, critical, critical_jitter, wellbeing` |
+| `U+E480–E48B` | cyfry `0–9`, `+`, `/` (białe z obrysem, 7×9; kolor z koloru tekstu) |
+| `U+E490` | panel wiersza 44×20 |
+| `U+E4F0–E4F8` | spacje: −1, −2, −4, −8, −16, −21, −45, +2, +4 |
 
-Efekt **Wellbeing**: `textures/mob_effect/wellbeing.png` (18×18, koniczyna z iskrą). Kolor efektu (cząsteczki): `0x8EE07A`.
+**Pierwszeństwo wariantów:** zdrowie `wither` > `poison` > `frozen` (zamrożenie w śniegu proszkowym) > stan wg punktów. Przy absorpcji za liczbą `+N` w kolorze `#F0C020`, a ikona `absorption`, gdy absorpcja ≥ zdrowie. Głód: `effect`, gdy działa efekt Hunger. Sanity: `wellbeing`, gdy działa efekt Wellbeing.
+
+**Złożenie wiersza:** `E490` (panel) `E4F6` (−45, powrót na początek panelu) `E4F7` (+2) `<ikona>` `E4F7` `<cyfry>`. Wiersze jeden pod drugim co 22 px (osobne linie albo osobne paski bossbara, jak wygodniej). Ikony mają `height 16, ascent 12`, więc przy innym nośniku trzeba dostroić `ascent`.
+
+### 4.2 Prawy górny róg: pancerz
+
+4 sloty jeden pod drugim (hełm, napierśnik, spodnie, buty), co 24 px:
+- ramka `U+E4A0` (`armor_slot.png`, 20×20),
+- w środku przedmiot jako komponent tekstu **sprite** (26.x: `{"type":"object","atlas":"minecraft:items","sprite":"item/<id>"}`, dla zbroi skórzanej z tintem nie ma, więc wystarczy podstawowy sprite). Pusty slot pokazuje sprite vanilla z atlasu `minecraft:gui`: `container/slot/helmet`, `chestplate`, `leggings`, `boots`,
+- pod ramką pasek wytrzymałości `U+E4B0–E4B8` (`durability_0` = prawie zniszczony, czerwony … `durability_8` = cały, zielony). `ascent −3`, więc rysuje się pod linią bazową.
+
+### 4.3 Nad paskiem przedmiotów
+Zdrowie wierzchowca i powietrze pod wodą zostają z vanilla, bez nowych grafik.
+
+Efekt **Wellbeing**: `textures/mob_effect/wellbeing.png` (18×18). Kolor efektu: `0x8EE07A`.
 
 ---
 

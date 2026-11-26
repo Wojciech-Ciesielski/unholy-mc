@@ -1,0 +1,360 @@
+{
+ "providers": [
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_full.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue400"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_medium.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue401"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_low.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue402"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_critical.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue403"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_critical_blink.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue404"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue405"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue406"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue407"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_absorption.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue408"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_full.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue410"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_medium.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue411"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_low.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue412"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_critical.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue413"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_critical_blink.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue414"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue415"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_full.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue420"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_medium.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue421"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_low.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue422"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_critical.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue423"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_critical_blink.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue424"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_full.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue430"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_medium.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue431"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_low.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue432"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_critical.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue433"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_critical_jitter.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue434"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue435"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/digits.png",
+   "height": 9,
+   "ascent": 9,
+   "chars": [
+    "\ue480\ue481\ue482\ue483\ue484\ue485\ue486\ue487\ue488\ue489\ue48a\ue48b"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/panel.png",
+   "height": 20,
+   "ascent": 14,
+   "chars": [
+    "\ue490"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/armor_slot.png",
+   "height": 20,
+   "ascent": 14,
+   "chars": [
+    "\ue4a0"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/durability_0.png",
+   "height": 3,
+   "ascent": -3,
+   "chars": [
+    "\ue4b0"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/durability_1.png",
+   "height": 3,
+   "ascent": -3,
+   "chars": [
+    "\ue4b1"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/durability_2.png",
+   "height": 3,
+   "ascent": -3,
+   "chars": [
+    "\ue4b2"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/durability_3.png",
+   "height": 3,
+   "ascent": -3,
+   "chars": [
+    "\ue4b3"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/durability_4.png",
+   "height": 3,
+   "ascent": -3,
+   "chars": [
+    "\ue4b4"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/durability_5.png",
+   "height": 3,
+   "ascent": -3,
+   "chars": [
+    "\ue4b5"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/durability_6.png",
+   "height": 3,
+   "ascent": -3,
+   "chars": [
+    "\ue4b6"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/durability_7.png",
+   "height": 3,
+   "ascent": -3,
+   "chars": [
+    "\ue4b7"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/durability_8.png",
+   "height": 3,
+   "ascent": -3,
+   "chars": [
+    "\ue4b8"
+   ]
+  },
+  {
+   "type": "space",
+   "advances": {
+    "\ue4f0": -1,
+    "\ue4f1": -2,
+    "\ue4f2": -4,
+    "\ue4f3": -8,
+    "\ue4f4": -16,
+    "\ue4f5": -21,
+    "\ue4f6": -45,
+    "\ue4f7": 2,
+    "\ue4f8": 4
+   }
+  }
+ ]
+}
