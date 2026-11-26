@@ -263,6 +263,41 @@ for prefix in ("health", "hunger", "hydration", "sanity"):
 for old in ["panel", "armor_slot"] + [f"durability_{i}" for i in range(9)]:
     (TEX / f"{old}.png").unlink(missing_ok=True)
 
+# ------------------------------------------------------------------ poziomy wypełnienia (ikony bez liczb, decyzja autora)
+def state_for(v):
+    return "full" if v >= 15 else "medium" if v >= 10 else "low" if v >= 5 else "critical"
+
+
+def drain(im, level):
+    """Opróżnia ikonę od góry: level 0–10 (co 2 pkt). Obrys zostaje, pusta część jest ciemna i półprzezroczysta."""
+    im = im.copy(); px = im.load()
+    box = im.getbbox()
+    if not box: return im
+    x0, y0, x1, y1 = box
+    inner_top, inner_bot = y0 + 1, y1 - 1
+    cut = inner_top + round((inner_bot - inner_top) * (1 - level / 10))
+    for y in range(y0, cut):
+        for x in range(x0, x1):
+            r, g, b, a = px[x, y]
+            if a == 0: continue
+            edge = any(not (0 <= x + dx < 16 and 0 <= y + dy < 16) or px[x + dx, y + dy][3] == 0
+                       for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+            if edge: continue
+            l = (r + g + b) / 3
+            px[x, y] = (int(18 + l * 0.12), int(16 + l * 0.1), int(18 + l * 0.12), 210)
+    return im
+
+
+LEVEL_SETS = {  # nazwa zestawu: (prefiks pliku stanu albo stały plik, baza znaków)
+    "health": ("health_{s}", 0xE500), "hunger": ("hunger_{s}", 0xE510), "hydration": ("hydration_{s}", 0xE520),
+    "sanity": ("sanity_{s}", 0xE530), "health_poison": ("health_poison", 0xE540), "health_wither": ("health_wither", 0xE550),
+    "health_frozen": ("health_frozen", 0xE560), "hunger_effect": ("hunger_effect", 0xE570), "sanity_wellbeing": ("sanity_wellbeing", 0xE580),
+}
+for set_name, (pat, base) in LEVEL_SETS.items():
+    for n in range(11):
+        src = pat.format(s=state_for(2 * n))
+        drain(Image.open(TEX / f"{src}.png").convert("RGBA"), n).save(TEX / f"{set_name}_lv{n}.png")
+
 # ------------------------------------------------------------------ font
 prov = []
 def bm(file, c, h=16, asc=12):
@@ -274,6 +309,8 @@ names = {
     0xE420: ["hydration_full", "hydration_medium", "hydration_low", "hydration_critical", "hydration_critical_blink"],
     0xE430: ["sanity_full", "sanity_medium", "sanity_low", "sanity_critical", "sanity_critical_jitter", "sanity_wellbeing"],
 }
+for set_name, (pat, base) in LEVEL_SETS.items():
+    for n in range(11): bm(f"{set_name}_lv{n}", base + n)
 for base, lst in names.items():
     for i, n in enumerate(lst): bm(n, base + i)
 prov.append({"type": "bitmap", "file": "unholymc:font/hud_stats/digits.png", "height": 9, "ascent": 9,
@@ -284,11 +321,10 @@ prov.append({"type": "space", "advances": {chr(0xE4F0): -1, chr(0xE4F1): -2, chr
 (A / "font").mkdir(exist_ok=True)
 (A / "font/hud_stats.json").write_text(json.dumps({"providers": prov}, indent=1) + "\n")
 
-# podgląd na tle trawy/nieba
-pv = Image.new("RGBA", (16 * 9 * 6, 16 * 4 * 6 + 60), (92, 128, 70, 255))
-order = [names[0xE400], names[0xE410], names[0xE420], names[0xE430]]
-for r, lst in enumerate(order):
-    for c, n in enumerate(lst):
-        pv.alpha_composite(Image.open(TEX / f"{n}.png").resize((96, 96), Image.NEAREST), (c * 96, r * 96))
-pv.alpha_composite(strip.resize((strip.width * 5, 45), Image.NEAREST), (0, 16 * 4 * 6 + 8))
+# podgląd na tle trawy/nieba: 4 statystyki × 11 poziomów (20 pkt po lewej)
+rows_ = ["health", "hunger", "hydration", "sanity"]
+pv = Image.new("RGBA", (11 * 80, 4 * 80), (92, 128, 70, 255))
+for r, st in enumerate(rows_):
+    for c, n in enumerate(range(10, -1, -1)):
+        pv.alpha_composite(Image.open(TEX / f"{st}_lv{n}.png").resize((64, 64), Image.NEAREST), (c * 80 + 8, r * 80 + 8))
 pv.save(PREV / "hud_stats_preview.png")

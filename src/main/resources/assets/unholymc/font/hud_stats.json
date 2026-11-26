@@ -2,6 +2,897 @@
  "providers": [
   {
    "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv0.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue500"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv1.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue501"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv2.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue502"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv3.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue503"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv4.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue504"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv5.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue505"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv6.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue506"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv7.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue507"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv8.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue508"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv9.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue509"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_lv10.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue50a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv0.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue510"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv1.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue511"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv2.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue512"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv3.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue513"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv4.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue514"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv5.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue515"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv6.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue516"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv7.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue517"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv8.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue518"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv9.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue519"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_lv10.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue51a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv0.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue520"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv1.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue521"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv2.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue522"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv3.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue523"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv4.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue524"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv5.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue525"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv6.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue526"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv7.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue527"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv8.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue528"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv9.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue529"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hydration_lv10.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue52a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv0.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue530"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv1.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue531"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv2.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue532"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv3.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue533"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv4.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue534"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv5.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue535"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv6.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue536"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv7.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue537"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv8.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue538"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv9.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue539"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_lv10.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue53a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv0.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue540"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv1.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue541"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv2.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue542"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv3.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue543"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv4.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue544"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv5.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue545"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv6.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue546"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv7.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue547"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv8.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue548"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv9.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue549"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_poison_lv10.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue54a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv0.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue550"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv1.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue551"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv2.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue552"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv3.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue553"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv4.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue554"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv5.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue555"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv6.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue556"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv7.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue557"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv8.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue558"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv9.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue559"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_wither_lv10.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue55a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv0.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue560"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv1.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue561"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv2.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue562"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv3.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue563"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv4.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue564"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv5.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue565"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv6.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue566"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv7.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue567"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv8.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue568"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv9.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue569"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/health_frozen_lv10.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue56a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv0.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue570"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv1.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue571"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv2.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue572"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv3.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue573"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv4.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue574"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv5.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue575"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv6.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue576"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv7.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue577"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv8.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue578"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv9.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue579"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/hunger_effect_lv10.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue57a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv0.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue580"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv1.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue581"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv2.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue582"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv3.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue583"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv4.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue584"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv5.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue585"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv6.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue586"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv7.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue587"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv8.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue588"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv9.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue589"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/sanity_wellbeing_lv10.png",
+   "height": 16,
+   "ascent": 12,
+   "chars": [
+    "\ue58a"
+   ]
+  },
+  {
+   "type": "bitmap",
    "file": "unholymc:font/hud_stats/health_full.png",
    "height": 16,
    "ascent": 12,

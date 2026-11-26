@@ -123,13 +123,25 @@ Definicje w `items/flashlight.json`, `items/thermos.json`, `items/unholy_sword.j
 
 Czcionka `unholymc:hud_stats` (`font/hud_stats.json`, tekstury `textures/font/hud_stats/`, generator `assets_src/tools/make_hud.py`, podgląd `assets_src/preview/hud_stats_preview.png`). Stare sprite'y 10 ikon (`textures/gui/sprites/hud/*`) przestają być używane.
 
-### 4.1 Wiersz sidebara
+### 4.1 Wiersz sidebara: na co dzień same ikony, liczby po kliknięciu kółka myszy
 
-Układ (decyzja autora): **po lewej liczba, po prawej ikona.**
-- **Lewa kolumna (tekst wiersza, czyli nazwa „gracza” w drużynie albo `display name` wpisu):** liczba punktów cyframi czcionki `unholymc:hud_stats` (podpięte są zwykłe `0–9`), w kolorze stanu.
-- **Prawa kolumna (wynik):** ikona 16×16 jako **stały format liczby** wpisu (`NumberFormat` typu `fixed` z komponentem tekstu z glifem ikony, np. `U+E401`). Gra wyrównuje tę kolumnę do prawej krawędzi, więc ikony stoją w jednej pionowej linii przy krawędzi ekranu.
+Decyzja autora: **domyślnie widać tylko ikony** i stan odczytuje się z ich wyglądu. **Po kliknięciu kółka myszy** (środkowy przycisk) na ok. 3 s pojawiają się liczby po lewej stronie ikon.
 
-Każda statystyka jest wyśrodkowana na wspólnej ramce 16×16, więc ikony wszystkich stanów stoją równo i nie przesuwają się przy miganiu. Liczby są wyrównane do lewej. Jeśli mają się kończyć w jednej linii tuż przed ikonami, dopełnij je z przodu spacjami czcionki: 1 cyfra = `U+E4F7` ×3 i `U+E4F0` (+7 px), tak żeby każda liczba miała szerokość 2 cyfr.
+- **Prawa kolumna (wynik), zawsze:** ikona poziomu jako stały format liczby wpisu (`NumberFormat` typu `fixed`). Ikony **opróżniają się od góry w 11 poziomach** (`lv0`–`lv10`, poziom = punkty / 2, zaokrąglone w dół), a do tego zmieniają wygląd ze stanem: pęknięcia serca, obgryzione udko, sucha kropla, zgniły mózg. Podgląd: `assets_src/preview/hud_stats_preview.png`.
+- **Lewa kolumna (tekst wiersza):** domyślnie pusta (spacja). Po kliknięciu kółka przez 60 ticków pokazuje liczbę punktów cyframi czcionki `unholymc:hud_stats` w kolorze stanu.
+- **Wykrywanie kliknięcia kółka (do sprawdzenia przez implementację):** klient vanilla wysyła „pick block” (`ServerboundPickItemFromBlockPacket` / `…FromEntityPacket`) tylko wtedy, gdy celownik wskazuje blok albo moba w zasięgu. Patrząc w niebo, nic nie wysyła. Jeśli to za mało, zapasowy wyzwalacz to klawisz zamiany ręki (F): `ServerboundPlayerActionPacket` `SWAP_ITEM_WITH_OFFHAND` przychodzi zawsze, ale wtedy trzeba anulować zamianę i F traci swoją funkcję.
+
+| Znaki poziomów (`lv0`…`lv10` = +0…+10) | Zestaw |
+|---|---|
+| `U+E500` | zdrowie (stan wg punktów) |
+| `U+E510` | głód |
+| `U+E520` | nawodnienie |
+| `U+E530` | Sanity |
+| `U+E540` / `U+E550` / `U+E560` | zdrowie: trucizna / wither / zamrożenie |
+| `U+E570` | głód z efektem Hunger |
+| `U+E580` | Sanity z efektem Wellbeing |
+
+Każda statystyka jest wyśrodkowana na wspólnej ramce 16×16, więc ikony stoją w jednej linii przy prawej krawędzi i nie skaczą. Przy stanie krytycznym (0–4 pkt) co 10 ticków można zamienić ikonę poziomu na `critical_blink` / `critical_jitter` (`U+E404`, `E414`, `E424`, `E434`), żeby migała.
 
 | Stan | Punkty | Kolor liczby |
 |---|---|---|
