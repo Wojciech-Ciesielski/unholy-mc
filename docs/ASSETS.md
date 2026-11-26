@@ -366,7 +366,20 @@ Klasyczne dźwięki straszenia z vanilla (wyższa szansa) to nadal `minecraft:am
 
 ---
 
-## 8. Do zrobienia / otwarte
+## 8. Shadery (DECISIONS #43) – kandydaci
+
+Szukałem lekkiej, wolnej paczki rdzeniowych shaderów (zwykła paczka zasobów, bez Iris/OptiFine) zgodnej z 26.2:
+
+| Kandydat | Licencja | Stan | Ocena |
+|---|---|---|---|
+| [carlodrift/minecraft-vanilla-shaders](https://github.com/carlodrift/minecraft-vanilla-shaders) | narzędzia MIT, dokumentacja CC BY 4.0, **przykładowe shadery CC0** | aktualny, pod **26.3**; zawiera checker `tools/mcshaders check <paczka>`, który kompiluje shadery jak gra (tylko macOS, wymaga zainstalowanego 26.3 i Javy 25) | **najlepsza baza**: przykłady CC0 można dowolnie przerobić; przewodnik opisuje zasady shaderów 26.x |
+| [Godlander/vpp](https://github.com/Godlander/vpp) | CC BY 4.0 | zarchiwizowany (grudzień 2024), starsza wersja gry | ładne efekty (falujące liście, emisja), ale wymaga przeportowania na 26.x |
+| [bradleyq/mc_vanilla_shaders](https://github.com/bradleyq/mc_vanilla_shaders) | MIT | bardzo stary | tylko jako inspiracja |
+| [JNNGL/vanilla-shaders](https://github.com/JNNGL/vanilla-shaders) | MIT | 1.21.x, część wymaga trybu Fabulous | pojedyncze efekty do wzięcia |
+
+**Rekomendacja:** nie dokładać całej cudzej paczki, tylko zbudować własną, małą na bazie przykładów CC0 z carlodrift: lekka globalna desaturacja w dzień, winieta, ewentualnie falujące liście. Jeśli autor ma macOS, checkerem `tools/mcshaders check` warto sprawdzić też naszą nakładkę `resourcepacks/blood_moon` (na 26.3, różnice względem 26.2 są małe).
+
+## 9. Do zrobienia / otwarte
 - [ ] Pliki `.ogg` (produkcja u autora) według tabeli z sekcji 6.
 - [ ] Ewentualne tekstury anomalii świata (np. „krzyże”), jeśli będą to nowe bloki, a nie tylko vanilla.
 - [ ] Partikle (czarne cząsteczki ciemnego zakątka): na razie proponuję vanilla `minecraft:squid_ink` / `smoke`; własna tekstura tylko gdyby to nie wystarczało.

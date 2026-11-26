@@ -75,3 +75,16 @@ Po zmianach z tego pliku następujące sekcje `ASSETS.md` są nieaktualne i pros
 - **§5 Jumpscare** → obrazy nie mogą już pochodzić z PNG slopów (punkt 2).
 - **§5a Krwawy Księżyc** → ograniczenia klienta vanilla (punkt 5).
 - **§6 Dźwięki** → nowe dźwięki (punkty 1 i 8).
+
+---
+
+## Status po stronie designu (2026-11-26)
+
+| Punkt | Stan | Gdzie |
+|---|---|---|
+| 1, 8 Dźwięki | **gotowe** (wersje robocze, synteza): 68 zdarzeń / 130 plików, w tym nowe otoczenie, kroki, przedmioty, niskie Sanity; fałszywy creeper = vanilla `entity.creeper.primed` | `sounds.json`, `ASSETS.md` §6 (tabela wyzwalaczy §6.1), `assets_src/tools/make_audio.py` |
+| 2 Jumpscare'y | **gotowe**: 4 twarze × 6 klatek, Spooky 8 klatek, nakładka szumu, tło na cały ekran, nowa czcionka `unholymc:jumpscare_frames` | `ASSETS.md` §5 |
+| 5 Krwawy Księżyc | **gotowe do sprawdzenia**: paczka-nakładka (push/pop w trakcie gry), shadery niezweryfikowane na GPU | `resourcepacks/blood_moon/`, `ASSETS.md` §5a |
+| 7 Atmosfera | szarszy dzień = wyblakłe kolormapy w głównej paczce; shadery: kandydaci w `ASSETS.md` §8 | `assets/minecraft/textures/colormap/` |
+| 9 HUD | **gotowe**: czcionka `unholymc:hud_stats` (ikony w stanach, cyfry, panel, slot pancerza, paski wytrzymałości) | `ASSETS.md` §4 |
+| 3, 4, 6 Animacje, rozmiary, moby 3D | **w toku**: czekam na decyzje autora co do wyglądu modeli | – |
