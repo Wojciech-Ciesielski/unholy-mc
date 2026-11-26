@@ -40,12 +40,13 @@ Użytkownik: slopy są za małe, trzeba je „troszkę powiększyć”. Rozmiary
 
 Mamy teksturę `blood_moon.png`, ale na kliencie vanilla niebo i księżyc nie zmieniają wyglądu (czerwona winieta, tytuł i dźwięk są jedyną zmianą). Jeśli macie pomysł na wizualne wzmocnienie dostępne z resource packa (np. efekty post-process, zmiana tekstury księżyca w paczce), proszę o propozycję. Wykonalność sprawdzę po mojej stronie.
 
-## 6. Slopy i halucynacje jako moby 3D
+## 6. Wszystkie slopy i halucynacje jako moby 3D
 
-Nowa decyzja użytkownika: rezygnujemy ze „śmiesznych” slopów w formie obrazków PNG i budujemy na ich podstawie **prawdziwe moby 3D**. To samo dla halucynacji (czarne, półprzezroczyste wersje). Nadpisuje GDD 4 („slopy korzystają z grafik PNG zamiast modeli 3D”).
-- Które slopy są „śmieszne”, do potwierdzenia z użytkownikiem (w `ASSETS.md` oznaczone są `wig_guy` i `cigar_cat`). Straszne slopy (np. `shadow_watcher`, `hollow_screamer`, `locust`) prawdopodobnie zostają obrazkami, ale też do potwierdzenia.
-- Proszę o **modele 3D** (wielokąty w formacie, jaki da się podłączyć jako elementy modelu: prostokątne bryły jak model Slendermana) i tekstury, oraz wersje hallucination. Potrzebne zestawy części do animacji chodu.
+Zmieniona decyzja użytkownika: **usuwamy wszystkie slopy w formie obrazków PNG** (nie tylko „śmieszne”) i budujemy na ich podstawie „**fotorealistyczne moby MC**”, czyli prawdziwe moby 3D. To samo dla halucynacji (czarne, półprzezroczyste wersje). Nadpisuje GDD 4 („slopy korzystają z grafik PNG zamiast modeli 3D”).
+- Proszę o **modele 3D** (prostokątne bryły składane jak model Slendermana, bo tak da się je pokazać na kliencie vanilla), tekstury, wersje hallucination i zestawy części do animacji chodu dla **wszystkich siedmiu** slopów.
+- Styl: „fotorealistyczny” w świecie Minecrafta. Proszę o interpretację (więcej detalu na teksturach, realistyczne proporcje).
 - Rozmiary i hitboxy z punktu 4 dotyczą też nowych modeli.
+- **Jumpscare'y używają dziś obrazów slopów.** Po usunięciu PNG potrzebne są osobne obrazy do jumpscare'ów (patrz punkt 2).
 
 ## 7. Atmosfera i kolory
 
@@ -55,3 +56,12 @@ Nowa decyzja użytkownika: rezygnujemy ze „śmiesznych” slopów w formie obr
 ## 8. Dźwięki przy niskim sanity (rozszerzenie punktu 1)
 
 Przy sanity **poniżej 15** (≤ 14) mają być słyszalne: fałszywe kroki, krzyk „zza ściany”, fałszywe creepery (syk). Proszę o pliki i krótki opis, kiedy mają grać (częstość, głośność, kierunek).
+
+## 9. Nowy HUD (ikony dynamiczne)
+
+Nowa decyzja użytkownika dla układu HUD:
+- **Lewy górny róg:** 4 statystki (zdrowie, głód, nawodnienie, sanity). Każda to **jedna ikona, która dynamicznie zmienia wygląd** i pokazuje **liczbę punktów** (nie liczbę ikon, jak dziś 10 sztuk).
+- **Prawy górny róg:** „equiped set” (założone wyposażenie).
+- **Nad paskiem przedmiotów:** pozostałe statystyki, np. zdrowie zwierzaka.
+
+Proszę o projekt: wygląd ikon dla każdej z czterech statystyk w kilku stanach (np. pełny, średni, niski, krytyczny), sposób pokazania liczby punktów i układ „equiped set”. Dostępne tylko to, co da się zrobić zwykłą paczką zasobów i znakami czcionki (przezroczyste PNG), bez własnych shaderów. Wykonalność w rogach sprawdzę po mojej stronie, więc projekt powinien przetrwać różne skale GUI.
