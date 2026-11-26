@@ -34,6 +34,11 @@ SLOPS = {
     "shrek":            ("shrek.jpg", "checker", 0, "tlrb", 1, True),           # neutralny, dla jaj
     "masked_reacher":   ("masked_reacher.jpg", "const", 40, "tlrb", 1, True),   # neutralny: atak po spojrzeniu w oczy (#38)
     "wraith":           ("wraith.png", "alpha", 0, "", 0, False),               # unholy
+    # nowe (2026-11-26, druga partia)
+    "horned_stalker":   ("horned_stalker.png", "checker_all", 0, "tlrb", 1, True),  # unholy
+    "pale_crawler":     ("pale_crawler.png", "const", 30, "tlrb", 1, True),     # agresywny
+    "stool_sitter":     ("stool_sitter.png", "const", 11, "tlrb", 0, True),     # neutralny
+    "needle_man":       ("needle_man.png", "const", 45, "tlrb", 1, True),       # agresywny
 }
 
 
@@ -96,8 +101,12 @@ def process(name, src, mode, thr, edges, erode, main_only):
     rgb = np.asarray(img).astype(int)
     if mode == "alpha":   # obrazek ma już prawdziwą przezroczystość
         alpha = src_img.convert("RGBA").getchannel("A")
-    elif mode == "checker":
-        fg = main_component(~checker_mask(rgb, edges)) if main_only else ~checker_mask(rgb, edges)
+    elif mode in ("checker", "checker_all"):
+        bg = checker_mask(rgb, edges)
+        if mode == "checker_all":   # także zamknięte „oczka” szachownicy między kończynami
+            mx, mn = rgb.max(-1), rgb.min(-1)
+            bg |= (mn > 200) & ((mx - mn) < 10)
+        fg = main_component(~bg) if main_only else ~bg
         alpha = Image.fromarray(np.where(fg, 255, 0).astype(np.uint8)).filter(ImageFilter.MinFilter(2 * erode + 1)).filter(ImageFilter.GaussianBlur(0.8))
     elif mode == "luma":
         luma = rgb.mean(-1)

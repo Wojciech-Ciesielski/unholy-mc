@@ -39,8 +39,12 @@ Wszystkie id są w `snake_case`. Warianty itemów wybiera po stronie klienta **`
 | Neutralne (dla jaj) | `shrek` | `shrek.jpg` | Shrek w całości | 2,0 | 1,0×1,9 |
 | Neutralne – **spojrzenie w oczy** (DECISIONS #38) | `masked_reacher` | `masked_reacher.jpg` | czarna, chuda postać z maską i długimi palcami, ręce w górze | 2,4 | 0,7×2,0 |
 | Unholy | `wraith` | `wraith.png` | zjawa w całunie (miękka alfa, `entityTranslucent`), unosi się 0,2 nad ziemią | 2,3 | 0,8×2,1 |
+| Agresywne | `pale_crawler` | `pale_crawler.png` | czarny pełzacz na pajęczych kończynach z bladą maską i wielkimi oczami | 1,8 | 1,2×1,4 |
+| Agresywne | `needle_man` | `needle_man.png` | czarna postać z czerwoną głową najeżoną igłami (para z jumpscare'em 9) | 2,6 | 0,7×2,4 |
+| Neutralne | `stool_sitter` | `stool_sitter.png` | zgarbiona postać na stołku z założonymi dłońmi: siedzi i patrzy, przy zbliżeniu ucieka | 2,0 | 0,8×1,9 |
+| Unholy | `horned_stalker` | `horned_stalker.png` | rogata czaszka kozła na gałęzistych nogach i rękach | 3,0 | 0,9×2,8 |
 
-Nowe slopy (2026-11-26) mają też gotowe `models/entity_part/slop_<id>[_hallucination].json` i `items/slop/<id>[_hallucination].json` w tym samym formacie co dotychczasowe. Po stronie kodu wystarczy dopisać je do `SlopVariant` (rozmiary z tabeli, przed mnożnikiem `slops.sizeMultiplier`). `masked_reacher` atakuje tylko wtedy, gdy gracz patrzy mu w twarz (jak Enderman): spojrzenie dłużej niż 1 s → dźwięk `entity.slop.neutral.scare`, potem atak.
+Nowe slopy (2026-11-26: cartoon_cat, shrek, masked_reacher, wraith, pale_crawler, needle_man, stool_sitter, horned_stalker) mają też gotowe `models/entity_part/slop_<id>[_hallucination].json` i `items/slop/<id>[_hallucination].json` w tym samym formacie co dotychczasowe. Po stronie kodu wystarczy dopisać je do `SlopVariant` (rozmiary z tabeli, przed mnożnikiem `slops.sizeMultiplier`). `masked_reacher` atakuje tylko wtedy, gdy gracz patrzy mu w twarz (jak Enderman): spojrzenie dłużej niż 1 s → dźwięk `entity.slop.neutral.scare`, potem atak.
 
 `pobierz_4` **nie jest slopem**: to referencja wyglądu 3D Slendermana (sekcja 1.3).
 
