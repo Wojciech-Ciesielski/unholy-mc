@@ -178,8 +178,19 @@ public final class MobVisuals {
             }
             float jitter = look.isChasing() ? 0.04f : 0f;
             var r = entity.getRandom();
+            // walking: every step lifts the picture a little and rocks it side to side; chasing leans it forward;
+            // standing still it breathes. (Billboards have no legs, so the motion has to sell the walk.)
+            float speed = Math.min(1f, entity.walkAnimation.speed() * 3f);
+            float phase = entity.walkAnimation.position() * 1.1f;
+            float bob = Math.abs(Mth.sin(phase)) * 0.14f * speed;
+            float roll = Mth.sin(phase) * 0.09f * speed;
+            float lean = (look.isChasing() ? 0.12f : 0.04f) * speed;
+            float breathe = 1f + Mth.sin(entity.tickCount * 0.09f) * 0.012f * (1f - speed);
+            float size = v.scaledBillboard();
+            image.setScale(new Vector3f(size, size * breathe, size));
+            image.setLeftRotation(new Quaternionf().rotateZ(roll).rotateX(-lean));
             image.setTranslation(new Vector3f(jitter * (r.nextFloat() * 2 - 1),
-                    v.scaledBillboard() / 2f + v.floatOffset, jitter * (r.nextFloat() * 2 - 1)));
+                    size / 2f + v.floatOffset + bob, jitter * (r.nextFloat() * 2 - 1)));
             image.startInterpolationIfDirty();
         }
     }

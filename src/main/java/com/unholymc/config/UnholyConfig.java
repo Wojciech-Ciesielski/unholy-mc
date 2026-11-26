@@ -205,6 +205,8 @@ public class UnholyConfig {
          * Every {@code surfaceSpawnIntervalTicks} each player rolls {@code surfaceSpawnChance}; forests spawn any category
          * (unholy only in its biomes), open ground only single aggressive slops ({@code openGroundChance} on top).
          */
+        /** How often (ticks, on average) an idle slop picks somewhere new to walk to (vanilla mobs: 120). */
+        public int wanderIntervalTicks = 40;
         public boolean surfaceSpawning = true;
         public int surfaceSpawnIntervalTicks = 200;
         public float surfaceSpawnChance = 0.5f;

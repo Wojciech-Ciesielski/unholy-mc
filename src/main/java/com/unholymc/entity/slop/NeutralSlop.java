@@ -54,7 +54,7 @@ public class NeutralSlop extends AbstractSlop {
         this.goalSelector.addGoal(1, new RepelGoal(this, 1.4, this::currentFleeSource));
         this.goalSelector.addGoal(2, new PanicGoal(this, 1.4));
         this.goalSelector.addGoal(3, new ScareGoal());
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.7));
+        this.goalSelector.addGoal(5, new SlopWander(this, 0.7, com.unholymc.config.ConfigManager.get().slops.wanderIntervalTicks));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 16f));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }

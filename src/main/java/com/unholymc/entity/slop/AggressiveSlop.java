@@ -51,7 +51,7 @@ public class AggressiveSlop extends AbstractSlop {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new RepelGoal(this, 1.3, this::currentFleeSource));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.1, true));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8));
+        this.goalSelector.addGoal(5, new SlopWander(this, 0.8, com.unholymc.config.ConfigManager.get().slops.wanderIntervalTicks));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 12f));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));

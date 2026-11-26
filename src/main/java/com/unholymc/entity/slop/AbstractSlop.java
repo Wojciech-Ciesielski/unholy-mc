@@ -134,6 +134,10 @@ public abstract class AbstractSlop extends Monster implements HolyRepellable, Bi
         double max = despawnDistance();
         if (nearest == null || nearest.distanceToSqr(this) > max * max) {
             this.discard();
+        } else if (nearest.distanceToSqr(this) < 32 * 32) {
+            // vanilla Mob.checkDespawn does this too: a mob with a player nearby is "active". Without it the counter
+            // grows past 100 and RandomStrollGoal refuses to start, so idle slops stood still for ever (B5).
+            this.setNoActionTime(0);
         }
     }
 

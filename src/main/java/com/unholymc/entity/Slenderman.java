@@ -241,6 +241,7 @@ public class Slenderman extends Monster {
     @Override
     public void checkDespawn() {
         if (level().getDifficulty() == Difficulty.PEACEFUL) discard();
+        setNoActionTime(0); // vanilla does this when a player is near; without it wandering AI stops after ~5 s
     }
 
     @Override
