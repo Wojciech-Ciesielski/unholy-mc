@@ -1,4 +1,4 @@
-"""Nowy HUD (DECISIONS #34): dynamiczne ikony statystyk 16x16, cyfry, panel, ramka slotu pancerza i paski wytrzymałości.
+"""Nowy HUD (DECISIONS #34): dynamiczne ikony statystyk 16x16 (wyrównane) i cyfry. Bez panelu i bez pancerza (decyzja autora).
 
 Wynik: textures/font/hud_stats/*.png + font/hud_stats.json (znaki w docs/ASSETS.md §4).
 """
@@ -249,26 +249,19 @@ for k, (c, rows) in enumerate(DIG.items()):
             if ch == "#": strip.putpixel((k * 7 + x + 1, y + 1), (255, 255, 255, 255))
 strip.save(TEX / "digits.png")
 
-# ------------------------------------------------------------------ panel, slot pancerza, paski wytrzymałości
-panel = Image.new("RGBA", (44, 20))
-for y in range(20):
-    for x in range(44):
-        corner = (x in (0, 43) and y in (0, 19))
-        if not corner: panel.putpixel((x, y), (8, 4, 6, 120))
-panel.save(TEX / "panel.png")
-slot = Image.new("RGBA", (20, 20))
-for y in range(20):
-    for x in range(20):
-        edge = x in (0, 19) or y in (0, 19)
-        if edge and not (x in (0, 19) and y in (0, 19)): slot.putpixel((x, y), (150, 140, 140, 170))
-        elif not edge: slot.putpixel((x, y), (10, 6, 8, 110))
-slot.save(TEX / "armor_slot.png")
-COLS = ["c01020", "d03a18", "e06a10", "e09a10", "d8c818", "a8d020", "70d030", "40c840", "20c060"]
-for lv in range(9):
-    bar = Image.new("RGBA", (16, 3), (0, 0, 0, 200))
-    for x in range(1, 1 + round(14 * lv / 8)):
-        bar.putpixel((x, 1), hexc(COLS[lv]))
-    bar.save(TEX / f"durability_{lv}.png")
+# ------------------------------------------------------------------ wyrównanie: każda statystyka wyśrodkowana na wspólnej ramce
+def align(prefix):
+    files = sorted(TEX.glob(f"{prefix}_*.png"))
+    ims = [Image.open(f).convert("RGBA") for f in files]
+    boxes = [im.getbbox() for im in ims]
+    x0 = min(b[0] for b in boxes); y0 = min(b[1] for b in boxes); x1 = max(b[2] for b in boxes); y1 = max(b[3] for b in boxes)
+    dx = (16 - (x1 - x0)) // 2 - x0; dy = (16 - (y1 - y0)) // 2 - y0
+    for f, im in zip(files, ims):
+        out = Image.new("RGBA", (16, 16)); out.paste(im, (dx, dy)); out.save(f)
+for prefix in ("health", "hunger", "hydration", "sanity"):
+    align(prefix)
+for old in ["panel", "armor_slot"] + [f"durability_{i}" for i in range(9)]:
+    (TEX / f"{old}.png").unlink(missing_ok=True)
 
 # ------------------------------------------------------------------ font
 prov = []
@@ -285,9 +278,7 @@ for base, lst in names.items():
     for i, n in enumerate(lst): bm(n, base + i)
 prov.append({"type": "bitmap", "file": "unholymc:font/hud_stats/digits.png", "height": 9, "ascent": 9,
              "chars": ["".join(chr(0xE480 + i) for i in range(len(DIG)))]})
-bm("panel", 0xE490, 20, 14)
-bm("armor_slot", 0xE4A0, 20, 14)
-for lv in range(9): bm(f"durability_{lv}", 0xE4B0 + lv, 3, -3)
+prov.append({"type": "bitmap", "file": "unholymc:font/hud_stats/digits.png", "height": 9, "ascent": 8, "chars": ["0123456789+/"]})
 prov.append({"type": "space", "advances": {chr(0xE4F0): -1, chr(0xE4F1): -2, chr(0xE4F2): -4, chr(0xE4F3): -8,
                                            chr(0xE4F4): -16, chr(0xE4F5): -21, chr(0xE4F6): -45, chr(0xE4F7): 2, chr(0xE4F8): 4}})
 (A / "font").mkdir(exist_ok=True)

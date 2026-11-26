@@ -86,6 +86,6 @@ Po zmianach z tego pliku następujące sekcje `ASSETS.md` są nieaktualne i pros
 | 2 Jumpscare'y | **gotowe**: 4 twarze × 6 klatek, Spooky 8 klatek, nakładka szumu, tło na cały ekran, nowa czcionka `unholymc:jumpscare_frames` | `ASSETS.md` §5 |
 | 5 Krwawy Księżyc | **gotowe do sprawdzenia**: paczka-nakładka (push/pop w trakcie gry), shadery niezweryfikowane na GPU | `resourcepacks/blood_moon/`, `ASSETS.md` §5a |
 | 7 Atmosfera | szarszy dzień = wyblakłe kolormapy w głównej paczce; shadery: kandydaci w `ASSETS.md` §8 | `assets/minecraft/textures/colormap/` |
-| 9 HUD | **gotowe**: czcionka `unholymc:hud_stats` (ikony w stanach, cyfry, panel, slot pancerza, paski wytrzymałości) | `ASSETS.md` §4 |
+| 9 HUD | **gotowe, wariant autora**: 4 statystyki w sidebarze po prawej, bez ciemnego tła (shader `gui.vsh`), ikony wyrównane; pancerz w rogu i panel **usunięte** | `ASSETS.md` §4 |
 | 6 Moby 3D | **anulowane przez autora (2026-11-26)**: modele wyglądały źle. Slopy i halucynacje **zostają billboardami PNG** (nadpisuje DECISIONS #36). Wersja robocza modeli została wycofana (revert) | – |
 | 3, 4 Animacje, rozmiary | do zrobienia dla billboardów PNG; nowe slopy z obrazków autora czekają na pliki źródłowe | – |

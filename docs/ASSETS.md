@@ -117,45 +117,43 @@ Definicje w `items/flashlight.json`, `items/thermos.json`, `items/unholy_sword.j
 
 ---
 
-## 4. HUD i efekty (DECISIONS #34)
+## 4. HUD i efekty (DECISIONS #34, decyzja autora 2026-11-26)
 
-Czcionka `unholymc:hud_stats` (`font/hud_stats.json`, tekstury `textures/font/hud_stats/`, generator `assets_src/tools/make_hud.py`, podgląd `assets_src/preview/hud_stats_preview.png`). Wszystko to zwykłe glify, więc działa na kliencie vanilla bez shaderów. Stare sprite'y 10 ikon (`textures/gui/sprites/hud/*`) przestają być używane.
+**Decyzja autora:** zostają **tylko 4 statystyki** (zdrowie, głód, nawodnienie, Sanity), **po prawej stronie ekranu** w sidebarze (tabela wyników), **bez ciemnego tła**, wszystkie wyrównane. Pancerz w rogu (ramki slotów i paski wytrzymałości) **usunięty**. Panel pod wierszem usunięty.
 
-### 4.1 Lewy górny róg: 4 statystyki
+Czcionka `unholymc:hud_stats` (`font/hud_stats.json`, tekstury `textures/font/hud_stats/`, generator `assets_src/tools/make_hud.py`, podgląd `assets_src/preview/hud_stats_preview.png`). Stare sprite'y 10 ikon (`textures/gui/sprites/hud/*`) przestają być używane.
 
-Każda statystyka to wiersz: **panel** (półprzezroczyste tło) + **ikona 16×16** w stanie zależnym od wartości + **liczba punktów** z cyfr pixel-art.
+### 4.1 Wiersz sidebara
+
+Wiersz to **ikona 16×16** w stanie zależnym od wartości (lewa kolumna, tekst wiersza) i **liczba punktów** w kolumnie wyniku (prawa kolumna, gra sama wyrównuje do prawej). Każda statystyka jest wyśrodkowana na wspólnej ramce 16×16, więc ikony wszystkich stanów i wszystkich statystyk stoją w jednej linii i nie przesuwają się przy miganiu. Liczbę wpisujemy stylowaną czcionką `unholymc:hud_stats` (numer wyniku z własnym formatem), która ma podpięte zwykłe cyfry `0–9`.
 
 | Stan | Punkty | Kolor liczby |
 |---|---|---|
-| `full` | 15–20 (i więcej, np. zdrowie z efektami) | `#FFFFFF` |
+| `full` | 15–20 (i więcej) | `#FFFFFF` |
 | `medium` | 10–14 | `#FFE070` |
 | `low` | 5–9 | `#FF9A30` |
-| `critical` | 0–4 | `#FF4040`; ikona na zmianę `critical` / `critical_blink` co 10 ticków (Sanity: `critical_jitter` losowo co 3–6 ticków, „drży”) |
+| `critical` | 0–4 | `#FF4040`; ikona na zmianę `critical` / `critical_blink` co 10 ticków (Sanity: `critical_jitter` co 3–6 ticków) |
 
 | Znak | Glify |
 |---|---|
 | `U+E400–E408` | zdrowie: `full, medium, low, critical, critical_blink, poison, wither, frozen, absorption` |
-| `U+E410–E415` | głód (udko, coraz bardziej obgryzione): `full, medium, low, critical, critical_blink, effect` (efekt Hunger) |
-| `U+E420–E424` | nawodnienie (kropla opróżnia się): `full, medium, low, critical, critical_blink` |
-| `U+E430–E435` | Sanity (mózg, coraz bardziej zgniły; w krytycznym oko i czarne krople): `full, medium, low, critical, critical_jitter, wellbeing` |
-| `U+E480–E48B` | cyfry `0–9`, `+`, `/` (białe z obrysem, 7×9; kolor z koloru tekstu) |
-| zwykłe `0–9`, `+`, `/` | te same cyfry podpięte pod normalne znaki (dla sidebara/scoreboardu, gdzie liczby wpisuje gra) |
-| `U+E490` | panel wiersza 44×20 |
+| `U+E410–E415` | głód: `full, medium, low, critical, critical_blink, effect` |
+| `U+E420–E424` | nawodnienie: `full, medium, low, critical, critical_blink` |
+| `U+E430–E435` | Sanity: `full, medium, low, critical, critical_jitter, wellbeing` |
+| `U+E480–E48B` oraz zwykłe `0–9 + /` | cyfry 7×9 z obrysem (kolor z koloru tekstu) |
 | `U+E4F0–E4F8` | spacje: −1, −2, −4, −8, −16, −21, −45, +2, +4 |
 
-**Pierwszeństwo wariantów:** zdrowie `wither` > `poison` > `frozen` (zamrożenie w śniegu proszkowym) > stan wg punktów. Przy absorpcji za liczbą `+N` w kolorze `#F0C020`, a ikona `absorption`, gdy absorpcja ≥ zdrowie. Głód: `effect`, gdy działa efekt Hunger. Sanity: `wellbeing`, gdy działa efekt Wellbeing.
+**Pierwszeństwo wariantów:** zdrowie `wither` > `poison` > `frozen` > stan wg punktów, `absorption` gdy absorpcja ≥ zdrowie (liczba z dopiskiem `+N` w `#F0C020`). Głód: `effect` przy efekcie Hunger. Sanity: `wellbeing` przy efekcie Wellbeing.
 
-**Złożenie wiersza:** `E490` (panel) `E4F6` (−45, powrót na początek panelu) `E4F7` (+2) `<ikona>` `E4F7` `<cyfry>`. Wiersze jeden pod drugim co 22 px (osobne linie albo osobne paski bossbara, jak wygodniej). Ikony mają `height 16, ascent 12`, więc przy innym nośniku trzeba dostroić `ascent`.
+**Kolejność wierszy:** zdrowie, głód, nawodnienie, Sanity. Tytuł sidebara pusty (albo spacja), a nazwy wierszy (ukryte „gracze”) różne, np. `§0`…`§3`, żeby się nie zlewały.
 
-### 4.2 Prawy górny róg: pancerz
+### 4.2 Bez ciemnego tła
 
-4 sloty jeden pod drugim (hełm, napierśnik, spodnie, buty), co 24 px:
-- ramka `U+E4A0` (`armor_slot.png`, 20×20),
-- w środku przedmiot jako komponent tekstu **sprite** (26.x: `{"type":"object","atlas":"minecraft:items","sprite":"item/<id>"}`, dla zbroi skórzanej z tintem nie ma, więc wystarczy podstawowy sprite). Pusty slot pokazuje sprite vanilla z atlasu `minecraft:gui`: `container/slot/helmet`, `chestplate`, `leggings`, `boots`,
-- pod ramką pasek wytrzymałości `U+E4B0–E4B8` (`durability_0` = prawie zniszczony, czerwony … `durability_8` = cały, zielony). `ascent −3`, więc rysuje się pod linią bazową.
+Tło sidebara rysuje gra (czerń z alfą 0,3 w wierszach i 0,4 w tytule), nie tekstura. Główna paczka nadpisuje `minecraft:shaders/core/gui.vsh` (kopia vanilla 26.2 + jedna funkcja): wypełnienia **dokładnie** w tych dwóch kolorach w **prawej połowie ekranu** stają się przezroczyste. Czat (alfa 0,5), lista graczy, tooltipy i menu mają inne kolory, więc zostają bez zmian. Ograniczenia:
+- gracz, który w ustawieniach wyłączył „tło tekstu tylko na czacie”, ma inną alfę i zobaczy tło (nic się nie psuje),
+- **niezweryfikowane na GPU**: przy błędzie shadera klient pokaże błąd ładowania paczki. Wtedy wystarczy usunąć `assets/minecraft/shaders/core/gui.vsh`.
 
-### 4.3 Nad paskiem przedmiotów
-Zdrowie wierzchowca i powietrze pod wodą zostają z vanilla, bez nowych grafik.
+Serca, głód i pancerz vanilla są ukrywane przez przezroczyste sprite'y (wynik testu wątku implementacji, `docs/BACKLOG.md`). Zdrowie wierzchowca i powietrze pod wodą zostają vanilla nad paskiem przedmiotów.
 
 Efekt **Wellbeing**: `textures/mob_effect/wellbeing.png` (18×18). Kolor efektu: `0x8EE07A`.
 
