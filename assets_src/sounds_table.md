@@ -48,3 +48,23 @@
 | `item.thermos.fill` | `item/thermos/fill.ogg` | players | Napełnianie: bulgotanie w metalowym naczyniu. | Thermos fills / Termos się napełnia |
 | `block.tree_note.rip` | `block/tree_note/rip1.ogg`, `block/tree_note/rip2.ogg` | blocks | Zerwanie kartki z drzewa: darcie papieru. | Note torn / Kartka zerwana |
 | `player.dehydrated` | `player/dehydrated1.ogg`, `player/dehydrated2.ogg` | players | Suchy kaszel (nawodnienie 0). | Player coughs / Gracz kaszle |
+| `ambient.forest.whisper` | `ambient/forest/whisper1.ogg` … `ambient/forest/whisper3.ogg` | ambient | Pojedynczy, niezrozumiały szept tuż przy uchu. | Something whispers / Coś szepcze |
+| `ambient.forest.distant_steps` | `ambient/forest/distant_steps1.ogg` … `ambient/forest/distant_steps3.ogg` | ambient | Kilka kroków po liściach w oddali, urywają się nagle. | Distant footsteps / Kroki w oddali |
+| `ambient.forest.knock` | `ambient/forest/knock1.ogg`, `ambient/forest/knock2.ogg` | ambient | 3–5 uderzeń w drewno, daleko w lesie. | Knocking / Stukanie |
+| `ambient.forest.branch_snap` | `ambient/forest/branch_snap1.ogg` … `ambient/forest/branch_snap3.ogg` | ambient | Trzask łamanej gałęzi. | Branch snaps / Trzask gałęzi |
+| `ambient.forest.breath` | `ambient/forest/breath1.ogg`, `ambient/forest/breath2.ogg` | ambient | Cichy, wolny oddech (wdech + wydech). | Something breathes / Coś oddycha |
+| `ambient.forest.tree_creak` | `ambient/forest/tree_creak1.ogg` … `ambient/forest/tree_creak3.ogg` | ambient | Skrzypienie pnia na wietrze. | Tree creaks / Drzewo skrzypi |
+| `ambient.forest.birds` | `ambient/forest/birds1.ogg` … `ambient/forest/birds3.ogg` | ambient | Ćwierkanie ptaków w lesie (dzień), ok. 5 s. | Birds chirp / Ptaki ćwierkają |
+| `ambient.forest.birds_silence` | `ambient/forest/birds_silence.ogg` | ambient | Trzepot skrzydeł, potem nagła cisza z cichym piskiem w uszach – slop w pobliżu. | Birds fall silent / Ptaki milkną |
+| `ambient.wind` | `ambient/wind1.ogg` … `ambient/wind3.ogg` | weather | Poryw wiatru z wyciem, 4–6 s. | Wind howls / Wyje wiatr |
+| `ambient.sanity.fake_steps` | `ambient/sanity/fake_steps1.ogg` … `ambient/sanity/fake_steps4.ogg` | ambient | 3–6 kroków tuż za plecami gracza. | Footsteps behind you / Kroki za tobą |
+| `ambient.sanity.wall_scream` | `ambient/sanity/wall_scream1.ogg` … `ambient/sanity/wall_scream3.ogg` | ambient | Stłumiony krzyk „zza ściany” (przefiltrowany jak przez kamień). | Muffled scream / Stłumiony krzyk |
+| `entity.slop.step` | `entity/slop/step1.ogg` … `entity/slop/step4.ogg` | hostile | Kroki slopów: miękkie, mokre szuranie. | Slop shuffles / Slop szura |
+| `entity.slop.unholy.step` | `entity/slop/unholy/step1.ogg` … `entity/slop/unholy/step3.ogg` | hostile | Kroki unholy slopa: ciężkie, z chrzęstem kości. | Bones crunch / Chrzęst kości |
+| `entity.slop.float` | `entity/slop/float.ogg` | neutral | Duszek z prześcieradła: cichy, falujący świst (pętla ok. 2 s). | Cloth flutters / Łopot materiału |
+| `entity.slenderman.step` | `entity/slenderman/step1.ogg` … `entity/slenderman/step3.ogg` | hostile | Kroki Slendermana: powolne, ciężkie, z echem. | Heavy footsteps / Ciężkie kroki |
+| `item.thermos.open` | `item/thermos/open.ogg` | players | Odkręcenie zakrętki (gwint + pyknięcie). | Thermos opens / Termos się otwiera |
+| `item.thermos.close` | `item/thermos/close.ogg` | players | Zakręcenie (gwint + stuk). | Thermos closes / Termos się zamyka |
+| `item.crucifix.hit` | `item/crucifix/hit1.ogg`, `item/crucifix/hit2.ogg` | players | Trafienie krucyfiksem: tępe uderzenie drewna + krótki dzwonek. | Crucifix strikes / Krucyfiks uderza |
+| `item.holy_water.shatter` | `item/holy_water/shatter1.ogg`, `item/holy_water/shatter2.ogg` | players | Rozbicie miotanej wody święconej: szkło + plusk + krótki chór. | Holy water shatters / Woda święcona się rozbija |
+| `item.unholy_sword.hit` | `item/unholy_sword/hit1.ogg` … `item/unholy_sword/hit3.ogg` | players | Trafienie Unholy Swordem: mięsiste cięcie + niski, zniekształcony puls. | Unholy Sword cuts / Bluźnierczy miecz tnie |

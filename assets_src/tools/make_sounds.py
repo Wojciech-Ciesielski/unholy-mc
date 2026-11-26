@@ -63,6 +63,30 @@ SOUNDS = [
     ("item.thermos.fill", 1, False, "players", "Napełnianie: bulgotanie w metalowym naczyniu.", "Thermos fills", "Termos się napełnia"),
     ("block.tree_note.rip", 2, False, "blocks", "Zerwanie kartki z drzewa: darcie papieru.", "Note torn", "Kartka zerwana"),
     ("player.dehydrated", 2, False, "players", "Suchy kaszel (nawodnienie 0).", "Player coughs", "Gracz kaszle"),
+    # --- otoczenie (prośba 1) – kiedy grają: patrz docs/ASSETS.md §6.1
+    ("ambient.forest.whisper", 3, False, "ambient", "Pojedynczy, niezrozumiały szept tuż przy uchu.", "Something whispers", "Coś szepcze"),
+    ("ambient.forest.distant_steps", 3, False, "ambient", "Kilka kroków po liściach w oddali, urywają się nagle.", "Distant footsteps", "Kroki w oddali"),
+    ("ambient.forest.knock", 2, False, "ambient", "3–5 uderzeń w drewno, daleko w lesie.", "Knocking", "Stukanie"),
+    ("ambient.forest.branch_snap", 3, False, "ambient", "Trzask łamanej gałęzi.", "Branch snaps", "Trzask gałęzi"),
+    ("ambient.forest.breath", 2, False, "ambient", "Cichy, wolny oddech (wdech + wydech).", "Something breathes", "Coś oddycha"),
+    ("ambient.forest.tree_creak", 3, False, "ambient", "Skrzypienie pnia na wietrze.", "Tree creaks", "Drzewo skrzypi"),
+    ("ambient.forest.birds", 3, False, "ambient", "Ćwierkanie ptaków w lesie (dzień), ok. 5 s.", "Birds chirp", "Ptaki ćwierkają"),
+    ("ambient.forest.birds_silence", 1, False, "ambient", "Trzepot skrzydeł, potem nagła cisza z cichym piskiem w uszach – slop w pobliżu.", "Birds fall silent", "Ptaki milkną"),
+    ("ambient.wind", 3, False, "weather", "Poryw wiatru z wyciem, 4–6 s.", "Wind howls", "Wyje wiatr"),
+    # --- niskie Sanity ≤ 14 (prośba 8)
+    ("ambient.sanity.fake_steps", 4, False, "ambient", "3–6 kroków tuż za plecami gracza.", "Footsteps behind you", "Kroki za tobą"),
+    ("ambient.sanity.wall_scream", 3, False, "ambient", "Stłumiony krzyk „zza ściany” (przefiltrowany jak przez kamień).", "Muffled scream", "Stłumiony krzyk"),
+    # --- ruch mobów
+    ("entity.slop.step", 4, False, "hostile", "Kroki slopów: miękkie, mokre szuranie.", "Slop shuffles", "Slop szura"),
+    ("entity.slop.unholy.step", 3, False, "hostile", "Kroki unholy slopa: ciężkie, z chrzęstem kości.", "Bones crunch", "Chrzęst kości"),
+    ("entity.slop.float", 1, False, "neutral", "Duszek z prześcieradła: cichy, falujący świst (pętla ok. 2 s).", "Cloth flutters", "Łopot materiału"),
+    ("entity.slenderman.step", 3, False, "hostile", "Kroki Slendermana: powolne, ciężkie, z echem.", "Heavy footsteps", "Ciężkie kroki"),
+    # --- przedmioty (prośba 1)
+    ("item.thermos.open", 1, False, "players", "Odkręcenie zakrętki (gwint + pyknięcie).", "Thermos opens", "Termos się otwiera"),
+    ("item.thermos.close", 1, False, "players", "Zakręcenie (gwint + stuk).", "Thermos closes", "Termos się zamyka"),
+    ("item.crucifix.hit", 2, False, "players", "Trafienie krucyfiksem: tępe uderzenie drewna + krótki dzwonek.", "Crucifix strikes", "Krucyfiks uderza"),
+    ("item.holy_water.shatter", 2, False, "players", "Rozbicie miotanej wody święconej: szkło + plusk + krótki chór.", "Holy water shatters", "Woda święcona się rozbija"),
+    ("item.unholy_sword.hit", 3, False, "players", "Trafienie Unholy Swordem: mięsiste cięcie + niski, zniekształcony puls.", "Unholy Sword cuts", "Bluźnierczy miecz tnie"),
 ]
 
 def main():

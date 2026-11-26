@@ -178,10 +178,40 @@ Bajorka nie stają się święcone (patrz DECISIONS 16), więc nie mają cząste
 
 ## 6. Dźwięki
 
-**Format:** OGG Vorbis, 44,1/48 kHz, jakość ~q5. **Mono** dla wszystkiego, co ma pozycję w świecie (inaczej MC nie zrobi panoramy ani tłumienia z dystansu). **Stereo** tylko dla `music.eleven_reversed`, `jumpscare.*` i `ambient.blood_moon.rise` (dźwięki „w głowie”). Normalizacja do ok. −14 LUFS; jumpscare'y mogą być głośniejsze (−9 LUFS), żeby naprawdę straszyły. Brak ciszy na początku pliku (opóźnia jumpscare). Pętle (`music.eleven_reversed`, `ambient.dark_corner`, `entity.slenderman.proximity`, `ambient.heartbeat`) muszą łączyć się bez kliku.
+**Stan (v0.1.1+):** wszystkie pliki z `sounds.json` (68 zdarzeń, 130 plików, ok. 4,6 MB) są wygenerowane proceduralnie przez `assets_src/tools/make_audio.py` (synteza w numpy + `ffmpeg`/libvorbis). Muzyka to przerobiona płyta 11 (odwrócona, spowolniona ×0,6, stereo, pogłos, bezszwowa pętla 115 s). Oryginał `11.ogg` leży lokalnie w `assets_src/audio_src/`, który jest w `.gitignore`. To **wersje robocze do odsłuchu**: każdy plik można podmienić nagraniem o tej samej nazwie, a przepis w `make_audio.py` poprawić i wygenerować ponownie (`python3 make_audio.py <filtr>`). Kontrola poziomów: `python3 assets_src/tools/check_audio.py`.
 
-Ścieżka pliku = `src/main/resources/assets/unholymc/sounds/<kolumna „Pliki”>`. `sounds.json` jest już wygenerowany (`assets_src/tools/make_sounds.py`). Brakujące pliki dają tylko ostrzeżenie w logu, nie crash.
-Napisy (subtitles): klucz `subtitles.unholymc.<event>`. Teksty EN/PL są w ostatniej kolumnie, do wpisania w `lang/en_us.json` i `lang/pl_pl.json` (pliki lang prowadzi wątek implementacji).
+**Format:** OGG Vorbis, 44,1 kHz, q5 (muzyka q3). **Mono** wszystko, co ma pozycję w świecie. **Stereo** tylko `music.eleven_reversed`, `jumpscare.*`, `ambient.blood_moon.rise` (grane „w głowie”, bez pozycji). Głośność ok. −18 dB RMS, jumpscare'y −11/−12 dB (naprawdę głośne), ambient tła −20…−22 dB. Szczyt ≤ −3 dBFS, bez ciszy na początku pliku. Pętle (`music.eleven_reversed`, `entity.slenderman.proximity`, `ambient.dark_corner`, `ambient.heartbeat`, `entity.slop.float`) łączą się bez kliku.
+
+### 6.1 Kiedy grają nowe dźwięki (wyzwalacze dla kodu)
+
+| Zdarzenie | Kiedy | Częstość | Skąd / głośność |
+|---|---|---|---|
+| `ambient.forest.whisper` | noc, las | co 40–120 s | 3–6 kratek od gracza, losowy kierunek, vol 0,6 |
+| `ambient.forest.distant_steps` | noc, las | co 60–150 s | 12–24 kratki, vol 0,8 |
+| `ambient.forest.knock` | noc, las | co 2–5 min | 16–32 kratki, vol 1,0 (słychać daleko) |
+| `ambient.forest.branch_snap` | noc, las; także gdy slop jest w promieniu 24 kratek | co 30–90 s | 8–16 kratek, częściej **za plecami** (kąt 120–240° od kierunku patrzenia) |
+| `ambient.forest.breath` | noc, Sanity ≤ 14 | co 3–6 min | 2–3 kratki **za plecami**, vol 0,5 |
+| `ambient.forest.tree_creak` | las, zawsze; w deszczu ×2 | co 20–60 s | najbliższy pień 4–12 kratek |
+| `ambient.forest.birds` | dzień, las, brak deszczu | co 8–20 s | korona drzewa 6–16 kratek, vol 0,5 |
+| `ambient.forest.birds_silence` | slop pojawia się w promieniu 32 kratek gracza w dzień w lesie | raz na pojawienie | najpierw `stopSound(ambient.forest.birds)`, potem ten dźwięk; przez kolejne 60 s ptaki nie grają |
+| `ambient.wind` | zawsze na powierzchni; w deszczu i burzy częściej | dzień co 60–120 s, deszcz co 15–40 s | z losowego kierunku poziomo, 10 kratek, vol 0,7 (burza 1,0) |
+| `ambient.sanity.fake_steps` | Sanity ≤ 14 | co 60–180 s (≤ 9: co 30–90 s) | 2–4 kratki **za plecami**; gdy gracz się odwróci (zmiana yaw > 90°), kod przerywa (`stopSound`) |
+| `ambient.sanity.wall_scream` | Sanity ≤ 14 | co 3–6 min (≤ 9: co 1,5–3 min) | z **najbliższego bloku stałego** 3–8 kratek (za ścianą); jeśli brak – 10 kratek pod ziemią |
+| fałszywy creeper | Sanity ≤ 14 | co 4–8 min (≤ 9: co 2–4 min) | **vanilla `minecraft:entity.creeper.primed`** (najbardziej przekonujący, bez nowego pliku), 1,5–2,5 kratki za plecami, tylko do tego gracza; bez wybuchu |
+| `entity.slop.step` | slop agresywny/neutralny idzie | co ok. 0,4 s ruchu (jak vanilla `playStepSound`) | z moba, vol 0,5 |
+| `entity.slop.unholy.step` | unholy slop idzie | co ok. 0,45 s | z moba, vol 0,7 |
+| `entity.slop.float` | duszek (`sheet_ghost`) się porusza | pętla co 2 s | z moba, vol 0,4 |
+| `entity.slenderman.step` | Slenderman idzie | co ok. 0,8 s | z moba, vol 1,0 (słychać z 24 kratek) |
+| `item.thermos.open` / `close` | początek / koniec picia z termosu i napełniania | – | gracz |
+| `item.crucifix.hit` | aktywne użycie krucyfiksu trafia moba (Holiness) | – | trafiony mob |
+| `item.holy_water.shatter` | splash wody święconej uderza | – | punkt uderzenia (zamiast vanilla `splash_potion.break`) |
+| `item.unholy_sword.hit` | trafienie Unholy Swordem | – | trafiony mob |
+
+Szepty, kroki i oddech **za plecami** liczymy względem kierunku patrzenia gracza w chwili odtworzenia. Dźwięki z sekcji „niskie Sanity” odtwarzamy **tylko dla tego gracza** (`ServerPlayer.connection.send(ClientboundSoundPacket)`), żeby inni ich nie słyszeli.
+
+### 6.2 Pełna lista
+
+Ścieżka pliku = `src/main/resources/assets/unholymc/sounds/<kolumna „Pliki”>`. Napisy (subtitles): klucz `subtitles.unholymc.<event>`, teksty EN/PL w ostatniej kolumnie.
 
 | SoundEvent (`unholymc:`) | Pliki `.ogg` | Kanał | Opis | Napis EN / PL |
 |---|---|---|---|---|
@@ -233,9 +263,29 @@ Napisy (subtitles): klucz `subtitles.unholymc.<event>`. Teksty EN/PL są w ostat
 | `item.thermos.fill` | `item/thermos/fill.ogg` | players | Napełnianie: bulgotanie w metalowym naczyniu. | Thermos fills / Termos się napełnia |
 | `block.tree_note.rip` | `block/tree_note/rip1.ogg`, `block/tree_note/rip2.ogg` | blocks | Zerwanie kartki z drzewa: darcie papieru. | Note torn / Kartka zerwana |
 | `player.dehydrated` | `player/dehydrated1.ogg`, `player/dehydrated2.ogg` | players | Suchy kaszel (nawodnienie 0). | Player coughs / Gracz kaszle |
+| `ambient.forest.whisper` | `ambient/forest/whisper1.ogg` … `ambient/forest/whisper3.ogg` | ambient | Pojedynczy, niezrozumiały szept tuż przy uchu. | Something whispers / Coś szepcze |
+| `ambient.forest.distant_steps` | `ambient/forest/distant_steps1.ogg` … `ambient/forest/distant_steps3.ogg` | ambient | Kilka kroków po liściach w oddali, urywają się nagle. | Distant footsteps / Kroki w oddali |
+| `ambient.forest.knock` | `ambient/forest/knock1.ogg`, `ambient/forest/knock2.ogg` | ambient | 3–5 uderzeń w drewno, daleko w lesie. | Knocking / Stukanie |
+| `ambient.forest.branch_snap` | `ambient/forest/branch_snap1.ogg` … `ambient/forest/branch_snap3.ogg` | ambient | Trzask łamanej gałęzi. | Branch snaps / Trzask gałęzi |
+| `ambient.forest.breath` | `ambient/forest/breath1.ogg`, `ambient/forest/breath2.ogg` | ambient | Cichy, wolny oddech (wdech + wydech). | Something breathes / Coś oddycha |
+| `ambient.forest.tree_creak` | `ambient/forest/tree_creak1.ogg` … `ambient/forest/tree_creak3.ogg` | ambient | Skrzypienie pnia na wietrze. | Tree creaks / Drzewo skrzypi |
+| `ambient.forest.birds` | `ambient/forest/birds1.ogg` … `ambient/forest/birds3.ogg` | ambient | Ćwierkanie ptaków w lesie (dzień), ok. 5 s. | Birds chirp / Ptaki ćwierkają |
+| `ambient.forest.birds_silence` | `ambient/forest/birds_silence.ogg` | ambient | Trzepot skrzydeł, potem nagła cisza z cichym piskiem w uszach – slop w pobliżu. | Birds fall silent / Ptaki milkną |
+| `ambient.wind` | `ambient/wind1.ogg` … `ambient/wind3.ogg` | weather | Poryw wiatru z wyciem, 4–6 s. | Wind howls / Wyje wiatr |
+| `ambient.sanity.fake_steps` | `ambient/sanity/fake_steps1.ogg` … `ambient/sanity/fake_steps4.ogg` | ambient | 3–6 kroków tuż za plecami gracza. | Footsteps behind you / Kroki za tobą |
+| `ambient.sanity.wall_scream` | `ambient/sanity/wall_scream1.ogg` … `ambient/sanity/wall_scream3.ogg` | ambient | Stłumiony krzyk „zza ściany” (przefiltrowany jak przez kamień). | Muffled scream / Stłumiony krzyk |
+| `entity.slop.step` | `entity/slop/step1.ogg` … `entity/slop/step4.ogg` | hostile | Kroki slopów: miękkie, mokre szuranie. | Slop shuffles / Slop szura |
+| `entity.slop.unholy.step` | `entity/slop/unholy/step1.ogg` … `entity/slop/unholy/step3.ogg` | hostile | Kroki unholy slopa: ciężkie, z chrzęstem kości. | Bones crunch / Chrzęst kości |
+| `entity.slop.float` | `entity/slop/float.ogg` | neutral | Duszek z prześcieradła: cichy, falujący świst (pętla ok. 2 s). | Cloth flutters / Łopot materiału |
+| `entity.slenderman.step` | `entity/slenderman/step1.ogg` … `entity/slenderman/step3.ogg` | hostile | Kroki Slendermana: powolne, ciężkie, z echem. | Heavy footsteps / Ciężkie kroki |
+| `item.thermos.open` | `item/thermos/open.ogg` | players | Odkręcenie zakrętki (gwint + pyknięcie). | Thermos opens / Termos się otwiera |
+| `item.thermos.close` | `item/thermos/close.ogg` | players | Zakręcenie (gwint + stuk). | Thermos closes / Termos się zamyka |
+| `item.crucifix.hit` | `item/crucifix/hit1.ogg`, `item/crucifix/hit2.ogg` | players | Trafienie krucyfiksem: tępe uderzenie drewna + krótki dzwonek. | Crucifix strikes / Krucyfiks uderza |
+| `item.holy_water.shatter` | `item/holy_water/shatter1.ogg`, `item/holy_water/shatter2.ogg` | players | Rozbicie miotanej wody święconej: szkło + plusk + krótki chór. | Holy water shatters / Woda święcona się rozbija |
+| `item.unholy_sword.hit` | `item/unholy_sword/hit1.ogg` … `item/unholy_sword/hit3.ogg` | players | Trafienie Unholy Swordem: mięsiste cięcie + niski, zniekształcony puls. | Unholy Sword cuts / Bluźnierczy miecz tnie |
 
 
-Klasyczne ambientowe dźwięki straszenia (wyższa szansa) to vanilla `minecraft:ambient.cave`, więc nie potrzebują plików.
+Klasyczne dźwięki straszenia z vanilla (wyższa szansa) to nadal `minecraft:ambient.cave`.
 
 ---
 

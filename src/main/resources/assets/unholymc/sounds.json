@@ -324,5 +324,155 @@
       "unholymc:player/dehydrated1",
       "unholymc:player/dehydrated2"
     ]
+  },
+  "ambient.forest.whisper": {
+    "subtitle": "subtitles.unholymc.ambient.forest.whisper",
+    "sounds": [
+      "unholymc:ambient/forest/whisper1",
+      "unholymc:ambient/forest/whisper2",
+      "unholymc:ambient/forest/whisper3"
+    ]
+  },
+  "ambient.forest.distant_steps": {
+    "subtitle": "subtitles.unholymc.ambient.forest.distant_steps",
+    "sounds": [
+      "unholymc:ambient/forest/distant_steps1",
+      "unholymc:ambient/forest/distant_steps2",
+      "unholymc:ambient/forest/distant_steps3"
+    ]
+  },
+  "ambient.forest.knock": {
+    "subtitle": "subtitles.unholymc.ambient.forest.knock",
+    "sounds": [
+      "unholymc:ambient/forest/knock1",
+      "unholymc:ambient/forest/knock2"
+    ]
+  },
+  "ambient.forest.branch_snap": {
+    "subtitle": "subtitles.unholymc.ambient.forest.branch_snap",
+    "sounds": [
+      "unholymc:ambient/forest/branch_snap1",
+      "unholymc:ambient/forest/branch_snap2",
+      "unholymc:ambient/forest/branch_snap3"
+    ]
+  },
+  "ambient.forest.breath": {
+    "subtitle": "subtitles.unholymc.ambient.forest.breath",
+    "sounds": [
+      "unholymc:ambient/forest/breath1",
+      "unholymc:ambient/forest/breath2"
+    ]
+  },
+  "ambient.forest.tree_creak": {
+    "subtitle": "subtitles.unholymc.ambient.forest.tree_creak",
+    "sounds": [
+      "unholymc:ambient/forest/tree_creak1",
+      "unholymc:ambient/forest/tree_creak2",
+      "unholymc:ambient/forest/tree_creak3"
+    ]
+  },
+  "ambient.forest.birds": {
+    "subtitle": "subtitles.unholymc.ambient.forest.birds",
+    "sounds": [
+      "unholymc:ambient/forest/birds1",
+      "unholymc:ambient/forest/birds2",
+      "unholymc:ambient/forest/birds3"
+    ]
+  },
+  "ambient.forest.birds_silence": {
+    "subtitle": "subtitles.unholymc.ambient.forest.birds_silence",
+    "sounds": [
+      "unholymc:ambient/forest/birds_silence"
+    ]
+  },
+  "ambient.wind": {
+    "subtitle": "subtitles.unholymc.ambient.wind",
+    "sounds": [
+      "unholymc:ambient/wind1",
+      "unholymc:ambient/wind2",
+      "unholymc:ambient/wind3"
+    ]
+  },
+  "ambient.sanity.fake_steps": {
+    "subtitle": "subtitles.unholymc.ambient.sanity.fake_steps",
+    "sounds": [
+      "unholymc:ambient/sanity/fake_steps1",
+      "unholymc:ambient/sanity/fake_steps2",
+      "unholymc:ambient/sanity/fake_steps3",
+      "unholymc:ambient/sanity/fake_steps4"
+    ]
+  },
+  "ambient.sanity.wall_scream": {
+    "subtitle": "subtitles.unholymc.ambient.sanity.wall_scream",
+    "sounds": [
+      "unholymc:ambient/sanity/wall_scream1",
+      "unholymc:ambient/sanity/wall_scream2",
+      "unholymc:ambient/sanity/wall_scream3"
+    ]
+  },
+  "entity.slop.step": {
+    "subtitle": "subtitles.unholymc.entity.slop.step",
+    "sounds": [
+      "unholymc:entity/slop/step1",
+      "unholymc:entity/slop/step2",
+      "unholymc:entity/slop/step3",
+      "unholymc:entity/slop/step4"
+    ]
+  },
+  "entity.slop.unholy.step": {
+    "subtitle": "subtitles.unholymc.entity.slop.unholy.step",
+    "sounds": [
+      "unholymc:entity/slop/unholy/step1",
+      "unholymc:entity/slop/unholy/step2",
+      "unholymc:entity/slop/unholy/step3"
+    ]
+  },
+  "entity.slop.float": {
+    "subtitle": "subtitles.unholymc.entity.slop.float",
+    "sounds": [
+      "unholymc:entity/slop/float"
+    ]
+  },
+  "entity.slenderman.step": {
+    "subtitle": "subtitles.unholymc.entity.slenderman.step",
+    "sounds": [
+      "unholymc:entity/slenderman/step1",
+      "unholymc:entity/slenderman/step2",
+      "unholymc:entity/slenderman/step3"
+    ]
+  },
+  "item.thermos.open": {
+    "subtitle": "subtitles.unholymc.item.thermos.open",
+    "sounds": [
+      "unholymc:item/thermos/open"
+    ]
+  },
+  "item.thermos.close": {
+    "subtitle": "subtitles.unholymc.item.thermos.close",
+    "sounds": [
+      "unholymc:item/thermos/close"
+    ]
+  },
+  "item.crucifix.hit": {
+    "subtitle": "subtitles.unholymc.item.crucifix.hit",
+    "sounds": [
+      "unholymc:item/crucifix/hit1",
+      "unholymc:item/crucifix/hit2"
+    ]
+  },
+  "item.holy_water.shatter": {
+    "subtitle": "subtitles.unholymc.item.holy_water.shatter",
+    "sounds": [
+      "unholymc:item/holy_water/shatter1",
+      "unholymc:item/holy_water/shatter2"
+    ]
+  },
+  "item.unholy_sword.hit": {
+    "subtitle": "subtitles.unholymc.item.unholy_sword.hit",
+    "sounds": [
+      "unholymc:item/unholy_sword/hit1",
+      "unholymc:item/unholy_sword/hit2",
+      "unholymc:item/unholy_sword/hit3"
+    ]
   }
 }
