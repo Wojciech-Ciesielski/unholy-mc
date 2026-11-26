@@ -125,7 +125,11 @@ Czcionka `unholymc:hud_stats` (`font/hud_stats.json`, tekstury `textures/font/hu
 
 ### 4.1 Wiersz sidebara
 
-Wiersz to **ikona 16×16** w stanie zależnym od wartości (lewa kolumna, tekst wiersza) i **liczba punktów** w kolumnie wyniku (prawa kolumna, gra sama wyrównuje do prawej). Każda statystyka jest wyśrodkowana na wspólnej ramce 16×16, więc ikony wszystkich stanów i wszystkich statystyk stoją w jednej linii i nie przesuwają się przy miganiu. Liczbę wpisujemy stylowaną czcionką `unholymc:hud_stats` (numer wyniku z własnym formatem), która ma podpięte zwykłe cyfry `0–9`.
+Układ (decyzja autora): **po lewej liczba, po prawej ikona.**
+- **Lewa kolumna (tekst wiersza, czyli nazwa „gracza” w drużynie albo `display name` wpisu):** liczba punktów cyframi czcionki `unholymc:hud_stats` (podpięte są zwykłe `0–9`), w kolorze stanu.
+- **Prawa kolumna (wynik):** ikona 16×16 jako **stały format liczby** wpisu (`NumberFormat` typu `fixed` z komponentem tekstu z glifem ikony, np. `U+E401`). Gra wyrównuje tę kolumnę do prawej krawędzi, więc ikony stoją w jednej pionowej linii przy krawędzi ekranu.
+
+Każda statystyka jest wyśrodkowana na wspólnej ramce 16×16, więc ikony wszystkich stanów stoją równo i nie przesuwają się przy miganiu. Liczby są wyrównane do lewej. Jeśli mają się kończyć w jednej linii tuż przed ikonami, dopełnij je z przodu spacjami czcionki: 1 cyfra = `U+E4F7` ×3 i `U+E4F0` (+7 px), tak żeby każda liczba miała szerokość 2 cyfr.
 
 | Stan | Punkty | Kolor liczby |
 |---|---|---|
