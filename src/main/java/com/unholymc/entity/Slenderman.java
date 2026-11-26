@@ -189,7 +189,7 @@ public class Slenderman extends Monster {
         // Blood Moon -> Deadly; dawn -> gone
         if (tickCount % 20 == 0) {
             setDeadly(forcedDeadly || BloodMoon.isActive(level));
-            if (level.dimension() == Level.OVERWORLD && level.isBrightOutside() && forestAnchor != Long.MIN_VALUE) {
+            if (level.dimension() == Level.OVERWORLD && !com.unholymc.world.Night.isNight(level) && forestAnchor != Long.MIN_VALUE) {
                 vanish();
                 return;
             }

@@ -62,7 +62,7 @@ public final class BloodMoon {
 
     /** Full moon night without a Blood Moon: holy ponds are holy (DECISIONS #16). */
     public static boolean isHolyNight(Level level) {
-        return level.dimension() == Level.OVERWORLD && isFullMoon(level) && level.isDarkOutside() && !isActive(level);
+        return level.dimension() == Level.OVERWORLD && isFullMoon(level) && Night.isNight(level) && !isActive(level);
     }
 
     public static int daysUntilFullMoon(Level level) {
@@ -73,7 +73,7 @@ public final class BloodMoon {
     private static void tick(MinecraftServer server) {
         ServerLevel level = server.overworld();
         WorldState s = state(level);
-        boolean dark = level.isDarkOutside();
+        boolean dark = Night.isNight(level);
         if (s.bloodMoon() && !dark) {
             set(level, false); // dawn
         } else if (dark && isFullMoon(level)) {

@@ -96,6 +96,6 @@ public class AggressiveSlop extends AbstractSlop {
     }
 
     public static boolean isNight(ServerLevel level) {
-        return level.isDarkOutside();
+        return com.unholymc.world.Night.isNight(level);
     }
 }

@@ -35,7 +35,7 @@ public final class SlopSpawning {
         var cfg = ConfigManager.get().slops;
         if (!cfg.surfaceSpawning) return;
         net.minecraft.server.level.ServerLevel level = server.overworld();
-        if (level.getDifficulty() == net.minecraft.world.Difficulty.PEACEFUL || !level.isDarkOutside()) return;
+        if (level.getDifficulty() == net.minecraft.world.Difficulty.PEACEFUL || !com.unholymc.world.Night.isNight(level)) return;
         for (net.minecraft.server.level.ServerPlayer p : level.players()) {
             if ((p.tickCount + p.getId() * 7) % Math.max(20, cfg.surfaceSpawnIntervalTicks) != 0) continue;
             if (!com.unholymc.survival.StatsHelper.isActive(p) || p.isSpectator()) continue;

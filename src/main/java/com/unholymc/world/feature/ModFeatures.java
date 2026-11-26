@@ -38,6 +38,7 @@ public final class ModFeatures {
         var abomination = register("abomination", new AnomalyFeatures.Abomination(NoneFeatureConfiguration.CODEC));
         register("scattered_anomaly", new ScatteredAnomalyFeature(NoneFeatureConfiguration.CODEC,
                 java.util.List.of(() -> leaves, () -> deadTree, () -> cross, () -> skull, () -> blood, () -> abomination)));
+        register("grave", new GraveFeature(NoneFeatureConfiguration.CODEC));
         register("tree_notes", new TreeNotesFeature(NoneFeatureConfiguration.CODEC, false));
         register("decoy_note", new TreeNotesFeature(NoneFeatureConfiguration.CODEC, true));
 
@@ -45,6 +46,7 @@ public final class ModFeatures {
         // single anomaly roughly every 100-150 blocks; the individual anomaly_* features stay available for /place
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.TOP_LAYER_MODIFICATION, placed("anomaly"));
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.UNDERGROUND_ORES, placed("anomaly_infested"));
+        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.TOP_LAYER_MODIFICATION, placed("grave"));
         BiomeModifications.addFeature(BiomeSelectors.tag(com.unholymc.entity.SlopSpawning.FOREST), GenerationStep.Decoration.TOP_LAYER_MODIFICATION, placed("tree_notes"));
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld().and(BiomeSelectors.tag(com.unholymc.entity.SlopSpawning.FOREST).negate()),
                 GenerationStep.Decoration.TOP_LAYER_MODIFICATION, placed("decoy_note"));

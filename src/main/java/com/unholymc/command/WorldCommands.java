@@ -18,7 +18,8 @@ public final class WorldCommands {
         ThmCommand.addSubcommand(root -> root.then(Commands.literal("tp")
                 .then(Commands.literal("dark_corner").executes(c -> tpTo(c.getSource(), "dark_corner")))
                 .then(Commands.literal("slender_forest").executes(c -> tpTo(c.getSource(), "slender_forest")))
-                .then(Commands.literal("holy_pond").executes(c -> tpTo(c.getSource(), "holy_pond")))));
+                .then(Commands.literal("holy_pond").executes(c -> tpTo(c.getSource(), "holy_pond")))
+                .then(Commands.literal("grave").executes(c -> tpTo(c.getSource(), "grave")))));
         ThmCommand.addSubcommand(root -> root.then(Commands.literal("dark_corner")
                 .then(Commands.literal("spawn").executes(c -> spawnCorner(c.getSource())))
                 .then(Commands.literal("toggle_day_cycle").executes(c -> toggleCorner(c.getSource())))
@@ -27,7 +28,7 @@ public final class WorldCommands {
 
     private static int set(CommandSourceStack source, boolean active) {
         ServerLevel overworld = source.getServer().overworld();
-        if (active && !overworld.isDarkOutside()) {
+        if (active && !com.unholymc.world.Night.isNight(overworld)) {
             // a Blood Moon only lives at night: "start" by day jumps straight to the evening
             source.getServer().getCommands().performPrefixedCommand(source.withSuppressedOutput(), "time set night");
         }
@@ -85,6 +86,7 @@ public final class WorldCommands {
         net.minecraft.core.BlockPos target = switch (what) {
             case "dark_corner" -> com.unholymc.world.DarkCorners.locate(ow, from, 6);
             case "slender_forest" -> com.unholymc.world.SlenderForests.locate(ow, from, 3000);
+            case "grave" -> com.unholymc.world.Graves.nearest(ow, from, 20);
             default -> nearestPond(ow, from);
         };
         if (target == null) {

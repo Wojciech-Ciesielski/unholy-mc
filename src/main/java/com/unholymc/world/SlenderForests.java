@@ -144,7 +144,7 @@ public final class SlenderForests {
     private static void tick(MinecraftServer server) {
         if (server.getTickCount() % 100 != 0) return;
         ServerLevel level = server.overworld();
-        if (!level.isDarkOutside()) return;
+        if (!Night.isNight(level)) return;
         var cfg = ConfigManager.get().slenderman;
         for (ServerPlayer p : level.players()) {
             if (!p.isAlive() || p.isSpectator()) continue;

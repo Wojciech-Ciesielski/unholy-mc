@@ -157,7 +157,7 @@ public final class DarkCorners {
     public static boolean isActive(ServerLevel level, BlockPos corner) {
         CornerState s = state(level, corner);
         if (level.getGameTime() < s.forcedUntil()) return s.forcedActive();
-        return level.isDarkOutside();
+        return Night.isNight(level);
     }
 
     /** /thm dark_corner toggle_day_cycle: flip day/night of a corner for 5 minutes. */

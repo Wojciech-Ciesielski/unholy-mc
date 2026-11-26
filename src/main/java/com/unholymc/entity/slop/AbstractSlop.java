@@ -126,7 +126,7 @@ public abstract class AbstractSlop extends Monster implements HolyRepellable, Bi
             return;
         }
         if (this.isPersistenceRequired()) return;
-        if (despawnsByDay() && this.level() instanceof ServerLevel sl && sl.dimension() == Level.OVERWORLD && sl.isBrightOutside()) {
+        if (despawnsByDay() && this.level() instanceof ServerLevel sl && sl.dimension() == Level.OVERWORLD && !com.unholymc.world.Night.isNight(sl)) {
             this.discard();
             return;
         }

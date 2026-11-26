@@ -260,7 +260,7 @@ public final class ServerFx {
         if (!NEXT_MUSIC.containsKey(p.getUUID())) NEXT_MUSIC.put(p.getUUID(), next);
         if (now < next) return;
         float v = cfg.musicVolume;
-        if (p.level().isDarkOutside()) v *= cfg.musicNightBoost;
+        if (com.unholymc.world.Night.isNight(p.level())) v *= cfg.musicNightBoost;
         if (underground(p)) v *= cfg.musicCaveBoost;
         p.connection.send(new ClientboundSoundEntityPacket(ModSounds.MUSIC_ELEVEN_REVERSED, SoundSource.MUSIC, p, Math.min(1f, v), 1f, p.getRandom().nextLong()));
         NEXT_MUSIC.put(p.getUUID(), now + Math.max(200, cfg.musicLoopTicks));

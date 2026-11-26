@@ -23,7 +23,7 @@ public abstract class PlayerMixin {
      */
     @Inject(method = "stopSleepInBed", at = @At("HEAD"))
     private void unholymc$onWakeUp(boolean forcefulWakeUp, boolean updateLevelList, CallbackInfo ci) {
-        if (!forcefulWakeUp && (Object) this instanceof ServerPlayer player && isSleepingLongEnough() && !player.level().isDarkOutside()) {
+        if (!forcefulWakeUp && (Object) this instanceof ServerPlayer player && isSleepingLongEnough() && !com.unholymc.world.Night.isNight(player.level())) {
             SleepTracker.onWokeUp(player);
         }
     }

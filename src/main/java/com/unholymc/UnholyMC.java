@@ -62,6 +62,7 @@ public class UnholyMC implements ModInitializer {
         WeatherControl.init();
         HolyPonds.init();
         ModFeatures.init();
+        com.unholymc.world.Graves.init();
         WorldCommands.init();
         SlenderForests.init();
         DarkCorners.init();

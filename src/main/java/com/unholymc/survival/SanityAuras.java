@@ -45,7 +45,7 @@ public final class SanityAuras {
         ServerLevel level = player.level();
 
         // Night (no passive drain during the day). Blood Moon triples it.
-        if (level.isDarkOutside()) {
+        if (com.unholymc.world.Night.isNight(level)) {
             float night = cfg.nightPer2Min;
             if (bloodMoonActive.test(level)) {
                 night *= cfg.bloodMoonNightMultiplier;
