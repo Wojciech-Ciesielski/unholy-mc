@@ -95,6 +95,12 @@ public abstract class AbstractSlop extends Monster implements HolyRepellable, Bi
         setVariant(SlopVariant.byId(input.getIntOr("Variant", variant().ordinal())));
     }
 
+    @Override
+    protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+        if (this instanceof UnholySlop) playSound(com.unholymc.registry.ModSounds.ENTITY_SLOP_UNHOLY_STEP.value(), 0.7f, 1f);
+        else playSound(com.unholymc.registry.ModSounds.ENTITY_SLOP_STEP.value(), 0.5f, 0.9f + random.nextFloat() * 0.2f);
+    }
+
     // --- fleeing (holy items) ---
 
     @Override
@@ -114,6 +120,10 @@ public abstract class AbstractSlop extends Monster implements HolyRepellable, Bi
         super.aiStep();
         if (!this.level().isClientSide()) {
             this.entityData.set(DATA_CHASING, this.getTarget() != null);
+            // the sheet ghost floats: a soft hum every two seconds while it moves, instead of steps
+            if (variant() == SlopVariant.SHEET_GHOST && tickCount % 40 == 0 && getDeltaMovement().horizontalDistanceSqr() > 1.0E-4) {
+                playSound(com.unholymc.registry.ModSounds.ENTITY_SLOP_FLOAT.value(), 0.4f, 1f);
+            }
         }
     }
 

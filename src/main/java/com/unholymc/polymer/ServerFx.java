@@ -76,6 +76,7 @@ public final class ServerFx {
     private static final Style FRAMES_FONT = Style.EMPTY.withFont(new FontDescription.Resource(UnholyMC.id("jumpscare_frames"))).withShadowColor(0).withColor(0xFFFFFF);
     private static final char BACKDROP = '\ue300', BACKDROP_RED = '\ue301';
     private static final int SCREAMER_FRAMES = 6, SPOOKY_FRAMES = 8;
+    private static final int[] SCREAMER_BASE = {0xE310, 0xE318, 0xE320, 0xE328, 0xE350, 0xE358, 0xE360, 0xE368, 0xE370};
 
     private record Screamer(long start, int face) {}
 
@@ -99,16 +100,18 @@ public final class ServerFx {
 
     /** The screamer (~12 ticks): a face jumps at the screen over a black backdrop, 6 frames, a new title every 2 ticks. */
     public static void screamer(ServerPlayer p, SlopVariant ignored) {
-        int face = 1 + p.getRandom().nextInt(4);
+        // faces 5 and 6 are the funny ones: one roll in six (ASSETS 5.2)
+        int[] scary = {1, 2, 3, 4, 7, 8, 9};
+        int face = p.getRandom().nextInt(6) == 0 ? 5 + p.getRandom().nextInt(2) : scary[p.getRandom().nextInt(scary.length)];
         SCREAMERS.put(p.getUUID(), new Screamer(p.level().getGameTime(), face));
         p.connection.send(new ClientboundSetTitlesAnimationPacket(0, 4, 0));
-        sound(p, ModSounds.JUMPSCARE_SCREAMER, 1f);
+        sound(p, face == 5 || face == 6 ? ModSounds.JUMPSCARE_MEME : ModSounds.JUMPSCARE_SCREAMER, 1f);
         screamerFrame(p, face, 0);
     }
 
     private static void screamerFrame(ServerPlayer p, int face, int index) {
         int staticIndex = (index == 0 || index == 2 || index == 4 || index == 5) ? (int) (p.level().getGameTime() % 4) : -1;
-        title(p, frame(BACKDROP, 0xE310 + 8 * (face - 1) + index, staticIndex));
+        title(p, frame(BACKDROP, SCREAMER_BASE[face - 1] + index, staticIndex));
     }
 
     /** The Spooky Jumpscare (~5.5 s); the death itself is scheduled by Jumpscares. */

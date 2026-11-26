@@ -148,3 +148,13 @@ Sprawdzone na serwerze dedykowanym i czystym kliencie vanilla:
 - **I5 (groby):** mini-struktura z kopcem z ziemi bielicowej, krzyżem, czaszką i pajęczynami, a metr pod ziemią beczka z lootem (`chests/grave`: kości, żelazo, jabłko, perła, a z szansą woda święcona, klejnot, krucyfiks, latarka, termos). Pierwsze otwarcie beczki daje strach, ciemność i 2 slopy w pobliżu. `/thm tp grave`. Loot wylosował się poprawnie, samego otwarcia beczki nie klikałem.
 - **B4/Z-anomalie (pomiar):** na lądzie wszystkie komórki 56×56 dostają anomalię (8 z 8). Komórki w całości na wodzie są pomijane, więc nad oceanami anomalii nie ma. Wyniki dla morza i lądu nie mieszają się.
 - **Noc:** `isDarkOutside()` w vanilla jest prawdziwe także w dzień podczas deszczu. Po odwróceniu pogody (decyzja #39) Krwawy Księżyc i spawn slopów traktowałyby deszczowy dzień jak noc. Dodałem `Night.isNight` liczone z zegara (okno łóżka 12542–23459) i podmieniłem je wszędzie.
+
+### Dźwięki w kodzie (ostatni etap)
+
+Podpięte wyzwalacze z `ASSETS.md` §6.1. **Nie mogłem ich odsłuchać** (w środowisku testowym nie ma karty dźwiękowej), więc sprawdzone jest tylko, że serwer ich nie wysyła z błędem i klient się nie rozłącza. Warto odsłuchać w grze.
+- **Atmosfera** (`horror/Atmosphere.java`, config `ambience.atmosphere`, `ambience.atmosphereRate`): szepty, odległe kroki, pukanie, trzask gałęzi (częściej, gdy slop jest w pobliżu), skrzypienie drzew (podwójnie w deszczu), ptaki w dzień z ich ucichnięciem, gdy pojawia się slop, wiatr (częściej w deszczu i burzy). Każdy dźwięk jest tylko dla jednego gracza, z własnym odliczaniem.
+- **Niskie sanity (≤ 14, głębsze ≤ 9):** fałszywe kroki za plecami (przerywają się, gdy gracz się odwróci o ponad 90°), krzyk zza ściany, fałszywy creeper (dźwięk vanilla), oddech nocą.
+- **Kroki moby:** slopy, Unholy Slopy, duszek (pomruk co 2 s), Slenderman. Dodatkowo wyciszyłem niewidzialnego zombie, na którym stoją moby, żeby jego własne kroki i jęki nie grały razem z naszymi.
+- **Przedmioty:** otwarcie i zamknięcie termosu, trafienie krucyfiksu, rozbicie wody święconej, trafienie Unholy Sworda.
+- **Jumpscare:** twarze 1–9 (śmieszne 5 i 6 wypadają raz na 6, z dźwiękiem `jumpscare.meme`).
+- **Napisy** (subtitles) do wszystkich nowych dźwięków w en i pl.

@@ -58,6 +58,7 @@ public class ThrownHolyWater extends ThrowableItemProjectile {
         }
 
         level.levelEvent(2002, this.blockPosition(), COLOR);
+        level.playSound(null, center.x, center.y, center.z, com.unholymc.registry.ModSounds.ITEM_HOLY_WATER_SHATTER, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 1f);
         this.discard();
     }
 }

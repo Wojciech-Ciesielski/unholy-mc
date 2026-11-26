@@ -60,6 +60,28 @@ public final class ModSounds {
     public static final Holder.Reference<SoundEvent> BLOCK_TREE_NOTE_RIP = register("block.tree_note.rip");
     public static final Holder.Reference<SoundEvent> PLAYER_DEHYDRATED = register("player.dehydrated");
 
+    public static final Holder.Reference<SoundEvent> JUMPSCARE_MEME = register("jumpscare.meme");
+    public static final Holder.Reference<SoundEvent> AMBIENT_FOREST_WHISPER = register("ambient.forest.whisper");
+    public static final Holder.Reference<SoundEvent> AMBIENT_FOREST_DISTANT_STEPS = register("ambient.forest.distant_steps");
+    public static final Holder.Reference<SoundEvent> AMBIENT_FOREST_KNOCK = register("ambient.forest.knock");
+    public static final Holder.Reference<SoundEvent> AMBIENT_FOREST_BRANCH_SNAP = register("ambient.forest.branch_snap");
+    public static final Holder.Reference<SoundEvent> AMBIENT_FOREST_BREATH = register("ambient.forest.breath");
+    public static final Holder.Reference<SoundEvent> AMBIENT_FOREST_TREE_CREAK = register("ambient.forest.tree_creak");
+    public static final Holder.Reference<SoundEvent> AMBIENT_FOREST_BIRDS = register("ambient.forest.birds");
+    public static final Holder.Reference<SoundEvent> AMBIENT_FOREST_BIRDS_SILENCE = register("ambient.forest.birds_silence");
+    public static final Holder.Reference<SoundEvent> AMBIENT_WIND = register("ambient.wind");
+    public static final Holder.Reference<SoundEvent> AMBIENT_SANITY_FAKE_STEPS = register("ambient.sanity.fake_steps");
+    public static final Holder.Reference<SoundEvent> AMBIENT_SANITY_WALL_SCREAM = register("ambient.sanity.wall_scream");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_STEP = register("entity.slop.step");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_UNHOLY_STEP = register("entity.slop.unholy.step");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLOP_FLOAT = register("entity.slop.float");
+    public static final Holder.Reference<SoundEvent> ENTITY_SLENDERMAN_STEP = register("entity.slenderman.step");
+    public static final Holder.Reference<SoundEvent> ITEM_THERMOS_OPEN = register("item.thermos.open");
+    public static final Holder.Reference<SoundEvent> ITEM_THERMOS_CLOSE = register("item.thermos.close");
+    public static final Holder.Reference<SoundEvent> ITEM_CRUCIFIX_HIT = register("item.crucifix.hit");
+    public static final Holder.Reference<SoundEvent> ITEM_HOLY_WATER_SHATTER = register("item.holy_water.shatter");
+    public static final Holder.Reference<SoundEvent> ITEM_UNHOLY_SWORD_HIT = register("item.unholy_sword.hit");
+
     private ModSounds() {}
 
     private static Holder.Reference<SoundEvent> register(String name) {

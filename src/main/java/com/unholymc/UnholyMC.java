@@ -56,6 +56,7 @@ public class UnholyMC implements ModInitializer {
         SlopSpawning.init();
         Jumpscares.init();
         HallucinationSpawner.init();
+        com.unholymc.horror.Atmosphere.init();
         SummonCommands.init();
         WorldState.init();
         BloodMoon.init();

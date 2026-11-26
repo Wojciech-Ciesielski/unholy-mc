@@ -103,6 +103,7 @@ public class ThermosItem extends Item {
             // full (or holding another fluid): fall through and drink
         }
         if (contents(stack).isEmpty()) return InteractionResult.PASS;
+        if (!level.isClientSide()) level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.ITEM_THERMOS_OPEN, SoundSource.PLAYERS, 0.8f, 1f);
         player.startUsingItem(hand);
         return InteractionResult.CONSUME;
     }
@@ -170,6 +171,7 @@ public class ThermosItem extends Item {
                 default -> {}
             }
             level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.ITEM_THERMOS_DRINK, SoundSource.PLAYERS, 0.8f, 1f);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.ITEM_THERMOS_CLOSE, SoundSource.PLAYERS, 0.8f, 1f);
             if (!player.hasInfiniteMaterials()) setContents(stack, new ThermosContents(c.fluid(), c.portions() - 1));
         }
         return stack;

@@ -119,8 +119,10 @@ public final class MobVisuals {
                     hadFlags = true;
                 }
             }
-            data.removeIf(v -> v.id() > 15 || v.id() == 0);
+            data.removeIf(v -> v.id() > 15 || v.id() == 0 || v.id() == 4);
             if (hadFlags || initial) data.add(new SynchedEntityData.DataValue<>(0, EntityDataSerializers.BYTE, (byte) (flags | INVISIBLE)));
+            // the zombie must stay silent: its own steps and groans would play on the client; ours come from the server
+            if (initial) data.add(new SynchedEntityData.DataValue<>(4, EntityDataSerializers.BOOLEAN, true));
         }
 
         @Override

@@ -325,6 +325,9 @@ public class UnholyConfig {
     }
 
     public static class Ambience {
+        /** The sound atmosphere (forest whispers, wind, low-sanity fake steps...). Rate multiplies how often sounds come (2 = twice as often). */
+        public boolean atmosphere = true;
+        public float atmosphereRate = 1f;
         /** Looping slowed / reversed disc 11, played to every player by the server. */
         public float musicVolume = 0.35f;
         /** Length of the music track in ticks: it is started again after this long. */

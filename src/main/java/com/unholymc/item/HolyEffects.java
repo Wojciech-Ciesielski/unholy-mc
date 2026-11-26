@@ -37,6 +37,10 @@ public final class HolyEffects {
             double dmg = damage.applyAsDouble(target);
             if (dmg > 0) {
                 target.hurtServer(level, level.damageSources().source(ModDamageTypes.HOLY, direct, owner), (float) dmg);
+                if (direct instanceof Player) { // the crucifix: its blow sounds where it lands
+                    level.playSound(null, target.getX(), target.getY() + target.getBbHeight() / 2, target.getZ(),
+                            com.unholymc.registry.ModSounds.ITEM_CRUCIFIX_HIT, net.minecraft.sounds.SoundSource.PLAYERS, 1f, 1f);
+                }
             }
             if (modCreature || dmg > 0) affected++;
         }

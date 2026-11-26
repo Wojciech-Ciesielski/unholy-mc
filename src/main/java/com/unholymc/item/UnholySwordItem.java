@@ -69,6 +69,15 @@ public class UnholySwordItem extends Item {
         return victim.is(ModTags.UNHOLY_SWORD_BONUS) ? damage * ConfigManager.get().unholySword.slopDamageBonus : 0f;
     }
 
+    @Override
+    public void postHurtEnemy(ItemStack stack, LivingEntity victim, LivingEntity attacker) {
+        super.postHurtEnemy(stack, victim, attacker);
+        if (victim.level() instanceof ServerLevel level) {
+            level.playSound(null, victim.getX(), victim.getY() + victim.getBbHeight() / 2, victim.getZ(), ModSounds.ITEM_UNHOLY_SWORD_HIT,
+                    SoundSource.PLAYERS, 1f, 0.9f + level.getRandom().nextFloat() * 0.2f);
+        }
+    }
+
     public static boolean isHeld(LivingEntity entity) {
         return entity.getMainHandItem().is(ModItems.UNHOLY_SWORD);
     }

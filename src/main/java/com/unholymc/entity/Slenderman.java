@@ -239,6 +239,11 @@ public class Slenderman extends Monster {
     }
 
     @Override
+    protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+        playSound(ModSounds.ENTITY_SLENDERMAN_STEP.value(), 1f, 1f);
+    }
+
+    @Override
     public void checkDespawn() {
         if (level().getDifficulty() == Difficulty.PEACEFUL) discard();
         setNoActionTime(0); // vanilla does this when a player is near; without it wandering AI stops after ~5 s
