@@ -10,3 +10,4 @@ remappedSrc/
 
 # oryginalne pliki Mojang (tylko lokalnie, do przeróbki)
 assets_src/audio_src/
+__pycache__/
