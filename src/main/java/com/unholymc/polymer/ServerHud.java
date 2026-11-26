@@ -87,7 +87,7 @@ public final class ServerHud {
         sb.append(GAP);
         // the mount's health replaces the food row: keep the drops out of its way (an empty gap keeps the brains in place)
         boolean mountBar = p.getVehicle() instanceof LivingEntity v && v.showVehicleHealth();
-        boolean dry = hud.hydrationStage() >= 2;
+        boolean dry = hud.hydrationStage() >= 1;
         for (int i = 9; i >= 0; i--) {
             if (mountBar) break;
             sb.append((char) (HYDRATION + (dry ? 3 : 0) + fill(i, hud.hydration())));

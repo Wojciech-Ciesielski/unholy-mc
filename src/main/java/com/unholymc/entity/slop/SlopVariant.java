@@ -34,6 +34,19 @@ public enum SlopVariant {
         this.hallucinationTexture = UnholyMC.id("textures/entity/slop/" + id + "_hallucination.png");
     }
 
+    /** Billboard / hitbox sizes as configured (slops.sizeMultiplier, DECISIONS: slops are a bit bigger than the design spec). */
+    public float scaledBillboard() {
+        return billboardSize * com.unholymc.config.ConfigManager.get().slops.sizeMultiplier;
+    }
+
+    public float scaledWidth() {
+        return width * com.unholymc.config.ConfigManager.get().slops.sizeMultiplier;
+    }
+
+    public float scaledHeight() {
+        return height * com.unholymc.config.ConfigManager.get().slops.sizeMultiplier;
+    }
+
     public static SlopVariant byId(int id) {
         SlopVariant[] v = values();
         return v[Math.floorMod(id, v.length)];

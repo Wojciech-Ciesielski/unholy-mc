@@ -101,7 +101,7 @@ public final class SurvivalSystem {
         }
 
         HudState hud = syncHud(player);
-        if (hud.hydrationStage() >= 2 && player.isSprinting()) {
+        if (hud.hydrationStage() >= 1 && player.isSprinting()) {
             player.setSprinting(false);
         }
         if (scan) {
@@ -138,12 +138,9 @@ public final class SurvivalSystem {
         return false;
     }
 
+    /** DECISIONS #35: 0 = fine, 1 = low (below {@code lowBelow} points = fewer than 6 icons). */
     public static int hydrationStage(float hydration, UnholyConfig.Hydration cfg) {
-        int v = StatsHelper.displayValue(hydration);
-        if (v <= cfg.severeMax) return 3;
-        if (v <= cfg.moderateMax) return 2;
-        if (v <= cfg.mildMax) return 1;
-        return 0;
+        return StatsHelper.displayValue(hydration) < cfg.lowBelow ? 1 : 0;
     }
 
     public static int sanityStage(float sanity, UnholyConfig.Sanity cfg) {
@@ -170,19 +167,10 @@ public final class SurvivalSystem {
     private static void applyEffects(ServerPlayer player, HudState hud, UnholyConfig cfg) {
         int dur = cfg.general.effectRefreshTicks;
         var h = cfg.hydration;
-        switch (hud.hydrationStage()) {
-            case 1 -> refresh(player, MobEffects.MINING_FATIGUE, dur, h.miningFatigueAmplifier);
-            case 2 -> {
-                refresh(player, MobEffects.MINING_FATIGUE, dur, h.miningFatigueAmplifier);
-                refresh(player, MobEffects.WEAKNESS, dur, h.weaknessModerateAmplifier);
-                if (h.nauseaEnabled) refresh(player, MobEffects.NAUSEA, dur + 40, 0);
-            }
-            case 3 -> {
-                refresh(player, MobEffects.MINING_FATIGUE, dur, h.miningFatigueAmplifier);
-                refresh(player, MobEffects.WEAKNESS, dur, h.weaknessSevereAmplifier);
-                if (h.nauseaEnabled) refresh(player, MobEffects.NAUSEA, dur + 40, 0);
-            }
-            default -> {}
+        // DECISIONS #35: Mining Fatigue and Weakness only when BOTH hydration and hunger are low
+        if (hud.hydration() < h.exhaustedBelow && player.getFoodData().getFoodLevel() < h.exhaustedBelow) {
+            refresh(player, MobEffects.MINING_FATIGUE, dur, h.miningFatigueAmplifier);
+            refresh(player, MobEffects.WEAKNESS, dur, h.weaknessAmplifier);
         }
         if (hud.sanityStage() == 0 && hud.sanity() >= cfg.sanity.wellbeingMin) {
             refresh(player, ModEffects.WELLBEING, dur, cfg.sanity.wellbeingAmplifier);

@@ -8,16 +8,40 @@ import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.saveddata.WeatherData;
 
 /**
- * GDD 5.4: rain and storms +50% more often (the vanilla countdown to the next rain/storm runs 1.5x as fast),
- * and at least one rain every 3 days. Vanilla weather commands (clearWeatherTime) are respected.
+ * DECISIONS #39: rain and storms are frequent and long, sun is rare (vanilla countdowns bent by config multipliers),
+ * and at least one rain every few days. Vanilla weather commands (clearWeatherTime) are respected.
  */
 public final class WeatherControl {
-    private static float extraRain, extraThunder;
+    private static float rainAcc, thunderAcc;
 
     private WeatherControl() {}
 
     public static void init() {
         ServerTickEvents.END_SERVER_TICK.register(WeatherControl::tick);
+    }
+
+    /** One tick of countdown bending; returns the new fractional accumulator. */
+    private static float bend(boolean active, float acc, float frequency, float duration,
+                              java.util.function.IntSupplier get, java.util.function.IntConsumer set) {
+        int time = get.getAsInt();
+        if (time <= 1) return 0f;
+        if (!active) {
+            acc += Math.max(0f, frequency - 1f);
+            while (acc >= 1f && time > 1) {
+                acc -= 1f;
+                time--;
+            }
+        } else if (duration > 1f) {
+            acc += 1f - 1f / duration;
+            while (acc >= 1f) {
+                acc -= 1f;
+                time++;
+            }
+        } else {
+            return 0f;
+        }
+        if (time != get.getAsInt()) set.accept(time);
+        return acc;
     }
 
     private static void tick(MinecraftServer server) {
@@ -28,25 +52,16 @@ public final class WeatherControl {
         long now = level.getGameTime();
         WorldState s = BloodMoon.state(level);
 
+        // DECISIONS #39: the vanilla countdowns are bent so that rain/storms are frequent and sun is rare.
+        // Counting down faster (extra decrements) shortens the clear spell; slower (re-adding ticks) lengthens the weather.
+        rainAcc = bend(w.isRaining(), rainAcc, cfg.rainFrequencyMultiplier, cfg.rainDurationMultiplier, w::getRainTime, w::setRainTime);
+        thunderAcc = bend(w.isThundering(), thunderAcc, cfg.thunderFrequencyMultiplier, cfg.thunderDurationMultiplier, w::getThunderTime, w::setThunderTime);
+
         if (w.isRaining()) {
             if (now - s.lastRainTime() > 1200) level.setAttached(WorldState.TYPE, s.withLastRain(now));
             return;
         }
         if (w.getClearWeatherTime() > 0) return; // /weather clear was used
-
-        float extra = Math.max(0f, cfg.rainFrequencyMultiplier - 1f);
-        extraRain += extra;
-        while (extraRain >= 1f) {
-            extraRain -= 1f;
-            if (w.getRainTime() > 1) w.setRainTime(w.getRainTime() - 1);
-        }
-        if (!w.isThundering()) {
-            extraThunder += extra;
-            while (extraThunder >= 1f) {
-                extraThunder -= 1f;
-                if (w.getThunderTime() > 1) w.setThunderTime(w.getThunderTime() - 1);
-            }
-        }
 
         if (s.lastRainTime() == 0L) {
             level.setAttached(WorldState.TYPE, s.withLastRain(now)); // start counting from the first tick

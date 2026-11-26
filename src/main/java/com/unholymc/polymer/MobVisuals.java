@@ -9,6 +9,7 @@ import eu.pb4.polymer.core.api.entity.PolymerEntity;
 import eu.pb4.polymer.core.api.entity.PolymerEntityUtils;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import eu.pb4.polymer.virtualentity.api.attachment.EntityAttachment;
+import eu.pb4.polymer.virtualentity.api.elements.InteractionElement;
 import eu.pb4.polymer.virtualentity.api.elements.ItemDisplayElement;
 import net.fabricmc.fabric.api.networking.v1.context.PacketContext;
 import net.minecraft.core.component.DataComponents;
@@ -43,7 +44,8 @@ import java.util.Set;
  */
 public final class MobVisuals {
     private static final byte INVISIBLE = 0x20;
-    private static final float ZOMBIE_HEIGHT = 1.95f;
+    /** The stand-in zombie is shrunk to the minimum scale; the exact hitbox is an interaction element (see Base). */
+    private static final float STAND_IN_SCALE = 0.0625f;
 
     private MobVisuals() {}
 
@@ -69,19 +71,36 @@ public final class MobVisuals {
         return stack;
     }
 
-    /** Shared part: an invisible zombie with our hitbox, and a holder of display passengers. */
+    /**
+     * Shared part: an invisible, tiny zombie that carries the mob on the wire, an interaction element with the mob's
+     * real hitbox (attacks and interactions are redirected to the mob), and display elements for the look.
+     * The displays are ordinary elements positioned from the mob's feet each tick (teleport-interpolated),
+     * not passengers, so they do not depend on the stand-in's size or seat height.
+     */
     private abstract static class Base<T extends LivingEntity> implements PolymerEntity {
         protected final T entity;
         protected final ElementHolder holder = new ElementHolder();
+        private final InteractionElement hitbox;
 
         Base(T entity) {
             this.entity = entity;
+            this.hitbox = InteractionElement.redirect(entity);
+            this.hitbox.setSize(entity.getBbWidth(), entity.getBbHeight());
         }
 
-        /** Called at the end of the subclass constructor: the passengers must exist before anyone starts tracking. */
+        /** Called at the end of the subclass constructor: the elements must exist before anyone starts tracking. */
         protected void start() {
+            holder.addElement(hitbox);
             build();
             EntityAttachment.ofTicking(holder, entity);
+        }
+
+        protected <E extends ItemDisplayElement> E display(E element) {
+            element.setItemDisplayContext(ItemDisplayContext.NONE);
+            element.setInterpolationDuration(2);
+            element.setTeleportDuration(3);
+            holder.addElement(element);
+            return element;
         }
 
         @Override
@@ -107,17 +126,15 @@ public final class MobVisuals {
         @Override
         public void modifyRawEntityAttributeData(List<ClientboundUpdateAttributesPacket.AttributeSnapshot> data, ServerPlayer player, boolean initial) {
             data.removeIf(s -> s.attribute().equals(Attributes.SCALE));
-            data.add(new ClientboundUpdateAttributesPacket.AttributeSnapshot(Attributes.SCALE, entity.getBbHeight() / ZOMBIE_HEIGHT, List.of()));
+            data.add(new ClientboundUpdateAttributesPacket.AttributeSnapshot(Attributes.SCALE, STAND_IN_SCALE, List.of()));
         }
 
         @Override
         public void beforeEntityTrackerTick(Set<ServerPlayerConnection> listeners) {
+            if (hitbox.getWidth() != entity.getBbWidth() || hitbox.getHeight() != entity.getBbHeight()) {
+                hitbox.setSize(entity.getBbWidth(), entity.getBbHeight());
+            }
             update();
-        }
-
-        /** Elements are positioned relative to the zombie's passenger seat, i.e. the top of the hitbox. */
-        protected float seatY() {
-            return entity.getBbHeight();
         }
 
         protected abstract void build();
@@ -142,11 +159,9 @@ public final class MobVisuals {
 
         @Override
         protected void build() {
-            image.setItemDisplayContext(ItemDisplayContext.NONE);
             image.setBillboardMode(Display.BillboardConstraints.VERTICAL);
-            image.setInterpolationDuration(2);
             if (look().isHallucinationLook()) image.setBrightness(new Brightness(15, 15));
-            holder.addPassengerElement(image);
+            display(image);
         }
 
         @Override
@@ -159,12 +174,12 @@ public final class MobVisuals {
                 tint = wantTint;
                 String name = v.name().toLowerCase(java.util.Locale.ROOT) + (look.isHallucinationLook() ? "_hallucination" : "");
                 image.setItem(model(UnholyMC.id("slop/" + name), tint, null));
-                image.setScale(new Vector3f(v.billboardSize));
+                image.setScale(new Vector3f(v.scaledBillboard()));
             }
             float jitter = look.isChasing() ? 0.04f : 0f;
             var r = entity.getRandom();
             image.setTranslation(new Vector3f(jitter * (r.nextFloat() * 2 - 1),
-                    -seatY() + v.billboardSize / 2f + v.floatOffset, jitter * (r.nextFloat() * 2 - 1)));
+                    v.scaledBillboard() / 2f + v.floatOffset, jitter * (r.nextFloat() * 2 - 1)));
             image.startInterpolationIfDirty();
         }
     }
@@ -191,12 +206,9 @@ public final class MobVisuals {
         @Override
         protected void build() {
             for (int i = 0; i < PARTS.length; i++) {
-                var e = new ItemDisplayElement();
-                e.setItemDisplayContext(ItemDisplayContext.NONE);
-                e.setInterpolationDuration(2);
+                var e = display(new ItemDisplayElement());
                 e.setViewRange(2f);
                 elements[i] = e;
-                holder.addPassengerElement(e);
             }
         }
 
@@ -217,8 +229,14 @@ public final class MobVisuals {
             float bodyYaw = Mth.wrapDegrees(entity.yBodyRot);
             float headYaw = Mth.wrapDegrees(entity.yHeadRot - entity.yBodyRot);
             float pos = entity.walkAnimation.position(), speed = Math.min(1f, entity.walkAnimation.speed());
-            float swing = Mth.cos(pos * 0.45f) * 0.9f * speed;
+            // a human-like stride: long swinging legs, arms swinging against them, torso leaning into the walk,
+            // a little twist and bob on every step (Slenderman is tall, so the cadence stays slow)
+            float phase = pos * 0.5f;
+            float swing = Mth.cos(phase) * 1.0f * speed;
             float breath = Mth.sin(entity.tickCount * 0.05f) * 0.03f * (1f - Math.min(1f, speed * 4f));
+            float lean = 0.14f * speed;
+            float twist = Mth.cos(phase) * 0.10f * speed;
+            float bob = Math.abs(Mth.sin(phase)) * 0.06f * speed;
             double jx = 0, jz = 0;
             if (glitch > 0) {
                 jx = (entity.getRandom().nextDouble() * 2 - 1) * 0.1;
@@ -229,16 +247,18 @@ public final class MobVisuals {
             for (int i = 0; i < PARTS.length; i++) {
                 Part part = PARTS[i];
                 Quaternionf local = switch (part.name) {
-                    case "head" -> new Quaternionf().rotateY(-headYaw * Mth.DEG_TO_RAD).rotateX(entity.getXRot() * Mth.DEG_TO_RAD).rotateZ(0.15f);
-                    case "body" -> new Quaternionf().rotateX(breath);
-                    case "right_arm" -> new Quaternionf().rotateX(swing * 0.25f).rotateZ(0.04f);
-                    case "left_arm" -> new Quaternionf().rotateX(-swing * 0.25f).rotateZ(-0.04f);
+                    case "head" -> new Quaternionf().rotateY(-headYaw * Mth.DEG_TO_RAD - twist * 0.6f)
+                            .rotateX(entity.getXRot() * Mth.DEG_TO_RAD - lean * 0.5f).rotateZ(0.15f);
+                    case "body" -> new Quaternionf().rotateY(twist).rotateX(breath - lean);
+                    case "right_arm" -> new Quaternionf().rotateY(twist).rotateX(swing * 0.8f - lean).rotateZ(0.04f);
+                    case "left_arm" -> new Quaternionf().rotateY(twist).rotateX(-swing * 0.8f - lean).rotateZ(-0.04f);
                     case "right_leg" -> new Quaternionf().rotateX(-swing);
                     default -> new Quaternionf().rotateX(swing);
                 };
-                Vector3f pivot = new Vector3f(part.x * s, part.y * s, part.z * s).rotate(body);
+                boolean legPart = part.name.endsWith("leg");
+                Vector3f pivot = new Vector3f(part.x * s, (part.y + (legPart ? 0f : bob)) * s, part.z * s).rotate(body);
                 var e = elements[i];
-                e.setTranslation(new Vector3f((float) (pivot.x + jx), pivot.y - seatY(), (float) (pivot.z + jz)));
+                e.setTranslation(new Vector3f((float) (pivot.x + jx), pivot.y, (float) (pivot.z + jz)));
                 e.setLeftRotation(new Quaternionf(body).mul(local));
                 e.setScale(new Vector3f(2f * s));
                 e.startInterpolationIfDirty();

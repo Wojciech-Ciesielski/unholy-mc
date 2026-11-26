@@ -104,7 +104,7 @@ public class Hallucination extends PathfinderMob implements BillboardEntity, Hol
     @Override
     protected EntityDimensions getDefaultDimensions(Pose pose) {
         SlopVariant v = variant();
-        return EntityDimensions.scalable(v.width, v.height);
+        return EntityDimensions.scalable(v.scaledWidth(), v.scaledHeight());
     }
 
     @Override

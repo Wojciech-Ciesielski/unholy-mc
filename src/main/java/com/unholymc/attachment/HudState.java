@@ -11,7 +11,7 @@ import net.minecraft.network.codec.StreamCodec;
  * @param enabled         false in creative/spectator/peaceful: HUD hidden, no effects
  * @param sanity          0..20 (rounded up)
  * @param hydration       0..20 (rounded up)
- * @param hydrationStage  0 = ok, 1 = mild, 2 = moderate, 3 = severe
+ * @param hydrationStage  0 = ok, 1 = low (below 12 points: no sprint, screen blinks)
  * @param sanityStage     0 = wellbeing, 1 = unsettled, 2 = disturbed, 3 = broken
  */
 public record HudState(boolean enabled, int sanity, int hydration, int hydrationStage, int sanityStage) {
@@ -26,6 +26,6 @@ public record HudState(boolean enabled, int sanity, int hydration, int hydration
             HudState::new);
 
     public boolean canSprint() {
-        return !enabled || hydrationStage < 2;
+        return !enabled || hydrationStage < 1;
     }
 }

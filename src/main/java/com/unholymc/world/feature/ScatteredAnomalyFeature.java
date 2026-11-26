@@ -31,20 +31,32 @@ public class ScatteredAnomalyFeature extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         WorldGenLevel level = ctx.level();
-        int cellChunks = Math.max(1, ConfigManager.get().world.anomalyGridSize / 16);
+        int size = Math.max(24, ConfigManager.get().world.anomalyGridSize);
         int chunkX = ctx.origin().getX() >> 4, chunkZ = ctx.origin().getZ() >> 4;
-        int cellX = Math.floorDiv(chunkX, cellChunks), cellZ = Math.floorDiv(chunkZ, cellChunks);
-        RandomSource cell = RandomSource.create(level.getSeed() ^ Mth.getSeed(cellX, 0x5EED, cellZ));
-        // keep the chosen chunk off the cell border so neighbouring anomalies are not glued together
-        int margin = cellChunks >= 4 ? 1 : 0;
-        int pickX = cellX * cellChunks + margin + cell.nextInt(cellChunks - 2 * margin);
-        int pickZ = cellZ * cellChunks + margin + cell.nextInt(cellChunks - 2 * margin);
-        if (pickX != chunkX || pickZ != chunkZ) return false;
+        // cells are in blocks (not chunk aligned); the one anomaly of a cell sits at a seed-chosen block
+        // and is placed by the chunk that contains it
+        int minCellX = Math.floorDiv(chunkX << 4, size), maxCellX = Math.floorDiv((chunkX << 4) + 15, size);
+        int minCellZ = Math.floorDiv(chunkZ << 4, size), maxCellZ = Math.floorDiv((chunkZ << 4) + 15, size);
+        for (int cellX = minCellX; cellX <= maxCellX; cellX++) {
+            for (int cellZ = minCellZ; cellZ <= maxCellZ; cellZ++) {
+                RandomSource cell = RandomSource.create(level.getSeed() ^ Mth.getSeed(cellX, 0x5EED, cellZ));
+                int margin = size / 6;
+                int pickX = cellX * size + margin + cell.nextInt(size - 2 * margin);
+                int pickZ = cellZ * size + margin + cell.nextInt(size - 2 * margin);
+                if ((pickX >> 4) != chunkX || (pickZ >> 4) != chunkZ) continue;
+                Feature<NoneFeatureConfiguration> type = anomalies.get(cell.nextInt(anomalies.size())).get();
+                return tryPlace(ctx, type, pickX, pickZ);
+            }
+        }
+        return false;
+    }
 
-        Feature<NoneFeatureConfiguration> type = anomalies.get(cell.nextInt(anomalies.size())).get();
+    private static boolean tryPlace(FeaturePlaceContext<NoneFeatureConfiguration> ctx, Feature<NoneFeatureConfiguration> type, int pickX, int pickZ) {
+        WorldGenLevel level = ctx.level();
         RandomSource r = ctx.random();
-        for (int attempt = 0; attempt < 12; attempt++) {
-            int x = (chunkX << 4) + r.nextInt(16), z = (chunkZ << 4) + r.nextInt(16);
+        for (int attempt = 0; attempt < 16; attempt++) {
+            // first the chosen block, then nearby columns of the same chunk
+            int x = attempt == 0 ? pickX : (pickX & ~15) + r.nextInt(16), z = attempt == 0 ? pickZ : (pickZ & ~15) + r.nextInt(16);
             BlockPos pos = new BlockPos(x, level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z), z);
             if (type.place(FeatureConfiguration.NONE, level, ctx.chunkGenerator(), r, pos)) return true;
         }

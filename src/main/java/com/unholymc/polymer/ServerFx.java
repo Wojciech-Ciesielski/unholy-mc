@@ -133,18 +133,12 @@ public final class ServerFx {
         }
     }
 
-    /** Dehydration screen effects (GDD 5.1): blurry spells, then eyelid blinks at the worst stage. */
+    /** Dehydration screen effects (DECISIONS #35): below the low threshold the screen blinks and darkens. */
     private static void dehydration(ServerPlayer p, HudState hud, long now) {
         if (!hud.enabled() || hud.hydrationStage() == 0) return;
         long t = now + p.getId();
-        switch (hud.hydrationStage()) {
-            case 1 -> { if (t % 200 == 0) quiet(p, MobEffects.DARKNESS, 30); }
-            case 2 -> { if (t % 160 == 0) quiet(p, MobEffects.DARKNESS, 50); }
-            default -> {
-                if (t % 80 == 0) quiet(p, MobEffects.BLINDNESS, 10);
-                if (t % 60 == 0) quiet(p, MobEffects.DARKNESS, 70);
-            }
-        }
+        if (t % 80 == 0) quiet(p, MobEffects.BLINDNESS, 10);
+        if (t % 60 == 0) quiet(p, MobEffects.DARKNESS, 70);
     }
 
     private static void quiet(ServerPlayer p, Holder<net.minecraft.world.effect.MobEffect> effect, int ticks) {
@@ -155,7 +149,7 @@ public final class ServerFx {
     private static void noSprint(ServerPlayer p, HudState hud) {
         var speed = p.getAttribute(Attributes.MOVEMENT_SPEED);
         if (speed == null) return;
-        boolean block = hud.enabled() && hud.hydrationStage() >= 2 && p.isSprinting();
+        boolean block = hud.enabled() && hud.hydrationStage() >= 1 && p.isSprinting();
         if (block && !speed.hasModifier(NO_SPRINT)) {
             // vanilla sprint: +30% total; 1.3 * (1 - 0.3/1.3) = 1
             speed.addTransientModifier(new AttributeModifier(NO_SPRINT, -0.3 / 1.3, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));

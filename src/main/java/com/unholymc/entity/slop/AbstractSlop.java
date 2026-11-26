@@ -74,7 +74,7 @@ public abstract class AbstractSlop extends Monster implements HolyRepellable, Bi
     @Override
     protected EntityDimensions getDefaultDimensions(Pose pose) {
         SlopVariant v = variant();
-        return EntityDimensions.scalable(v.width, v.height);
+        return EntityDimensions.scalable(v.scaledWidth(), v.scaledHeight());
     }
 
     @Override

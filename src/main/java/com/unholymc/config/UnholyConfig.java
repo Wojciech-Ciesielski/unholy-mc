@@ -53,14 +53,12 @@ public class UnholyConfig {
         public List<String> dryBiomes = new ArrayList<>(List.of("minecraft:desert", "#minecraft:is_savanna", "#minecraft:is_badlands", "#minecraft:is_jungle"));
         public List<String> wetBiomes = new ArrayList<>(List.of("minecraft:mushroom_fields", "minecraft:swamp", "minecraft:mangrove_swamp"));
 
-        /** Threshold stages (inclusive upper bounds). */
-        public int mildMax = 14;      // 14-10: blur + mining fatigue
-        public int moderateMax = 9;   // 9-5: no sprint, nausea, weakness I
-        public int severeMax = 4;     // 4-0: blink, strong blur, nausea, weakness II
+        /** DECISIONS #35: one threshold, in points (12 = fewer than 6 icons). Below it: no sprint, screen blinks, darkness. */
+        public int lowBelow = 12;
+        /** Mining Fatigue and Weakness need hydration AND hunger below this many points (DECISIONS #35). */
+        public int exhaustedBelow = 12;
         public int miningFatigueAmplifier = 0;
-        public int weaknessModerateAmplifier = 0;
-        public int weaknessSevereAmplifier = 1;
-        public boolean nauseaEnabled = true;
+        public int weaknessAmplifier = 0;
         /** Damage while at exactly 0 (DECISIONS #30: independent of difficulty). */
         public float dehydrationDamage = 1f;
         public int dehydrationDamageIntervalTicks = 20;
@@ -202,6 +200,8 @@ public class UnholyConfig {
     }
 
     public static class Slops {
+        /** Billboard and hitbox size multiplier on top of the design sizes (applies to new spawns). */
+        public float sizeMultiplier = 1.3f;
         /** Registration-time values (restart needed). Category shares 60/30/10 via spawn weights. */
         public int aggressiveSpawnWeight = 12;
         public int neutralSpawnWeight = 6;
@@ -255,15 +255,20 @@ public class UnholyConfig {
     }
 
     public static class World {
-        /** GDD 5.4: rain/storms +50% more often (the clear-weather countdown runs this many times faster). */
-        public float rainFrequencyMultiplier = 1.5f;
+        /** DECISIONS #39: rain is common, sun is rare. The vanilla clear-weather countdown runs this many times faster... */
+        public float rainFrequencyMultiplier = 5f;
+        /** ...and rain lasts this many times longer than in vanilla. */
+        public float rainDurationMultiplier = 2.5f;
+        /** Storms: same idea, more frequent and a bit longer. */
+        public float thunderFrequencyMultiplier = 4f;
+        public float thunderDurationMultiplier = 1.5f;
         /** At least one rain or storm every N days. */
         public int guaranteedRainEveryDays = 3;
         public int guaranteedRainDurationTicks = 6000;
         /** Chance that a naturally spawned zombie wears a carved pumpkin (world anomaly). */
         public float zombiePumpkinChance = 0.12f;
         /** Surface anomalies (crosses, skulls, dead trees...): about one per grid cell of this many blocks. */
-        public int anomalyGridSize = 128;
+        public int anomalyGridSize = 56;
     }
 
     public static class BloodMoon {
