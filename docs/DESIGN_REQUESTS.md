@@ -85,7 +85,9 @@ Po zmianach z tego pliku następujące sekcje `ASSETS.md` są nieaktualne i pros
 | 1, 8 Dźwięki | **gotowe** (wersje robocze, synteza): 68 zdarzeń / 130 plików, w tym nowe otoczenie, kroki, przedmioty, niskie Sanity; fałszywy creeper = vanilla `entity.creeper.primed` | `sounds.json`, `ASSETS.md` §6 (tabela wyzwalaczy §6.1), `assets_src/tools/make_audio.py` |
 | 2 Jumpscare'y | **gotowe**: 4 twarze × 6 klatek, Spooky 8 klatek, nakładka szumu, tło na cały ekran, nowa czcionka `unholymc:jumpscare_frames` | `ASSETS.md` §5 |
 | 5 Krwawy Księżyc | **gotowe do sprawdzenia**: paczka-nakładka (push/pop w trakcie gry), shadery niezweryfikowane na GPU | `resourcepacks/blood_moon/`, `ASSETS.md` §5a |
-| 7 Atmosfera | szarszy dzień = wyblakłe kolormapy w głównej paczce; shadery: kandydaci w `ASSETS.md` §8 | `assets/minecraft/textures/colormap/` |
+| 7 Atmosfera | **gotowe**: wyblakłe kolormapy + lekkie shadery w głównej paczce (korekcja kolorów, ciemniejsze noce, mgiełka, mocniejsza winieta), bez wpływu na FPS; niezweryfikowane na GPU | `ASSETS.md` §5b |
 | 9 HUD | **gotowe, wariant autora**: 4 statystyki w sidebarze po prawej, bez ciemnego tła (shader `gui.vsh`), ikony wyrównane; pancerz w rogu i panel **usunięte** | `ASSETS.md` §4 |
 | 6 Moby 3D | **anulowane przez autora (2026-11-26)**: modele wyglądały źle. Slopy i halucynacje **zostają billboardami PNG** (nadpisuje DECISIONS #36). Wersja robocza modeli została wycofana (revert) | – |
-| 3, 4 Animacje, rozmiary | do zrobienia dla billboardów PNG; nowe slopy z obrazków autora czekają na pliki źródłowe | – |
+| 3 Animacje slopów | **wycofane przez autora** (2026-11-26) | – |
+| 4 Rozmiary | tabela w `ASSETS.md` §1 (także 4 nowe slopy: cartoon_cat, shrek, masked_reacher, wraith) | `ASSETS.md` §1 |
+| Nowe slopy i jumpscare'y z obrazków autora | **gotowe** (4 slopy, 5 twarzy, dźwięk `jumpscare.meme`); twarzy „blady uśmiech” nie robimy | `ASSETS.md` §1, §5 |

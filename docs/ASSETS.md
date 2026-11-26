@@ -257,7 +257,15 @@ Tytuły i komunikaty (bez zmian):
 ## 5b. Atmosfera i kolory (DECISIONS #43)
 
 - **Szarszy dzień:** główna paczka nadpisuje `minecraft:textures/colormap/{grass,foliage,dry_foliage}.png` wersjami −30% nasycenia i −6% jasności (pochodne vanilla 26.2, generator `make_packs.py`). Trawa i liście we wszystkich biomach są lekko wyblakłe, a niebo i woda zostają vanilla. To bezpieczna podstawa i działa bez shaderów.
-- **Shadery:** propozycje gotowych paczek są w sekcji 8. Własne efekty (np. lekka globalna desaturacja, winieta) dopiszemy do wybranej paczki, żeby dwie paczki nie nadpisywały tych samych plików `shaders/core`.
+- **Lekkie shadery (główna paczka, bez Iris/OptiFine):** zamiast cudzej paczki własne, minimalne zmiany, które dokładają kilka operacji do obliczeń, które gra i tak wykonuje (bez dodatkowych przebiegów i post-processu, więc FPS praktycznie bez zmian):
+
+| Plik | Efekt |
+|---|---|
+| `minecraft:shaders/include/fog.glsl` | **korekcja kolorów świata**: −20% nasycenia, lekko chłodniej; **noc**: głębsze cienie (jasność mgły służy jako „pora dnia”, jasne źródła światła zostają jasne); **mgiełka**: delikatna mgła (max 35%) od 35% zasięgu renderowania. Działa tylko w świecie (`FogColor.a > 0`), więc GUI i przedmioty w ekwipunku wyglądają normalnie. W Netherze ciemna mgła daje „nocny” wygląd (zamierzone). |
+| `minecraft:textures/misc/vignette.png` | **mocniejsza winieta**: vanilla rysuje ją zawsze (jej siła zależy od jasności otoczenia), więc podmiana tekstury nic nie kosztuje |
+| `minecraft:shaders/core/gui.vsh` | ukrycie tła sidebara ze statystykami (§4.2) |
+
+Podczas Krwawego Księżyca nakładka podmienia `fog.glsl` własną, czerwoną wersją. **Niezweryfikowane na GPU:** przy błędzie kompilacji klient pokaże błąd ładowania paczki. Wtedy usuwa się `fog.glsl` (kolory wracają do vanilla, reszta działa). Natężenie efektów da się zmienić w jednym miejscu: `assets_src/tools/make_packs.py`, sekcja 3 (`0.80` = nasycenie, `1.35` = głębia nocnych cieni, `0.35` = mgiełka, `215` = siła winiety).
 
 ---
 
