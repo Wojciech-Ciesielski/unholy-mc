@@ -59,6 +59,7 @@ public final class PolymerSetup {
         MobVisuals.init();
         ServerHud.init();
         ServerFx.init();
+        BloodMoonPack.init();
 
         for (Item item : new Item[]{ModItems.NIGHTMARE_GEM, ModItems.HOLY_WATER, ModItems.SPLASH_HOLY_WATER, ModItems.CRUCIFIX,
                 ModItems.FLASHLIGHT, ModItems.GRAVE_CROSS}) {

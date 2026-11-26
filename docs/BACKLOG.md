@@ -127,7 +127,9 @@ Zrobione i sprawdzone w grze (serwer dedykowany + czysty klient vanilla), commit
 
 - **Z-HUD (wariant C):** nowy HUD z czcionką designu. Cztery rzędy po lewej, cztery sloty pancerza po prawej (z paskami wytrzymałości), serca, głód i pancerz vanilla ukryte. Sprawdzone na czystym kliencie 1280×720 (skala GUI 2). Nośnikiem są przezroczyste bossbary, więc potrzebna jest wysokość ekranu ≥ ok. 270 pikseli GUI (na mniejszych dolne rzędy się nie mieszczą). Kalibracja: `/hud edge <px>` per gracz.
 
-Do zrobienia: B5 (ruch moby/anomalii), B9 (niebo Krwawego Księżyca), F1 reszta (animacje slopów), F2 (dźwięki w kodzie), F3 (jumpscare'y z klatkami designu), I2–I7.
+- **B9 (Krwawy Księżyc):** paczka-nakładka od designu pushowana graczom w Overworldzie na czas eventu i zdejmowana o świcie (hosting przez Polymer AutoHost). Sprawdzone w grze: niebo robi się krwawo czerwone, po `blood_moon stop` wraca normalne, shadery kompilują się bez błędów. Każdy push/pop przeładowuje zasoby klienta (ok. 1–3 s). Księżyca na niebie nie widziałem na zrzucie.
+
+Do zrobienia: B5 (ruch moby/anomalii), F1 reszta (animacje slopów), F2 (dźwięki w kodzie), F3 (jumpscare'y z klatkami designu), I2–I7.
 
 ### Wyniki testu wykonalności Z-HUD
 
