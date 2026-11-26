@@ -18,6 +18,7 @@ import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.protocol.game.ClientboundClearTitlesPacket;
 import net.minecraft.network.protocol.game.ClientboundSetBorderWarningDistancePacket;
+import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
 import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
@@ -51,8 +52,6 @@ import java.util.UUID;
  * and extra cave sounds, and the no-sprint rule while dehydrated.
  */
 public final class ServerFx {
-    private static final Style JUMPSCARE_FONT = Style.EMPTY.withFont(new FontDescription.Resource(UnholyMC.id("jumpscare"))).withShadowColor(0);
-    private static final char SLOP_GLYPH = '', SPOOKY_FACE = '';
     private static final net.minecraft.resources.Identifier NO_SPRINT = UnholyMC.id("dehydrated_no_sprint");
 
     private static final Map<UUID, Long> SPOOKY_START = new HashMap<>();
@@ -66,19 +65,50 @@ public final class ServerFx {
         ServerPlayConnectionEvents.DISCONNECT.register((h, s) -> {
             UUID id = h.player.getUUID();
             SPOOKY_START.remove(id);
+            SCREAMERS.remove(id);
             NEXT_MUSIC.remove(id);
             RED_TINT.remove(id);
         });
     }
 
-    // --- jumpscares ---
+    // --- jumpscares (frames and timing from docs/ASSETS.md section 5) ---
 
-    /** The 14-tick screamer: a slop's face jumps at the screen with a scream. */
-    public static void screamer(ServerPlayer p, SlopVariant variant) {
-        int t = Math.max(2, ConfigManager.get().jumpscares.screamerTicks);
-        p.connection.send(new ClientboundSetTitlesAnimationPacket(0, t / 2, t - t / 2));
-        p.connection.send(new ClientboundSetTitleTextPacket(Component.literal(String.valueOf((char) (SLOP_GLYPH + variant.ordinal()))).withStyle(JUMPSCARE_FONT)));
+    private static final Style FRAMES_FONT = Style.EMPTY.withFont(new FontDescription.Resource(UnholyMC.id("jumpscare_frames"))).withShadowColor(0).withColor(0xFFFFFF);
+    private static final char BACKDROP = '\ue300', BACKDROP_RED = '\ue301';
+    private static final int SCREAMER_FRAMES = 6, SPOOKY_FRAMES = 8;
+
+    private record Screamer(long start, int face) {}
+
+    private static final Map<UUID, Screamer> SCREAMERS = new HashMap<>();
+
+    /** One title frame: backdrop (covers the screen), centred face, optional noise overlay. */
+    private static Component frame(char backdrop, int face, int staticIndex) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(backdrop).append('\ue3f0');
+        if (face >= 0) {
+            sb.append('\ue3f2').append((char) face);
+            if (staticIndex >= 0) sb.append('\ue3f1').append((char) (0xE340 + staticIndex));
+            sb.append('\ue3f3');
+        }
+        return Component.literal(sb.toString()).withStyle(FRAMES_FONT);
+    }
+
+    private static void title(ServerPlayer p, Component text) {
+        p.connection.send(new ClientboundSetTitleTextPacket(text));
+    }
+
+    /** The screamer (~12 ticks): a face jumps at the screen over a black backdrop, 6 frames, a new title every 2 ticks. */
+    public static void screamer(ServerPlayer p, SlopVariant ignored) {
+        int face = 1 + p.getRandom().nextInt(4);
+        SCREAMERS.put(p.getUUID(), new Screamer(p.level().getGameTime(), face));
+        p.connection.send(new ClientboundSetTitlesAnimationPacket(0, 4, 0));
         sound(p, ModSounds.JUMPSCARE_SCREAMER, 1f);
+        screamerFrame(p, face, 0);
+    }
+
+    private static void screamerFrame(ServerPlayer p, int face, int index) {
+        int staticIndex = (index == 0 || index == 2 || index == 4 || index == 5) ? (int) (p.level().getGameTime() % 4) : -1;
+        title(p, frame(BACKDROP, 0xE310 + 8 * (face - 1) + index, staticIndex));
     }
 
     /** The Spooky Jumpscare (~5.5 s); the death itself is scheduled by Jumpscares. */
@@ -86,25 +116,33 @@ public final class ServerFx {
         SPOOKY_START.put(p.getUUID(), p.level().getGameTime());
         p.connection.send(new ClientboundStopSoundPacket(null, null)); // the world goes quiet
         p.connection.send(new ClientboundClearTitlesPacket(true));
+        p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, true, false, false));
     }
 
     private static void spookyTick(ServerPlayer p, long t) {
         if (t == 20) {
             sound(p, ModSounds.JUMPSCARE_SPOOKY_BUILDUP, 1f);
-            p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 70, 0, true, false, false));
+            p.connection.send(new ClientboundSetTitlesAnimationPacket(0, 70, 0));
+            title(p, frame(BACKDROP_RED, -1, -1));
         }
         if (t == 32 || t == 47 || t == 62) { // the red text flashes three times
-            p.connection.send(new ClientboundSetTitlesAnimationPacket(0, 6, 0));
-            p.connection.send(new ClientboundSetTitleTextPacket(Component.translatable("jumpscare.unholymc.spooky_text").withColor(0xC01020)));
+            p.connection.send(new ClientboundSetSubtitleTextPacket(Component.translatable("jumpscare.unholymc.spooky_text").withColor(0xC01020)));
+            p.connection.send(new ClientboundSetTitlesAnimationPacket(0, 70, 0));
+            title(p, frame(BACKDROP_RED, -1, -1));
         }
+        if (t == 38 || t == 53 || t == 68) p.connection.send(new ClientboundSetSubtitleTextPacket(Component.empty()));
         if (t == 80) {
             sound(p, ModSounds.JUMPSCARE_SPOOKY, 1f);
-            p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, true, false, false));
-            p.connection.send(new ClientboundSetTitlesAnimationPacket(0, 40, 0));
+            p.connection.send(new ClientboundSetSubtitleTextPacket(Component.empty()));
+            p.connection.send(new ClientboundSetTitlesAnimationPacket(0, 4, 0));
         }
-        if (t >= 80 && t < 110 && t % 2 == 0) { // shaking face
-            String pad = t % 4 == 0 ? "" : " ";
-            p.connection.send(new ClientboundSetTitleTextPacket(Component.literal(pad + SPOOKY_FACE).withStyle(JUMPSCARE_FONT)));
+        if (t >= 80 && t < 80 + 2 * SPOOKY_FRAMES && t % 2 == 0) {
+            int k = (int) (t - 80) / 2;
+            title(p, frame(k == 3 || k == 5 ? BACKDROP_RED : BACKDROP, 0xE330 + k, (int) (t % 4)));
+        }
+        if (t == 80 + 2 * SPOOKY_FRAMES) { // black until the server kills the player
+            p.connection.send(new ClientboundSetTitlesAnimationPacket(0, 60, 0));
+            title(p, frame(BACKDROP, -1, -1));
         }
     }
 
@@ -117,6 +155,17 @@ public final class ServerFx {
     private static void tick(MinecraftServer server) {
         for (ServerPlayer p : server.getPlayerList().getPlayers()) {
             long now = p.level().getGameTime();
+            Screamer sc = SCREAMERS.get(p.getUUID());
+            if (sc != null) {
+                int index = (int) ((now - sc.start) / 2);
+                if ((now - sc.start) % 2 == 0 && index > 0 && index < SCREAMER_FRAMES) screamerFrame(p, sc.face, index);
+                if (index >= SCREAMER_FRAMES) {
+                    SCREAMERS.remove(p.getUUID());
+                    p.connection.send(new ClientboundClearTitlesPacket(true));
+                    p.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 20, 0, true, false, false));
+                    p.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 10, 0, true, false, false));
+                }
+            }
             Long start = SPOOKY_START.get(p.getUUID());
             if (start != null) {
                 long t = now - start;
