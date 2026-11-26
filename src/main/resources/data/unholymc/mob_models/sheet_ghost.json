@@ -1,0 +1,39 @@
+{
+ "id": "sheet_ghost",
+ "height": 1.875,
+ "width": 0.8,
+ "scale": 2.0,
+ "notes": "Neutralny. Bez nóg: unosi się 0,3 bloku nad ziemią (sinusoida ±0,08 bloku, okres 2 s). Poszarpane pasy materiału u dołu kołyszą się z tułowiem.",
+ "parts": [
+  {
+   "name": "body",
+   "pivot": [
+    0.0,
+    1.375,
+    0.0
+   ],
+   "role": "body",
+   "emissive": false
+  },
+  {
+   "name": "right_arm",
+   "pivot": [
+    -0.375,
+    1.25,
+    0.0
+   ],
+   "role": "right_arm",
+   "emissive": false
+  },
+  {
+   "name": "left_arm",
+   "pivot": [
+    0.375,
+    1.25,
+    0.0
+   ],
+   "role": "left_arm",
+   "emissive": false
+  }
+ ]
+}

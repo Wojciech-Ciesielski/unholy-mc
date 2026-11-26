@@ -1,0 +1,70 @@
+{
+ "id": "hollow_screamer",
+ "height": 2.375,
+ "width": 0.8,
+ "scale": 2.0,
+ "notes": "Unholy. Tułów pochylony stale o 25° do przodu (rola `body` + `hunch`), głowa wysunięta. Ręce sięgają za kolana, szare dłonie. Twarz to blada maska z wybałuszonymi oczami i otwartymi ustami, reszta głowy w czarnym kapturze.",
+ "parts": [
+  {
+   "name": "head",
+   "pivot": [
+    0.0,
+    1.75,
+    0.0
+   ],
+   "role": "head",
+   "emissive": false
+  },
+  {
+   "name": "body",
+   "pivot": [
+    0.0,
+    1.75,
+    0.0
+   ],
+   "role": "body",
+   "emissive": false,
+   "hunch_deg": 25
+  },
+  {
+   "name": "right_arm",
+   "pivot": [
+    -0.375,
+    1.6875,
+    0.0
+   ],
+   "role": "right_arm",
+   "emissive": false
+  },
+  {
+   "name": "left_arm",
+   "pivot": [
+    0.375,
+    1.6875,
+    0.0
+   ],
+   "role": "left_arm",
+   "emissive": false
+  },
+  {
+   "name": "right_leg",
+   "pivot": [
+    -0.1406,
+    0.9375,
+    0.0
+   ],
+   "role": "right_leg",
+   "emissive": false
+  },
+  {
+   "name": "left_leg",
+   "pivot": [
+    0.1406,
+    0.9375,
+    0.0
+   ],
+   "role": "left_leg",
+   "emissive": false
+  }
+ ]
+}

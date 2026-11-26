@@ -1,0 +1,79 @@
+{
+ "id": "shadow_watcher",
+ "height": 2.312,
+ "width": 0.75,
+ "scale": 2.0,
+ "notes": "Agresywny. Cała postać czarna, rozmyta na krawędziach; płaszcz rozszerza się od pasa. Oczy to osobna część `eyes` renderowana z pełną jasnością (Brightness 15) i obracana razem z głową.",
+ "parts": [
+  {
+   "name": "head",
+   "pivot": [
+    0.0,
+    1.75,
+    0.0
+   ],
+   "role": "head",
+   "emissive": false
+  },
+  {
+   "name": "body",
+   "pivot": [
+    0.0,
+    1.75,
+    0.0
+   ],
+   "role": "body",
+   "emissive": false
+  },
+  {
+   "name": "right_arm",
+   "pivot": [
+    -0.375,
+    1.6875,
+    0.0
+   ],
+   "role": "right_arm",
+   "emissive": false
+  },
+  {
+   "name": "left_arm",
+   "pivot": [
+    0.375,
+    1.6875,
+    0.0
+   ],
+   "role": "left_arm",
+   "emissive": false
+  },
+  {
+   "name": "right_leg",
+   "pivot": [
+    -0.1406,
+    0.8125,
+    0.0
+   ],
+   "role": "right_leg",
+   "emissive": false
+  },
+  {
+   "name": "left_leg",
+   "pivot": [
+    0.1406,
+    0.8125,
+    0.0
+   ],
+   "role": "left_leg",
+   "emissive": false
+  },
+  {
+   "name": "eyes",
+   "pivot": [
+    0.0,
+    1.75,
+    0.0
+   ],
+   "role": "head",
+   "emissive": true
+  }
+ ]
+}

@@ -1,0 +1,89 @@
+{
+ "id": "cigar_cat",
+ "height": 2.0,
+ "width": 0.7,
+ "scale": 2.0,
+ "notes": "Neutralny, memiczny. Kocie uszy, potargane szare włosy, sweter; cygaro wystaje z ust, żarzący się koniec to osobna część `ember` z pełną jasnością (co 2–4 s cząsteczka `minecraft:smoke` z końca).",
+ "parts": [
+  {
+   "name": "head",
+   "pivot": [
+    0.0,
+    1.5,
+    0.0
+   ],
+   "role": "head",
+   "emissive": false
+  },
+  {
+   "name": "body",
+   "pivot": [
+    0.0,
+    1.5,
+    0.0
+   ],
+   "role": "body",
+   "emissive": false
+  },
+  {
+   "name": "right_arm",
+   "pivot": [
+    -0.375,
+    1.4375,
+    0.0
+   ],
+   "role": "right_arm",
+   "emissive": false
+  },
+  {
+   "name": "left_arm",
+   "pivot": [
+    0.375,
+    1.4375,
+    0.0
+   ],
+   "role": "left_arm",
+   "emissive": false
+  },
+  {
+   "name": "right_leg",
+   "pivot": [
+    -0.125,
+    0.75,
+    0.0
+   ],
+   "role": "right_leg",
+   "emissive": false
+  },
+  {
+   "name": "left_leg",
+   "pivot": [
+    0.125,
+    0.75,
+    0.0
+   ],
+   "role": "left_leg",
+   "emissive": false
+  },
+  {
+   "name": "cigar",
+   "pivot": [
+    0.0,
+    1.5,
+    0.0
+   ],
+   "role": "head",
+   "emissive": false
+  },
+  {
+   "name": "ember",
+   "pivot": [
+    0.0,
+    1.5,
+    0.0
+   ],
+   "role": "head",
+   "emissive": true
+  }
+ ]
+}

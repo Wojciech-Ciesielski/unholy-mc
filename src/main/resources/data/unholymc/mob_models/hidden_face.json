@@ -1,0 +1,71 @@
+{
+ "id": "hidden_face",
+ "height": 2.312,
+ "width": 0.65,
+ "scale": 2.0,
+ "notes": "NOWY neutralny slop (DECISIONS #38). Wychudzona, szara postać, która **zasłania twarz dużymi dłońmi**. Gdy gracz patrzy na jej głowę (jak u Endermana) dłużej niż 1 s, opuszcza ręce i odsłania przekrwione oczy i zęby, po 1 s rusza do ataku. Jeśli gracz odwróci wzrok wcześniej, zasłania się z powrotem.",
+ "parts": [
+  {
+   "name": "head",
+   "pivot": [
+    0.0,
+    1.8125,
+    0.0
+   ],
+   "role": "head",
+   "emissive": false
+  },
+  {
+   "name": "body",
+   "pivot": [
+    0.0,
+    1.8125,
+    0.0
+   ],
+   "role": "body",
+   "emissive": false
+  },
+  {
+   "name": "right_arm",
+   "pivot": [
+    -0.3125,
+    1.75,
+    0.0
+   ],
+   "role": "right_arm",
+   "emissive": false,
+   "cover_face": true
+  },
+  {
+   "name": "left_arm",
+   "pivot": [
+    0.3125,
+    1.75,
+    0.0
+   ],
+   "role": "left_arm",
+   "emissive": false,
+   "cover_face": true
+  },
+  {
+   "name": "right_leg",
+   "pivot": [
+    -0.1094,
+    0.9375,
+    0.0
+   ],
+   "role": "right_leg",
+   "emissive": false
+  },
+  {
+   "name": "left_leg",
+   "pivot": [
+    0.1094,
+    0.9375,
+    0.0
+   ],
+   "role": "left_leg",
+   "emissive": false
+  }
+ ]
+}
