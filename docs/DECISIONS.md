@@ -62,7 +62,7 @@ Oryginalny GDD to tekst wyciągnięty z dokumentu .docx autora (bez zmian).
     - **Głód < 12 pkt i nawodnienie < 12 pkt jednocześnie:** Mining Fatigue i Weakness.
     - Efekty pośrednie (rozmycie, Mining Fatigue przy 14–10, Weakness II i nudności przy 9–5) **usunięte**.
     - Obumieranie przy 0 pkt (#30) bez zmian.
-36. **Wszystkie slopy to moby 3D.** Usuwamy slopy w formie PNG (wszystkie, nie tylko „śmieszne”), na ich podstawie powstają realistyczne moby w stylu Minecrafta. Halucynacje tak samo. Zastępuje GDD 4 („grafiki PNG zamiast modeli 3D”). Wymaga modeli od designu.
+36. ~~**Wszystkie slopy to moby 3D.**~~ **ANULOWANE przez autora (2026-11-26):** modele wyglądały źle. Slopy i halucynacje **zostają billboardami PNG** (GDD 4 obowiązuje). Nowe slopy z obrazków autora czekają na pliki źródłowe.
 37. **Pojedyncze agresywne slopy pojawiają się także na polanach** i otwartym terenie (nadpisuje GDD 4: „unikają otwartych powierzchni”).
 38. **Nowy neutralny slop atakuje tylko wtedy, gdy gracz spojrzy mu w oczy** (jak Enderman). Dodatek do neutralnych (czy zastępuje któryś, do ustalenia).
 39. **Pogoda odwrócona:** deszcz jest częsty, słońce rzadkie, burze częstsze. Nadpisuje GDD 5.4 („+50% deszczu”).

@@ -60,11 +60,8 @@ Oznaczenia: **[B]** błąd, **[Z]** zmiana specyfikacji (nadpisuje GDD/DECISIONS
   - Efekty pośrednie (rozmycie, Mining Fatigue przy 14–10, Weakness II i nudności przy 9–5) usuwane. Obumieranie przy 0 pkt bez zmian.
   - Konfiguracja: sekcja `hydration` w configu. Dotyczy `SurvivalSystem.applyEffects`, `ServerFx.dehydration`, `ServerFx.noSprint`.
   - Zapis „brak sprintu przy nawodnieniu < 12” to moje rozumienie wypowiedzi „jak u głodu”. Głód w vanilla blokuje sprint przy ≤ 6 pkt, to się nie zmienia.
-- **Z-slopy-3D [Z]:** usuwamy **wszystkie** slopy w formie obrazków PNG. Na ich podstawie powstają realistyczne moby 3D w stylu Minecrafta (potwierdzone przez użytkownika). Halucynacje tak samo. Decyzja #36, zastępuje GDD 4.
-  - Wymaga modeli i tekstur od designu (patrz `DESIGN_REQUESTS.md`).
-  - Rozwiązuje część problemów z hitboxami i rozmiarami (B6, B7) i z animacją chodu (F1).
-  - **Skutek uboczny:** obrazy slopów są dziś używane jako twarze jumpscare'ów. Po usunięciu PNG jumpscare'y potrzebują własnych obrazów (F3).
-  - Kod: `MobVisuals.Billboard` zastąpić składaniem modelu z części (jak `SlenderVisual`), usunąć `SlopVariant.texture`, modele `items/slop/*` i `models/entity_part/slop_*`.
+- **Z-slopy-3D [ANULOWANE]:** autor odrzucił modele 3D (2026-11-26). Slopy i halucynacje **zostają billboardami PNG**, decyzja #36 anulowana. Zostają: większe rozmiary (B7), animacja ruchu billboardów (F1), hitboxy (B6), a nowe slopy z obrazków autora czekają na pliki źródłowe.
+  - Jumpscare'y mają teraz własne klatki od designu (patrz F3), więc nie zależą od PNG slopów.
 - **Z-HUD [Z]:** nowy układ HUD (decyzja #34, zastępuje DECISIONS #33):
   - **Lewy górny róg:** 4 statystki (zdrowie, głód, nawodnienie, sanity) jako po **jednej ikonie dynamicznej** z liczbą punktów (zamiast 10 ikon).
   - **Prawy górny róg:** założony zestaw, **tylko pancerz** (potwierdzone).
