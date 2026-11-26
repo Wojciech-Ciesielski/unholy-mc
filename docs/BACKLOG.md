@@ -11,7 +11,7 @@ Oznaczenia: **[B]** błąd, **[Z]** zmiana specyfikacji (nadpisuje GDD/DECISIONS
 ### B1. [B] Wysokość pasków sanity i nawodnienia — zastąpione przez Z-HUD
 - Uwaga użytkownika: paski są wyżej, niż powinny. Podnoszą się tylko przy dodatkowej statystyce (pancerz), a pancerz ma być nad sanity.
 - Stan obecny: w v0.1.1 paski to znaki czcionki w action barze na stałej wysokości, jeden rząd nad sercami, więc bez pancerza zostaje pusty rząd.
-- **Ten punkt traci znaczenie**, bo cały HUD zostaje przeprojektowany (patrz Z-HUD poniżej). Zostawiam jako zapis historii.
+- **Ten punkt traci znaczenie**, bo cały HUD zostaje przeprojektowany (patrz Z-HUD poniżej, decyzja #34). Zostawiam jako zapis historii.
 
 ### B2. [B] Slopy i Slenderman „zapadają się pod ziemię” podczas chodzenia
 - Wygląda komicznie.
@@ -51,30 +51,30 @@ Oznaczenia: **[B]** błąd, **[Z]** zmiana specyfikacji (nadpisuje GDD/DECISIONS
 ## Zmiany specyfikacji
 
 - **Z-szybkość deszczu [Z]:** odwrócić proporcje. Teraz deszcz jest tak częsty jak słońce, a słońce tak częste jak deszcz. Ma być: **deszcz często, słońce rzadko**. **Burze częściej.** Nadpisuje GDD 5.4 („+50% deszczu”). Parametry: `world.rainFrequencyMultiplier`, `world.guaranteedRainEveryDays`.
-- **Z-mruganie [Z][?]:** efekt migania ekranu i ślepoty/ciemności przy odwodnieniu. Ostatnia wypowiedź użytkownika: działa gdy nawodnienie jest **mniej niż 6 ikon kropli**. Wcześniej mówił „poniżej 4”. Niejasne: 6 ikon to 12 pkt, a 6 pkt to 3 ikony. Do ustalenia jednostka i próg.
+- **Z-mruganie [Z]:** miganie ekranu i darkness przy odwodnieniu poniżej **12 pkt (6 ikon)**. Zastępuje wcześniejsze „poniżej 4”. (Decyzja #35/#45.)
 - **Z-spawn [Z]:** pojedyncze agresywne slopy mają pojawiać się też na polanach (patrz B3). Nadpisuje GDD 4.
 - **Z-anomalie [Z]:** gęstość anomalii co 50–60 kratek (nadpisuje poprzednie 100–150).
-- **Z-odwodnienie [Z][?]:** złagodzić efekty (nadpisuje GDD 5.1 i DECISIONS #29). Zasady użytkownika po doprecyzowaniu:
-  - **Mining Fatigue i Weakness** występują dopiero, gdy **obie** statystyki, głód **i** nawodnienie, są poniżej 6.
-  - **Miganie ekranu i darkness** przy nawodnieniu poniżej 6 ikon kropli (patrz Z-mruganie).
-  - **Brak sprintu:** próg jak u głodu (poniżej 6).
-  - Efekty pośrednie (Mining Fatigue przy 14–10, Weakness II i nudności przy 9–5) są **usuwane**.
-  - **Do ustalenia jednostka „6”:** użytkownik mówi „ikon kropli”, ale w vanilla próg sprintu głodu to 6 punktów (3 ikony). Czy „6” to punkty (3 ikony), czy 6 ikon (12 pkt)? Do zapytania, zanim to zakoduję.
-- **Z-slopy-3D [Z][?]:** usuwamy **wszystkie** slopy w formie obrazków PNG (nie tylko „śmieszne”, to zmiana względem poprzedniej wersji). Na ich podstawie powstają „**fotorealistyczne moby MC**”, czyli prawdziwe moby 3D. Halucynacje tak samo. Nadpisuje GDD 4 („slopy korzystają z grafik PNG zamiast modeli 3D”).
+- **Z-odwodnienie [Z]:** złagodzić efekty (decyzja #35, nadpisuje GDD 5.1 i DECISIONS #29). Jedna wartość: **12 pkt (< 6 ikon)**.
+  - **Nawodnienie < 12:** miganie, darkness i brak sprintu.
+  - **Głód < 12 i nawodnienie < 12 jednocześnie:** Mining Fatigue i Weakness.
+  - Efekty pośrednie (rozmycie, Mining Fatigue przy 14–10, Weakness II i nudności przy 9–5) usuwane. Obumieranie przy 0 pkt bez zmian.
+  - Konfiguracja: sekcja `hydration` w configu. Dotyczy `SurvivalSystem.applyEffects`, `ServerFx.dehydration`, `ServerFx.noSprint`.
+  - Zapis „brak sprintu przy nawodnieniu < 12” to moje rozumienie wypowiedzi „jak u głodu”. Głód w vanilla blokuje sprint przy ≤ 6 pkt, to się nie zmienia.
+- **Z-slopy-3D [Z]:** usuwamy **wszystkie** slopy w formie obrazków PNG. Na ich podstawie powstają realistyczne moby 3D w stylu Minecrafta (potwierdzone przez użytkownika). Halucynacje tak samo. Decyzja #36, zastępuje GDD 4.
   - Wymaga modeli i tekstur od designu (patrz `DESIGN_REQUESTS.md`).
-  - Rozwiązuje część problemów z hitboxami i rozmiarami (B6, B7) i animacją chodu (F1).
-  - **Do ustalenia styl:** „fotorealistyczne” w grze z kwadratowymi blokami może znaczyć „bardziej realistyczne niż obrazki” albo „w stylu Minecrafta, ale realistyczne”. Dopytać.
+  - Rozwiązuje część problemów z hitboxami i rozmiarami (B6, B7) i z animacją chodu (F1).
   - **Skutek uboczny:** obrazy slopów są dziś używane jako twarze jumpscare'ów. Po usunięciu PNG jumpscare'y potrzebują własnych obrazów (F3).
-- **Z-HUD [Z]:** zmiana układu HUD (nadpisuje DECISIONS #33 i część GDD 5.1/5.2):
-  - **Lewy górny róg:** 4 statystki (zdrowie, głód, nawodnienie, sanity). Zamiast 10 ikon każda ma **jedną ikonę, która dynamicznie zmienia wygląd** i pokazuje **liczbę punktów**, a nie liczbę ikon.
-  - **Prawy górny róg:** reszta, czyli „equiped set” (założone wyposażenie).
-  - **Nad paskiem przedmiotów** zostają pozostałe statystyki, np. zdrowie zwierzaka (wierzchowca) i „nawodnienie” (do wyjaśnienia, patrz niżej).
-  - **Wykonalność, niesprawdzona:** po stronie serwera dla zwykłego klienta to najtrudniejsza zmiana HUD.
-    - Zastąpienie vanilla serc, głodu i pancerza: da się je schować, podmieniając ich sprite'y w paczce serwera na przezroczyste (globalnie, dla każdego gracza tego serwera), a własne rysować po swojemu.
-    - Prawy górny róg ma natywne miejsce na **ikony efektów**; ikona niestandardowego efektu z własną teksturą pojawia się dokładnie tam. Liczba zmieniających się wartości (np. każda wartość zdrowia osobno) wymagałaby dużo efektów lub podmiany ikon.
-    - Lewy górny róg nie ma natywnego miejsca w vanilla (nic tam nie ma, poza debugiem). Tytuł i action bar są wyśrodkowane, a przesunięcie w bok przez znaki spacji zależy od szerokości okna i skali GUI gracza, więc dokładne umieszczenie w rogu nie jest pewne.
-    - Do zrobienia: krótki test wykonalności (które rogi i jak stabilnie) przed decyzją o dalszych krokach.
-  - **Do wyjaśnienia:** co dokładnie pokazuje „equiped set” (tylko pancerz, czy też trzymane przedmioty), oraz co oznacza „nawodnienie” nad paskiem przedmiotów, skoro nawodnienie jest w lewym górnym rogu (może chodzi o powietrze pod wodą?).
+  - Kod: `MobVisuals.Billboard` zastąpić składaniem modelu z części (jak `SlenderVisual`), usunąć `SlopVariant.texture`, modele `items/slop/*` i `models/entity_part/slop_*`.
+- **Z-HUD [Z]:** nowy układ HUD (decyzja #34, zastępuje DECISIONS #33):
+  - **Lewy górny róg:** 4 statystki (zdrowie, głód, nawodnienie, sanity) jako po **jednej ikonie dynamicznej** z liczbą punktów (zamiast 10 ikon).
+  - **Prawy górny róg:** założony zestaw, **tylko pancerz** (potwierdzone).
+  - **Nad paskiem przedmiotów:** zdrowie zwierzaka (wierzchowca) i **powietrze pod wodą** (potwierdzone, że „nawodnienie” w tym zdaniu znaczyło powietrze). To są vanilla elementy, które dziś są już w tym miejscu, więc wystarczy ich nie ruszać.
+  - **Ukrycie vanilla serc, głodu i pancerza:** podmiana ich sprite'ów w paczce serwera na przezroczyste (dla wszystkich graczy tego serwera). Stare paski mózgów/kropli z action baru (`ServerHud`) są wycofywane.
+  - **Wykonalność, niesprawdzona:**
+    - Prawy górny róg ma natywne miejsce na **ikony efektów**: niestandardowy efekt z własną teksturą pojawia się dokładnie tam. Liczba zmieniających się wartości (np. każda wartość zdrowia) wymagałaby wielu efektów lub podmiany ikon.
+    - Lewy górny róg nie ma natywnego miejsca w vanilla. Tytuł i action bar są wyśrodkowane, a przesunięcie w bok znakami spacji zależy od szerokości okna i skali GUI gracza, więc dokładne umieszczenie w rogu jest niepewne.
+    - **Zrobić krótki test wykonalności** (które rogi i jak stabilnie) przed przeróbką.
+  - Mniejsze luki do uzupełnienia: jak pokazać dodatkowe serca (absorpcja), efekty zdrowia (trucizna, wither) i hardcore na pojedynczej ikonie zdrowia.
 
 ## Nowe funkcje
 
@@ -107,8 +107,8 @@ Oznaczenia: **[B]** błąd, **[Z]** zmiana specyfikacji (nadpisuje GDD/DECISIONS
 
 ## Do doprecyzowania
 
-- Z-odwodnienie i Z-mruganie: czy „6” to punkty (3 ikony) czy ikony (12 pkt), i czy miganie jest przy „poniżej 6” (nowa wypowiedź) czy „poniżej 4” (wcześniejsza).
-- Z-slopy-3D: styl „fotorealistyczne moby MC”.
-- Z-HUD: co pokazuje „equiped set”; co to za statystyka „nawodnienie” nad paskiem przedmiotów; czy ikony punktów mają pokazywać też wartość maksymalną.
-- I4: czy nowy neutralny ma zastąpić któryś z obecnych, czy dojść jako czwarty wariant.
-- I5: tabela lootu w beczce i sposób straszenia.
+- Z-HUD: czy pojedyncze ikony mają pokazywać też wartość maksymalną; jak pokazać absorpcję, trucizny i hardcore.
+- Z-odwodnienie: potwierdzić, że brak sprintu przy nawodnieniu < 12 pkt to właściwy próg.
+- I4: czy nowy neutralny slop ma zastąpić któryś z obecnych, czy dojść jako czwarty wariant.
+- I5: tabela lootu w beczce w grobie i sposób straszenia.
+- B5: co znaczy „anomalie nie chodzą” (moby anomalii, np. zombie z dynią?).

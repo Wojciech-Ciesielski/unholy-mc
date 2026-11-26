@@ -7,7 +7,7 @@ Oryginalny GDD to tekst wyciągnięty z dokumentu .docx autora (bez zmian).
 
 | # | Decyzja |
 |---|---------|
-| T1 | Minecraft **26.2.1**, Fabric (Loader + Fabric API), Java wymagana przez tę wersję. |
+| T1 | Minecraft **26.2** (potwierdzone przez autora; nie 26.2.1), Fabric (Loader + Fabric API), Java 25. |
 | T2 | Mod jest projektowany **pod serwer dedykowany multiplayer** (musi działać też w singleplayerze/LAN). Ścisły podział client/server, sieć przez Fabric Networking, dane graczy przez Data Attachments. |
 | T3 | **Brak wsparcia** Sodium/Iris i innych modów. Zamknięty projekt dla znajomych, maintainer = autor. |
 | T4 | Wszystkie wartości liczbowe (tempa, szanse, promienie, HP, DMG) **konfigurowalne** w pliku configu (serwer jest źródłem prawdy). |
@@ -15,6 +15,8 @@ Oryginalny GDD to tekst wyciągnięty z dokumentu .docx autora (bez zmian).
 | T6 | Projekt zamknięty dla znajomych – można użyć przerobionej (spowolnionej, odwróconej) płyty 11 jako własnego assetu dźwiękowego. |
 | T7 | Języki: **en_us** i **pl_pl**. |
 | T8 | Branch: **tylko `main`**. |
+| T9 | **Mod działa tylko po stronie serwera** (od v0.1.1, biblioteka Polymer wbudowana w jar). Gracze wchodzą **zwykłym klientem vanilla**, bez Fabrica i bez modów; zasoby dostarcza serwerowa paczka zasobów hostowana automatycznie. Zastępuje podział client/server z T2: kod kliencki i własne pakiety sieciowe zostały usunięte. |
+| T10 | Wszystko, co widzi gracz, musi być możliwe do zrobienia na kliencie vanilla (paczka zasobów, znaki czcionki, encje display, efekty, dźwięki, cząsteczki). Efekty niemożliwe bez klienta (np. kolor nieba, barwa wody) są odrzucane albo robione zastępczo. |
 
 ## Mechaniki
 
@@ -46,11 +48,30 @@ Oryginalny GDD to tekst wyciągnięty z dokumentu .docx autora (bez zmian).
 26. **Termos**: tylko jeden rodzaj płynu naraz. Mleko z termosu leczy efekty jak vanilla mleko. Napełnianie: PPM na źródło (lub krowę dla mleka). Bez przelewania z butelek.
 27. **Picie bezpośrednio ze źródła wody (PPM)** – możliwe (jak butelka wody).
 28. **Seria przespanych nocy jest per gracz**: przerywa ją noc, w której *ten gracz* nie spał. Funkcja „leżenie w łóżku bez przespania +30 / 2 min” – **usunięta**.
-29. **Efekty niskiego nawodnienia**: wolniejsze kopanie = **Mining Fatigue**; zmniejszone obrażenia = **Weakness I**, a przy jeszcze większym odwodnieniu (i wygłodzeniu) **Weakness II**.
+29. *(zmienione w #35)* **Efekty niskiego nawodnienia**: wolniejsze kopanie = **Mining Fatigue**; zmniejszone obrażenia = **Weakness I**, a przy jeszcze większym odwodnieniu (i wygłodzeniu) **Weakness II**.
 30. **Obumieranie z pragnienia** (0,5 serca/s) nie zależy od poziomu trudności – picie jest ważniejsze od jedzenia.
 31. **Peaceful / Creative / Spectator**: wyłączone Sanity i nawodnienie; slopy nie reagują na gracza (Creative/Spectator) lub nie istnieją (Peaceful).
 32. **Anomalie świata** (często): liście bez drzew, czaszki szkieletów, redstone jako „krew”, abominacje (zły kolor liści / zły gatunek drzewa w danym biomie), zombie z dynią na głowie, krzyże.
-33. **HUD**: pasek Sanity (mózgi) **nad sercami**, pasek nawodnienia (krople) **nad głodem**.
+33. *(zmienione w #34)* **HUD**: pasek Sanity (mózgi) **nad sercami**, pasek nawodnienia (krople) **nad głodem**.
+
+## Zmiany po testach v0.1.1 (nadpisują GDD i powyższe punkty)
+
+34. **Nowy HUD.** Lewy górny róg: 4 statystki (zdrowie, głód, nawodnienie, sanity). Każda to **jedna ikona, która dynamicznie zmienia wygląd** i pokazuje **liczbę punktów**, a nie 10 ikon. Prawy górny róg: **założony zestaw** (tylko pancerz). Nad paskiem przedmiotów zostają pozostałe statystyki: **zdrowie wierzchowca/zwierzaka** i **powietrze pod wodą**. Vanilla serca, głód i pancerz są ukrywane (podmiana sprite'ów w paczce serwera). Zastępuje #33.
+35. **Złagodzone efekty głodu i nawodnienia.** Zastępuje #29 i GDD 5.1. Wszystko według jednej wartości: **12 pkt (mniej niż 6 ikon)**.
+    - **Nawodnienie < 12 pkt:** miganie ekranu i darkness, brak sprintu.
+    - **Głód < 12 pkt i nawodnienie < 12 pkt jednocześnie:** Mining Fatigue i Weakness.
+    - Efekty pośrednie (rozmycie, Mining Fatigue przy 14–10, Weakness II i nudności przy 9–5) **usunięte**.
+    - Obumieranie przy 0 pkt (#30) bez zmian.
+36. **Wszystkie slopy to moby 3D.** Usuwamy slopy w formie PNG (wszystkie, nie tylko „śmieszne”), na ich podstawie powstają realistyczne moby w stylu Minecrafta. Halucynacje tak samo. Zastępuje GDD 4 („grafiki PNG zamiast modeli 3D”). Wymaga modeli od designu.
+37. **Pojedyncze agresywne slopy pojawiają się także na polanach** i otwartym terenie (nadpisuje GDD 4: „unikają otwartych powierzchni”).
+38. **Nowy neutralny slop atakuje tylko wtedy, gdy gracz spojrzy mu w oczy** (jak Enderman). Dodatek do neutralnych (czy zastępuje któryś, do ustalenia).
+39. **Pogoda odwrócona:** deszcz jest częsty, słońce rzadkie, burze częstsze. Nadpisuje GDD 5.4 („+50% deszczu”).
+40. **Anomalie świata co 50–60 kratek** (zmiana względem „bardzo często”, wcześniej ustalone 100–150).
+41. **Dźwięki przy niskim sanity:** przy sanity **poniżej 15** (≤ 14) oprócz dotychczasowych: fałszywe kroki, krzyk „zza ściany”, fałszywe creepery. Rozszerza GDD 5.2.
+42. **Mini-struktura: pojedynczy grób.** Straszna, z **beczką z lootem do rozkopania**.
+43. **Szary klimat w dzień:** kolory lekko wyblakłe. Efekty graficzne z gotowej, lekkiej, wolnej paczki (licencja MIT lub podobna) działającej jako zwykły resource pack (bez Iris), z dodatkiem kilku własnych efektów.
+44. **Komenda `/thm` do teleportacji do specjalnych struktur** (ciemny zakątek, las Slendermana, bajorko, grób itd.).
+45. **Mruganie ekranu i darkness przy odwodnieniu** są zawarte w #35 (próg 12 pkt). Zastępują wcześniejszy zapis „< 4”.
 
 ## Kolejność prac (MVP)
 
@@ -59,3 +80,4 @@ Oryginalny GDD to tekst wyciągnięty z dokumentu .docx autora (bez zmian).
 3. Slopy i halucynacje.
 4. Świat (pogoda, Krwawy Księżyc, dźwięk, anomalie).
 5. Struktury i Slenderman.
+6. Po testach v0.1.1: lista zmian w `docs/BACKLOG.md` (HUD, moby 3D, dźwięki, shadery, groby, balans efektów).

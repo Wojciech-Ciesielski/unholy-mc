@@ -44,7 +44,7 @@ Mamy teksturę `blood_moon.png`, ale na kliencie vanilla niebo i księżyc nie z
 
 Zmieniona decyzja użytkownika: **usuwamy wszystkie slopy w formie obrazków PNG** (nie tylko „śmieszne”) i budujemy na ich podstawie „**fotorealistyczne moby MC**”, czyli prawdziwe moby 3D. To samo dla halucynacji (czarne, półprzezroczyste wersje). Nadpisuje GDD 4 („slopy korzystają z grafik PNG zamiast modeli 3D”).
 - Proszę o **modele 3D** (prostokątne bryły składane jak model Slendermana, bo tak da się je pokazać na kliencie vanilla), tekstury, wersje hallucination i zestawy części do animacji chodu dla **wszystkich siedmiu** slopów.
-- Styl: „fotorealistyczny” w świecie Minecrafta. Proszę o interpretację (więcej detalu na teksturach, realistyczne proporcje).
+- Styl (potwierdzony przez użytkownika): **realistyczniejszy niż obrazki, ale dalej w stylu Minecrafta**: więcej detalu na teksturach, realistyczne proporcje.
 - Rozmiary i hitboxy z punktu 4 dotyczą też nowych modeli.
 - **Jumpscare'y używają dziś obrazów slopów.** Po usunięciu PNG potrzebne są osobne obrazy do jumpscare'ów (patrz punkt 2).
 
@@ -59,9 +59,19 @@ Przy sanity **poniżej 15** (≤ 14) mają być słyszalne: fałszywe kroki, krz
 
 ## 9. Nowy HUD (ikony dynamiczne)
 
-Nowa decyzja użytkownika dla układu HUD:
+Nowa decyzja użytkownika (decyzja #34 w `DECISIONS.md`):
 - **Lewy górny róg:** 4 statystki (zdrowie, głód, nawodnienie, sanity). Każda to **jedna ikona, która dynamicznie zmienia wygląd** i pokazuje **liczbę punktów** (nie liczbę ikon, jak dziś 10 sztuk).
-- **Prawy górny róg:** „equiped set” (założone wyposażenie).
-- **Nad paskiem przedmiotów:** pozostałe statystyki, np. zdrowie zwierzaka.
+- **Prawy górny róg:** założony zestaw, **tylko pancerz** (hełm, napierśnik, spodnie, buty).
+- **Nad paskiem przedmiotów:** zdrowie zwierzaka i powietrze pod wodą. To są vanilla elementy, więc nie wymagają projektu.
+- Vanilla serca, głód i pancerz są chowane przez podmianę ich sprite'ów w paczce na przezroczyste.
 
-Proszę o projekt: wygląd ikon dla każdej z czterech statystyk w kilku stanach (np. pełny, średni, niski, krytyczny), sposób pokazania liczby punktów i układ „equiped set”. Dostępne tylko to, co da się zrobić zwykłą paczką zasobów i znakami czcionki (przezroczyste PNG), bez własnych shaderów. Wykonalność w rogach sprawdzę po mojej stronie, więc projekt powinien przetrwać różne skale GUI.
+Proszę o projekt: wygląd ikon dla każdej z czterech statystyk w kilku stanach (np. pełny, średni, niski, krytyczny), sposób pokazania liczby punktów i układ pancerza. Dostępne tylko to, co da się zrobić zwykłą paczką zasobów i znakami czcionki (przezroczyste PNG), bez własnych shaderów. Wykonalność w rogach sprawdzę po mojej stronie, więc projekt powinien przetrwać różne skale GUI. Ikony mózgu i kropli, które już mamy (`textures/gui/sprites/hud/`), można wykorzystać jako punkt wyjścia.
+
+## 10. Sekcje `ASSETS.md` do aktualizacji przez design
+
+Po zmianach z tego pliku następujące sekcje `ASSETS.md` są nieaktualne i proszę o ich przepisanie:
+- **§1 Slopy (billboardy PNG)** → moby 3D (punkt 6).
+- **§4 HUD i efekty** → nowy HUD (punkt 9). Stare sprite'y 10 ikon przestają być używane.
+- **§5 Jumpscare** → obrazy nie mogą już pochodzić z PNG slopów (punkt 2).
+- **§5a Krwawy Księżyc** → ograniczenia klienta vanilla (punkt 5).
+- **§6 Dźwięki** → nowe dźwięki (punkty 1 i 8).
