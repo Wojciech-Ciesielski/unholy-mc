@@ -1,6 +1,6 @@
 # The Unholy Minecraft – lista błędów i zmian po testach (v0.1.1)
 
-Zapis uwag po „intensywnych” testach z użytkownikiem i znajomymi. **Nic tu jeszcze nie jest zrobione.**
+Zapis uwag po „intensywnych” testach z użytkownikiem i znajomymi. Stan prac: patrz sekcja „Stan realizacji” na końcu.
 Przyczyny oznaczone „hipoteza” nie zostały zweryfikowane w kodzie ani w grze.
 Rzeczy dla wątku designu są dodatkowo w `docs/DESIGN_REQUESTS.md`.
 
@@ -112,3 +112,30 @@ Oznaczenia: **[B]** błąd, **[Z]** zmiana specyfikacji (nadpisuje GDD/DECISIONS
 - I4: czy nowy neutralny slop ma zastąpić któryś z obecnych, czy dojść jako czwarty wariant.
 - I5: tabela lootu w beczce w grobie i sposób straszenia.
 - B5: co znaczy „anomalie nie chodzą” (moby anomalii, np. zombie z dynią?).
+
+## Stan realizacji
+
+Zrobione i sprawdzone w grze (serwer dedykowany + czysty klient vanilla), commity `4c53576` i `ac9f042`:
+- **Z-szybkość deszczu** (pogoda: deszcz częsty i długi, burze częstsze; mnożniki w `world.*`). Kod gotowy, ale rzeczywisty rytm pogody nie był obserwowany przez dłuższy czas.
+- **B4/Z-anomalie:** siatka 56 kratek, komórki w blokach (nie w chunkach). Rzeczywista gęstość na świeżym świecie jeszcze niezmierzona.
+- **Z-odwodnienie, Z-mruganie:** jeden próg 12 pkt, Mining Fatigue i Weakness tylko przy głodzie i nawodnieniu poniżej 12. Przetestowane tylko przez kompilację i wcześniejsze efekty, bez oglądania w grze.
+- **B2:** zapadanie się. Przeprojektowałem wygląd (zwykłe elementy zamiast pasażerów zombie), slop chodzi po ziemi i stoi na niej. Błędu nie udało mi się odtworzyć przed zmianą, więc nie mam pewności, że to była ta przyczyna.
+- **B6:** hitbox przez element interakcji o dokładnym rozmiarze. Trafienia działają (życie 20 → 17 po trzech ciosach).
+- **B7:** slopy większe o 30% (`slops.sizeMultiplier`).
+- **B8:** cząsteczki trafienia (kod gotowy; nie obejrzałem ich na ekranie).
+- **Z-chód Slendermana:** dłuższy krok, ręce przeciw nogom, pochylenie, skręt i podskok przy kroku. Nie obejrzany w grze.
+- **B3:** własny spawner slopów w nocy (las: wszystkie kategorie, polany: pojedyncze agresywne). W lesie w ciągu 50 s pojawiły się 2 agresywne i 1 neutralny. Na otwartym terenie nie zdążyłem potwierdzić.
+- **F4:** `/thm tp <dark_corner|slender_forest|holy_pond>`. Działa dla ciemnego zakątka. Bajorka tylko w załadowanych chunkach.
+- **F1 (część):** animacja picia z termosu (termos unosi się do twarzy).
+
+Do zrobienia: B5 (ruch moby/anomalii), B9 (niebo Krwawego Księżyca), F1 reszta (animacje slopów), F2 (dźwięki), F3 (jumpscare'y), I2–I7, Z-slopy-3D, Z-HUD (patrz niżej).
+
+### Wyniki testu wykonalności Z-HUD
+
+Sprawdzone na serwerze dedykowanym i czystym kliencie vanilla:
+- **Ukrycie serc, głodu i pancerza: działa.** Podmiana sprite'ów w `assets/minecraft/textures/gui/sprites/hud/` (`heart/*`, `food_*`, `armor_*`, z wyjątkiem `vehicle_*`) na przezroczyste. Dotyczy wszystkich graczy serwera. Nie zostało zacommitowane, bo bez nowego HUD zdrowie byłoby niewidoczne.
+- **Prawy górny róg: działa.** Niestandardowy efekt z własną ikoną pojawia się jako ikona w prawym górnym rogu (sprawdzone na przykładzie efektu oporności).
+- **Lewy górny róg: nie da się natywnie.** Nie ma w vanilla elementu zakotwiczonego w lewym górnym rogu. Tytuł i action bar są wyśrodkowane, a ich przesunięcie zależy od szerokości okna i skali GUI gracza, więc narożnik nie jest pewny.
+- **Tabela wyników po prawej (sidebar scoreboard): działa.** Zakotwiczona przy prawej krawędzi, wyśrodkowana w pionie, skaluje się z GUI. Wiersze mogą zawierać glify naszej czcionki (ikonę) i liczbę. Wymaga doklejenia do czcionki zwykłych cyfr (dziś nasza czcionka ich nie ma i cyfry wyświetlają się jako ramki).
+- **Alternatywy dla lewego górnego rogu:** (A) panel statystyk po prawej stronie w sidebarze (4 wiersze: ikona + liczba) i pancerz jako ikony efektów w prawym górnym rogu; (B) kompaktowy rząd ikon z liczbami nad paskiem przedmiotów (jak dziś, ale jedna ikona na statystykę); (C) szacowane przesunięcie w lewo od środka, niepewne.
+- Decyzja użytkownika potrzebna: który wariant.
