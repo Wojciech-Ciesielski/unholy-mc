@@ -25,6 +25,7 @@ The client-visible parts are built with Polymer: items and blocks use vanilla st
 mobs are invisible vanilla mobs carrying display entities (PNG billboards, Slenderman's six-part model),
 the sanity / hydration bars are font glyphs in the action bar, jumpscares are full-screen title glyphs,
 the Blood Moon tints the screen through a per-player world border warning.
+**HUD:** the four stats (health, hunger, hydration, sanity) are rows at the left screen edge and the armour slots at the right edge, drawn as boss-bar text with the design thread's font. Vanilla hearts, hunger and armour are hidden by the resource pack. The distance from the screen centre to the edge depends on the window size and GUI scale, so each player can calibrate it with `/hud edge <px>` (default 240, half the width of the screen in GUI pixels; `/hud reset`). The layout needs a screen at least ~270 GUI pixels high (e.g. 1080p at GUI scale 4 or smaller).
 Known limits for vanilla clients: holy water in ponds is not tinted (particles and light only), no custom sky colours.
 - `./gradlew runClient` / `./gradlew runServer` for a dev instance (run dir: `run/`).
 - Server config: `config/unholymc.json` (created on first start, every gameplay number lives there; `/thm reload` re-reads it).

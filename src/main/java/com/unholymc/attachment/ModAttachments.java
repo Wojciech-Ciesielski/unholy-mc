@@ -15,6 +15,10 @@ public final class ModAttachments {
     public static final AttachmentType<HudState> HUD_STATE = AttachmentRegistry.create(UnholyMC.id("hud_state"),
             b -> b.initializer(() -> HudState.DEFAULT));
 
+    /** Distance (GUI pixels) from the screen centre to the left/right screen edge, set by the player with /hud edge. */
+    public static final AttachmentType<Integer> HUD_EDGE = AttachmentRegistry.create(UnholyMC.id("hud_edge"),
+            b -> b.persistent(com.mojang.serialization.Codec.INT).initializer(() -> 240).copyOnDeath());
+
     private ModAttachments() {}
 
     public static void init() {}

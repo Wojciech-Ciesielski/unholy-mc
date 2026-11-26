@@ -125,7 +125,9 @@ Zrobione i sprawdzone w grze (serwer dedykowany + czysty klient vanilla), commit
 - **F4:** `/thm tp <dark_corner|slender_forest|holy_pond>`. Działa dla ciemnego zakątka. Bajorka tylko w załadowanych chunkach.
 - **F1 (część):** animacja picia z termosu (termos unosi się do twarzy).
 
-Do zrobienia: B5 (ruch moby/anomalii), B9 (niebo Krwawego Księżyca), F1 reszta (animacje slopów), F2 (dźwięki), F3 (jumpscare'y), I2–I7, Z-slopy-3D, Z-HUD (patrz niżej).
+- **Z-HUD (wariant C):** nowy HUD z czcionką designu. Cztery rzędy po lewej, cztery sloty pancerza po prawej (z paskami wytrzymałości), serca, głód i pancerz vanilla ukryte. Sprawdzone na czystym kliencie 1280×720 (skala GUI 2). Nośnikiem są przezroczyste bossbary, więc potrzebna jest wysokość ekranu ≥ ok. 270 pikseli GUI (na mniejszych dolne rzędy się nie mieszczą). Kalibracja: `/hud edge <px>` per gracz.
+
+Do zrobienia: B5 (ruch moby/anomalii), B9 (niebo Krwawego Księżyca), F1 reszta (animacje slopów), F2 (dźwięki w kodzie), F3 (jumpscare'y z klatkami designu), I2–I7.
 
 ### Wyniki testu wykonalności Z-HUD
 

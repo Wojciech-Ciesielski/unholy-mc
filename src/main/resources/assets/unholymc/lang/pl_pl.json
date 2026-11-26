@@ -150,5 +150,7 @@
   "commands.unholymc.tp.not_found": "Nie znaleziono w pobliżu: %1$s (szukam tylko w wygenerowanych, załadowanych obszarach)",
   "commands.unholymc.tp.dark_corner": "ciemnego zakątka",
   "commands.unholymc.tp.slender_forest": "lasu Slendermana",
-  "commands.unholymc.tp.holy_pond": "bajorka wody święconej"
+  "commands.unholymc.tp.holy_pond": "bajorka wody święconej",
+  "commands.unholymc.hud.edge": "Krawędź HUD ustawiona na %1$s pikseli GUI od środka ekranu (domyślnie 240). Zwiększ, jeśli panel jest za daleko od krawędzi, zmniejsz, jeśli jest ucięty.",
+  "message.unholymc.hud_hint": "Panel statystyk przylega do krawędzi ekranu tylko wtedy, gdy zna rozmiar twojego okna. Jeśli jest ucięty albo odsunięty od krawędzi, wpisz /hud edge <liczba> (domyślnie 240; spróbuj 213 lub 320; liczba to połowa szerokości ekranu w pikselach GUI)."
 }

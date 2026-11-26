@@ -150,5 +150,7 @@
   "commands.unholymc.tp.not_found": "No %1$s found nearby (only generated, loaded areas are searched)",
   "commands.unholymc.tp.dark_corner": "a dark corner",
   "commands.unholymc.tp.slender_forest": "a Slenderman forest",
-  "commands.unholymc.tp.holy_pond": "a holy pond"
+  "commands.unholymc.tp.holy_pond": "a holy pond",
+  "commands.unholymc.hud.edge": "HUD edge set to %1$s GUI pixels from the screen centre (default 240). Raise it if the panel is too far from the edge, lower it if it is cut off.",
+  "message.unholymc.hud_hint": "The stats panel hugs the screen edges only if it knows your window size. If it is cut off or floats away from the edge, run /hud edge <number> (default 240; try 213 or 320; the number is half the width of your screen in GUI pixels)."
 }
