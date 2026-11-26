@@ -355,6 +355,15 @@
     "\ue4f7": 2,
     "\ue4f8": 4
    }
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/hud_stats/digits.png",
+   "height": 9,
+   "ascent": 8,
+   "chars": [
+    "0123456789+/"
+   ]
   }
  ]
 }

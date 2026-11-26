@@ -28,6 +28,14 @@ FACES = {
     3: ("pobierz_2.jfif", (140, 30, 280, 170)),
     4: ("pobierz_4.jfif", (325, 5, 425, 105)),
 }
+# nowe twarze w kolorze (2026-11-26): (plik, kadr, śmieszna?)
+COLOR_FACES = {
+    5: ("shrek_scream.webp", (236, 30, 1036, 830), True),
+    6: ("john_pork.png", (150, 15, 420, 285), True),
+    7: ("dark_bear.jpg", (110, 20, 530, 440), False),
+    8: ("glowing_grin.jpg", (0, 0, 250, 250), False),
+    9: ("red_creature.png", (0, 0, 256, 256), False),
+}
 STOPS = [(0.0, (0, 0, 0)), (0.3, (35, 0, 3)), (0.55, (125, 8, 14)), (0.82, (215, 192, 172)), (1.0, (252, 244, 232))]
 
 
@@ -54,6 +62,21 @@ def prep_face(src, box):
     return g
 
 
+def prep_color(src, box):
+    """Twarz w kolorze na czarnym tle (przezroczystość i wtopiona szachownica -> czerń)."""
+    im = Image.open(RAW / src).convert("RGBA").crop(box).resize((W, W), Image.LANCZOS)
+    a = np.asarray(im).astype(float)
+    rgb, al = a[..., :3], a[..., 3:] / 255
+    mx, mn = rgb.max(-1), rgb.min(-1)
+    cand = Image.fromarray(np.where((mn > 185) & ((mx - mn) < 14) | (al[..., 0] < 0.1), 255, 0).astype(np.uint8)).copy()
+    for k in range(0, W, 3):
+        for pt in ((k, 0), (0, k), (W - 1, k)):
+            if cand.getpixel(pt) == 255: ImageDraw.floodfill(cand, pt, 128)
+    bg = (np.asarray(cand) == 128)[..., None]
+    rgb = np.where(bg, 0, rgb * al)
+    return rgb / 255
+
+
 def vignette(rgb, strength=1.25):
     yy, xx = np.mgrid[0:rgb.shape[0], 0:rgb.shape[1]]
     d = np.hypot(xx - rgb.shape[1] / 2, yy - rgb.shape[0] / 2) / (rgb.shape[0] / 2)
@@ -71,9 +94,14 @@ def transform(g, scale, dx, dy, rot):
 
 
 def frame(g, scale=1.0, dx=0, dy=0, rot=0, chroma=0, invert=False, static=0.0, red=0.0, blur=0.0):
-    gg = transform(g, scale, dx, dy, rot)
-    if blur: gg = np.asarray(Image.fromarray((gg * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(blur))).astype(float) / 255
-    rgb = duotone(gg)
+    if g.ndim == 3:   # kolor: każdy kanał osobno, bez duotonu
+        chans = [transform(g[..., c], scale, dx, dy, rot) for c in range(3)]
+        if blur: chans = [np.asarray(Image.fromarray((c * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(blur))).astype(float) / 255 for c in chans]
+        rgb = np.stack(chans, -1) * 255
+    else:
+        gg = transform(g, scale, dx, dy, rot)
+        if blur: gg = np.asarray(Image.fromarray((gg * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(blur))).astype(float) / 255
+        rgb = duotone(gg)
     if chroma:  # rozszczepienie kanałów
         rgb[..., 0] = np.roll(rgb[..., 0], chroma, axis=1)
         rgb[..., 2] = np.roll(rgb[..., 2], -chroma, axis=1)
@@ -119,6 +147,14 @@ def main():
         for i, p in enumerate(SCREAMER):
             f = frame(g, **p); f.save(TEX / f"screamer_{k}_{i}.png", optimize=True); row.append(f)
         sheet_rows.append(row)
+    for k, (src, box, funny) in COLOR_FACES.items():
+        g = prep_color(src, box)
+        row = []
+        for i, p in enumerate(SCREAMER):
+            p = dict(p)
+            if funny: p["red"] = 0.0          # śmieszne: bez krwawego zabarwienia
+            f = frame(g, **p); f.save(TEX / f"screamer_{k}_{i}.png", optimize=True); row.append(f)
+        sheet_rows.append(row)
     # Spooky: twarz z gotowej tekstury GUI (the_hollow_screamer, przerobiona wcześniej)
     g = prep_face("the_hollow_screamer.jfif", (195, 15, 395, 215))
     h = g.shape[0]
@@ -147,6 +183,8 @@ def main():
     bitmap("backdrop_red", 256, 128, 0xE301)
     for k in range(1, 5):
         for i in range(6): bitmap(f"screamer_{k}_{i}", FACE_H, FACE_ASC, 0xE310 + (k - 1) * 8 + i)
+    for k in COLOR_FACES:
+        for i in range(6): bitmap(f"screamer_{k}_{i}", FACE_H, FACE_ASC, 0xE350 + (k - 5) * 8 + i)
     for i in range(8): bitmap(f"spooky_{i}", FACE_H, FACE_ASC, 0xE330 + i)
     for i in range(4): bitmap(f"static_{i}", FACE_H, FACE_ASC, 0xE340 + i)
     prov.append({"type": "space", "advances": {chr(0xE3F0): -257, chr(0xE3F1): -97, chr(0xE3F2): 80, chr(0xE3F3): 79}})

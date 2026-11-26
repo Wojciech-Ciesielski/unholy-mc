@@ -35,6 +35,12 @@ Wszystkie id są w `snake_case`. Warianty itemów wybiera po stronie klienta **`
 | Neutralne | `cigar_cat` | `pobierz_5` | kotka z cygarem (śmieszna) | 1,6 | 0,9×1,4 |
 | Unholy (10%) | `hollow_screamer` | `the_hollow_screamer` | zgarbiona postać z twarzą-maską | 2,6 | 0,8×2,4 |
 | Unholy | `locust` | `the_locust` | wychudzone monstrum z ludzką twarzą | 2,8 | 0,7×2,6 |
+| Agresywne | `cartoon_cat` | `cartoon_cat.jpg` | Cartoon Cat: wysoki czarny kot z uśmiechem, białe rękawiczki | 2,6 | 0,7×2,4 |
+| Neutralne (dla jaj) | `shrek` | `shrek.jpg` | Shrek w całości | 2,0 | 1,0×1,9 |
+| Neutralne – **spojrzenie w oczy** (DECISIONS #38) | `masked_reacher` | `masked_reacher.jpg` | czarna, chuda postać z maską i długimi palcami, ręce w górze | 2,4 | 0,7×2,0 |
+| Unholy | `wraith` | `wraith.png` | zjawa w całunie (miękka alfa, `entityTranslucent`), unosi się 0,2 nad ziemią | 2,3 | 0,8×2,1 |
+
+Nowe slopy (2026-11-26) mają też gotowe `models/entity_part/slop_<id>[_hallucination].json` i `items/slop/<id>[_hallucination].json` w tym samym formacie co dotychczasowe. Po stronie kodu wystarczy dopisać je do `SlopVariant` (rozmiary z tabeli, przed mnożnikiem `slops.sizeMultiplier`). `masked_reacher` atakuje tylko wtedy, gdy gracz patrzy mu w twarz (jak Enderman): spojrzenie dłużej niż 1 s → dźwięk `entity.slop.neutral.scare`, potem atak.
 
 `pobierz_4` **nie jest slopem**: to referencja wyglądu 3D Slendermana (sekcja 1.3).
 
@@ -133,6 +139,7 @@ Każda statystyka to wiersz: **panel** (półprzezroczyste tło) + **ikona 16×1
 | `U+E420–E424` | nawodnienie (kropla opróżnia się): `full, medium, low, critical, critical_blink` |
 | `U+E430–E435` | Sanity (mózg, coraz bardziej zgniły; w krytycznym oko i czarne krople): `full, medium, low, critical, critical_jitter, wellbeing` |
 | `U+E480–E48B` | cyfry `0–9`, `+`, `/` (białe z obrysem, 7×9; kolor z koloru tekstu) |
+| zwykłe `0–9`, `+`, `/` | te same cyfry podpięte pod normalne znaki (dla sidebara/scoreboardu, gdzie liczby wpisuje gra) |
 | `U+E490` | panel wiersza 44×20 |
 | `U+E4F0–E4F8` | spacje: −1, −2, −4, −8, −16, −21, −45, +2, +4 |
 
@@ -170,6 +177,11 @@ Wszystkie klatki 248×248. W tytule vanilla skaluje tekst ×4, więc glif twarzy
 | `U+E318`–`E31D` | `screamer_2_0..5` – love_note | 96 / 52 | |
 | `U+E320`–`E325` | `screamer_3_0..5` – cień ze świecącymi oczami | 96 / 52 | |
 | `U+E328`–`E32D` | `screamer_4_0..5` – blada głowa (pobierz_4) | 96 / 52 | |
+| `U+E350`–`E355` | `screamer_5_0..5` – krzyczący Shrek (**śmieszny**, kolor) | 96 / 52 | |
+| `U+E358`–`E35D` | `screamer_6_0..5` – John Pork (**śmieszny**, kolor) | 96 / 52 | |
+| `U+E360`–`E365` | `screamer_7_0..5` – ciemny miś z zębami | 96 / 52 | |
+| `U+E368`–`E36D` | `screamer_8_0..5` – świecące oczy i zęby | 96 / 52 | |
+| `U+E370`–`E375` | `screamer_9_0..5` – czerwony stwór z kolcami | 96 / 52 | |
 | `U+E330`–`E337` | `spooky_0..7` – the_hollow_screamer, rozciągnięta paszcza | 96 / 52 | Spooky Jumpscare |
 | `U+E340`–`E343` | `static_0..3` (półprzezroczysty szum) | 96 / 52 | nakładka na twarz |
 | `U+E3F0` | space −257 | – | cofnięcie o szerokość tła |
@@ -182,7 +194,7 @@ Wszystkie klatki 248×248. W tytule vanilla skaluje tekst ×4, więc glif twarzy
 `E300 E3F0 E3F2 <twarz> E3F1 <static> E3F3`. Statykę można pominąć (wtedy `E3F2 <twarz> E3F3`, a po twarzy `+1` do wyrównania nie jest potrzebne).
 
 ### 5.2 Zwykły jumpscare (screamer), ok. 12 ticków
-- `jumpscare.screamer<n>` (dźwięk) i twarz `n` (1–4) losowane razem, żeby wrzask pasował do twarzy.
+- Twarz losowana z 1–9. Dźwięk: dla twarzy 1–4 i 7–9 `jumpscare.screamer`, dla śmiesznych 5–6 (Shrek, John Pork) `jumpscare.meme` (basowe „BOOM” + okrzyk). Proponowana waga: śmieszne 1/6 losowań, żeby zostały zaskoczeniem.
 - Tytuł: `fadeIn 0, stay 2, fadeOut 0`, **nowy pakiet co 2 ticki** z kolejną klatką `screamer_n_0 … _5`, statyka `static_(tick % 4)` na klatkach 0, 2, 4 i 5.
 - Klatka 3 to błysk negatywu, a 5 to rozpad w szum. Po ostatniej klatce `ClientboundClearTitlesPacket`.
 - Drżenie: kamerę ruszyć się nie da, więc drżenie i najazd są **wypalone w klatkach**. Na serwerze można dodać krótkie `Nausea` (20 ticków) i `Darkness` 10 ticków po wszystkim.

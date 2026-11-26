@@ -29,6 +29,11 @@ SLOPS = {
     # unholy
     "hollow_screamer":  ("the_hollow_screamer.jfif", "const", 45, "tlrb", 2, False),
     "locust":           ("the_locust.jfif", "const", 45, "tlrb", 2, False),
+    # nowe (2026-11-26, obrazki autora)
+    "cartoon_cat":      ("cartoon_cat.jpg", "const", 45, "tlrb", 1, True),      # agresywny
+    "shrek":            ("shrek.jpg", "checker", 0, "tlrb", 1, True),           # neutralny, dla jaj
+    "masked_reacher":   ("masked_reacher.jpg", "const", 40, "tlrb", 1, True),   # neutralny: atak po spojrzeniu w oczy (#38)
+    "wraith":           ("wraith.png", "alpha", 0, "", 0, False),               # unholy
 }
 
 
@@ -70,10 +75,31 @@ def main_component(fg):
     return np.asarray(m2) == 100
 
 
+def checker_mask(rgb, edges):
+    """Tło w postaci wtopionej szachownicy „przezroczystości”: jasne i prawie bez nasycenia, spójne z krawędzią."""
+    mx, mn = rgb.max(-1), rgb.min(-1)
+    cand = (mn > 185) & ((mx - mn) < 14)
+    m = Image.fromarray(np.where(cand, 255, 0).astype(np.uint8)).copy()
+    h, w = cand.shape
+    for x in range(0, w, 2):
+        for pt in ((x, 0), (x, h - 1)):
+            if m.getpixel(pt) == 255: ImageDraw.floodfill(m, pt, 128)
+    for y in range(0, h, 2):
+        for pt in ((0, y), (w - 1, y)):
+            if m.getpixel(pt) == 255: ImageDraw.floodfill(m, pt, 128)
+    return np.asarray(m) == 128
+
+
 def process(name, src, mode, thr, edges, erode, main_only):
-    img = Image.open(RAW / src).convert("RGB")
+    src_img = Image.open(RAW / src)
+    img = src_img.convert("RGB")
     rgb = np.asarray(img).astype(int)
-    if mode == "luma":
+    if mode == "alpha":   # obrazek ma już prawdziwą przezroczystość
+        alpha = src_img.convert("RGBA").getchannel("A")
+    elif mode == "checker":
+        fg = main_component(~checker_mask(rgb, edges)) if main_only else ~checker_mask(rgb, edges)
+        alpha = Image.fromarray(np.where(fg, 255, 0).astype(np.uint8)).filter(ImageFilter.MinFilter(2 * erode + 1)).filter(ImageFilter.GaussianBlur(0.8))
+    elif mode == "luma":
         luma = rgb.mean(-1)
         a = np.clip((luma - 18) * 2.2, 0, 255)
         # un-premultiply: obiekt był na czarnym tle, więc kolor = obserwowany / alfa

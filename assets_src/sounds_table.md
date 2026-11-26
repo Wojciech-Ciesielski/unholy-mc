@@ -1,6 +1,7 @@
 | SoundEvent (`unholymc:`) | Pliki `.ogg` | Kanał | Opis | Napis EN / PL |
 |---|---|---|---|---|
 | `jumpscare.screamer` | `jumpscare/screamer1.ogg` … `jumpscare/screamer4.ogg` | master/UI | Zwykły jumpscare: ostry krzyk + trzask szumu, 0,8–1,2 s, bardzo głośny początek (bez narastania). | Something screams / Coś krzyczy |
+| `jumpscare.meme` | `jumpscare/meme1.ogg`, `jumpscare/meme2.ogg` | master/UI | Śmieszny jumpscare (Shrek, John Pork): potężne basowe „BOOM” + przesterowany okrzyk, ok. 1 s. | Something booms / Coś huknęło |
 | `jumpscare.spooky_buildup` | `jumpscare/spooky_buildup.ogg` | master/UI | Spooky Jumpscare, faza 1 (ok. 3 s): wszystko cichnie, zwalniające bicie serca, szept „you slept too long”. | Heartbeat slows / Serce zwalnia |
 | `jumpscare.spooky` | `jumpscare/spooky.ogg` | master/UI | Spooky Jumpscare, faza 2 (ok. 1,5 s): przesterowany wrzask + zgrzyt metalu + przester TV, kończy się ucięciem do ciszy. | You never woke up / Już się nie obudzisz |
 | `entity.slop.aggressive.ambient` | `entity/slop/aggressive/ambient1.ogg` … `entity/slop/aggressive/ambient3.ogg` | hostile | Niskie charczenie / mamrotanie, zniekształcone (pitch −30%). | Slop mutters / Slop mamrocze |

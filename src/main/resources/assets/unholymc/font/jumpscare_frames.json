@@ -236,6 +236,276 @@
   },
   {
    "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_5_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue350"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_5_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue351"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_5_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue352"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_5_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue353"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_5_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue354"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_5_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue355"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_6_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue358"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_6_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue359"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_6_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue35a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_6_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue35b"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_6_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue35c"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_6_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue35d"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_7_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue360"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_7_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue361"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_7_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue362"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_7_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue363"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_7_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue364"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_7_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue365"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_8_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue368"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_8_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue369"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_8_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue36a"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_8_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue36b"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_8_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue36c"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_8_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue36d"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_9_0.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue370"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_9_1.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue371"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_9_2.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue372"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_9_3.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue373"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_9_4.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue374"
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "unholymc:font/jumpscare/screamer_9_5.png",
+   "height": 96,
+   "ascent": 52,
+   "chars": [
+    "\ue375"
+   ]
+  },
+  {
+   "type": "bitmap",
    "file": "unholymc:font/jumpscare/spooky_0.png",
    "height": 96,
    "ascent": 52,

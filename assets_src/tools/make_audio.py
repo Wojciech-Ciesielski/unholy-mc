@@ -257,6 +257,15 @@ def r_screamer(i):
     return reverb(pan(m, [-0.3, 0.3, -0.2]), 0.8, 0.2)
 
 
+def r_meme(i):
+    d = 1.3
+    boom = distort(sine(glide(90, 38), d) * decay(int(d * SR), 0.35), 4) * 1.4
+    click_ = noise(0.02) * decay(int(0.02 * SR), 0.004) * 2
+    yell = scream(0.7, [330, 420][i], ("a", "o"), rough=0.3, rise=1.1, drive=6) * 0.6
+    m = reverb(mix(boom, click_, (yell, 0.05)), 1.2, 0.25)
+    return pan(m, [-0.2, 0.2])
+
+
 def r_spooky_buildup(i):
     d = 3.2
     beats, tt, gap = [], 0.0, 0.75
@@ -636,7 +645,7 @@ def eleven(i):
 
 
 RECIPES = {
-    "jumpscare.screamer": r_screamer, "jumpscare.spooky_buildup": r_spooky_buildup, "jumpscare.spooky": r_spooky,
+    "jumpscare.screamer": r_screamer, "jumpscare.meme": r_meme, "jumpscare.spooky_buildup": r_spooky_buildup, "jumpscare.spooky": r_spooky,
     "entity.slop.aggressive.ambient": r_agg_ambient, "entity.slop.aggressive.chase": r_agg_chase,
     "entity.slop.aggressive.hurt": r_agg_hurt, "entity.slop.aggressive.death": r_agg_death,
     "entity.slop.neutral.ambient": r_neu_ambient, "entity.slop.neutral.scare": r_neu_scare,
@@ -668,8 +677,8 @@ RECIPES = {
     "item.holy_water.shatter": r_holy_shatter, "item.unholy_sword.hit": r_sword_hit,
 }
 LOOPS = {"music.eleven_reversed", "entity.slenderman.proximity", "ambient.dark_corner", "ambient.heartbeat", "entity.slop.float"}
-STEREO = {"music.eleven_reversed", "jumpscare.screamer", "jumpscare.spooky_buildup", "jumpscare.spooky", "ambient.blood_moon.rise"}
-LOUD = {"jumpscare.screamer": -12, "jumpscare.spooky": -11, "entity.slop.neutral.scare": -14, "entity.slenderman.deadly_roar": -14,
+STEREO = {"jumpscare.meme", "music.eleven_reversed", "jumpscare.screamer", "jumpscare.spooky_buildup", "jumpscare.spooky", "ambient.blood_moon.rise"}
+LOUD = {"jumpscare.meme": -12.5, "jumpscare.screamer": -12, "jumpscare.spooky": -11, "entity.slop.neutral.scare": -14, "entity.slenderman.deadly_roar": -14,
         "music.eleven_reversed": -20, "entity.slenderman.proximity": -20, "ambient.dark_corner": -22, "ambient.forest.breath": -22,
         "ambient.forest.whisper": -21, "ambient.heartbeat": -16, "item.flashlight.toggle_off": -20, "item.flashlight.toggle_on": -20}
 

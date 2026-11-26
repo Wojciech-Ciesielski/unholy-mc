@@ -9,6 +9,7 @@ A = ROOT / "src/main/resources/assets/unholymc"
 SOUNDS = [
     # --- jumpscare'y
     ("jumpscare.screamer", 4, False, "master/UI", "Zwykły jumpscare: ostry krzyk + trzask szumu, 0,8–1,2 s, bardzo głośny początek (bez narastania).", "Something screams", "Coś krzyczy"),
+    ("jumpscare.meme", 2, False, "master/UI", "Śmieszny jumpscare (Shrek, John Pork): potężne basowe „BOOM” + przesterowany okrzyk, ok. 1 s.", "Something booms", "Coś huknęło"),
     ("jumpscare.spooky_buildup", 1, False, "master/UI", "Spooky Jumpscare, faza 1 (ok. 3 s): wszystko cichnie, zwalniające bicie serca, szept „you slept too long”.", "Heartbeat slows", "Serce zwalnia"),
     ("jumpscare.spooky", 1, False, "master/UI", "Spooky Jumpscare, faza 2 (ok. 1,5 s): przesterowany wrzask + zgrzyt metalu + przester TV, kończy się ucięciem do ciszy.", "You never woke up", "Już się nie obudzisz"),
     # --- slopy agresywne

@@ -8,6 +8,13 @@
       "unholymc:jumpscare/screamer4"
     ]
   },
+  "jumpscare.meme": {
+    "subtitle": "subtitles.unholymc.jumpscare.meme",
+    "sounds": [
+      "unholymc:jumpscare/meme1",
+      "unholymc:jumpscare/meme2"
+    ]
+  },
   "jumpscare.spooky_buildup": {
     "subtitle": "subtitles.unholymc.jumpscare.spooky_buildup",
     "sounds": [
