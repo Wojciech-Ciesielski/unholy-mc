@@ -15,6 +15,10 @@ public final class WorldCommands {
                 .then(Commands.literal("start").executes(c -> set(c.getSource(), true)))
                 .then(Commands.literal("stop").executes(c -> set(c.getSource(), false)))
                 .then(Commands.literal("check").executes(c -> check(c.getSource())))));
+        ThmCommand.addSubcommand(root -> root.then(Commands.literal("tp")
+                .then(Commands.literal("dark_corner").executes(c -> tpTo(c.getSource(), "dark_corner")))
+                .then(Commands.literal("slender_forest").executes(c -> tpTo(c.getSource(), "slender_forest")))
+                .then(Commands.literal("holy_pond").executes(c -> tpTo(c.getSource(), "holy_pond")))));
         ThmCommand.addSubcommand(root -> root.then(Commands.literal("dark_corner")
                 .then(Commands.literal("spawn").executes(c -> spawnCorner(c.getSource())))
                 .then(Commands.literal("toggle_day_cycle").executes(c -> toggleCorner(c.getSource())))
@@ -71,5 +75,41 @@ public final class WorldCommands {
                 corner == null ? Component.translatable("commands.unholymc.dark_corner.not_found") : Component.literal(corner.getX() + ", " + corner.getZ()),
                 forest == null ? Component.translatable("commands.unholymc.dark_corner.not_found") : Component.literal(forest.getX() + ", " + forest.getZ())), false);
         return 1;
+    }
+
+    /** /thm tp <structure>: teleports the player to the nearest generated structure of that kind (DECISIONS #44). */
+    private static int tpTo(CommandSourceStack source, String what) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        var p = source.getPlayerOrException();
+        ServerLevel ow = source.getServer().overworld();
+        net.minecraft.core.BlockPos from = p.level() == ow ? p.blockPosition() : ow.getRespawnData().pos();
+        net.minecraft.core.BlockPos target = switch (what) {
+            case "dark_corner" -> com.unholymc.world.DarkCorners.locate(ow, from, 6);
+            case "slender_forest" -> com.unholymc.world.SlenderForests.locate(ow, from, 3000);
+            default -> nearestPond(ow, from);
+        };
+        if (target == null) {
+            source.sendFailure(Component.translatable("commands.unholymc.tp.not_found", Component.translatable("commands.unholymc.tp." + what)));
+            return 0;
+        }
+        ow.getChunk(target.getX() >> 4, target.getZ() >> 4); // load it
+        int y = ow.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, target.getX(), target.getZ());
+        p.teleportTo(ow, target.getX() + 0.5, y, target.getZ() + 0.5, java.util.Set.of(), p.getYRot(), p.getXRot(), true);
+        source.sendSuccess(() -> Component.translatable("commands.unholymc.tp.done", Component.translatable("commands.unholymc.tp." + what),
+                target.getX(), y, target.getZ()), true);
+        return 1;
+    }
+
+    /** Nearest pond among the chunks that are currently loaded (ponds live in chunk data). */
+    private static net.minecraft.core.@org.jspecify.annotations.Nullable BlockPos nearestPond(ServerLevel level, net.minecraft.core.BlockPos from) {
+        net.minecraft.core.BlockPos best = null;
+        double bestD = Double.MAX_VALUE;
+        for (var pond : com.unholymc.world.HolyPonds.pondsNear(level, from, 20)) {
+            double d = pond.center().distSqr(from);
+            if (d < bestD) {
+                bestD = d;
+                best = pond.center();
+            }
+        }
+        return best;
     }
 }

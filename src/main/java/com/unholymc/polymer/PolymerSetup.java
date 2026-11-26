@@ -32,6 +32,26 @@ public final class PolymerSetup {
         }
     }
 
+    /**
+     * The thermos: a stick for vanilla clients, but with a drinking animation. The client plays the use animation
+     * from the item it sees, so a filled thermos is shown with a consumable component (the server finishes the use).
+     */
+    private record ThermosOverlay() implements PolymerItem {
+        @Override
+        public Item getPolymerItem(ItemStack itemStack, PacketContext context) {
+            return Items.STICK;
+        }
+
+        @Override
+        public void modifyBasePolymerItemStack(ItemStack out, ItemStack stack, PacketContext context, net.minecraft.core.HolderLookup.Provider lookup) {
+            if (com.unholymc.item.ThermosItem.contents(stack).isEmpty()) return;
+            float seconds = com.unholymc.config.ConfigManager.get().thermos.drinkTicks / 20f;
+            out.set(net.minecraft.core.component.DataComponents.CONSUMABLE, net.minecraft.world.item.component.Consumable.builder().consumeSeconds(seconds)
+                            .animation(net.minecraft.world.item.ItemUseAnimation.DRINK)
+                            .sound(net.minecraft.sounds.SoundEvents.GENERIC_DRINK).hasConsumeParticles(false).build());
+        }
+    }
+
     public static void init() {
         PolymerResourcePackUtils.addModAssets(UnholyMC.MOD_ID);
         PolymerResourcePackUtils.markAsRequired();
@@ -41,9 +61,10 @@ public final class PolymerSetup {
         ServerFx.init();
 
         for (Item item : new Item[]{ModItems.NIGHTMARE_GEM, ModItems.HOLY_WATER, ModItems.SPLASH_HOLY_WATER, ModItems.CRUCIFIX,
-                ModItems.FLASHLIGHT, ModItems.THERMOS, ModItems.GRAVE_CROSS}) {
+                ModItems.FLASHLIGHT, ModItems.GRAVE_CROSS}) {
             PolymerItem.registerOverlay(item, new Overlay(Items.STICK));
         }
+        PolymerItem.registerOverlay(ModItems.THERMOS, new ThermosOverlay());
         PolymerItem.registerOverlay(ModItems.UNHOLY_SWORD, new Overlay(Items.NETHERITE_SWORD));
 
         for (var sound : BuiltInRegistries.SOUND_EVENT.entrySet()) {

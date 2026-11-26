@@ -145,5 +145,10 @@
   "commands.unholymc.dark_corner.day": "The nearest dark corner is now inactive (day) for 5 minutes - its coal mound was rebuilt",
   "commands.unholymc.dark_corner.located": "Nearest dark corner: %1$s. Nearest Slenderman forest: %2$s",
   "commands.unholymc.dark_corner.not_found": "none found nearby",
-  "block.unholymc.grave_cross": "Grave Cross"
+  "block.unholymc.grave_cross": "Grave Cross",
+  "commands.unholymc.tp.done": "Teleported to %1$s at %2$s, %3$s, %4$s",
+  "commands.unholymc.tp.not_found": "No %1$s found nearby (only generated, loaded areas are searched)",
+  "commands.unholymc.tp.dark_corner": "a dark corner",
+  "commands.unholymc.tp.slender_forest": "a Slenderman forest",
+  "commands.unholymc.tp.holy_pond": "a holy pond"
 }

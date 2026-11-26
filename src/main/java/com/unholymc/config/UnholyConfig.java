@@ -200,6 +200,19 @@ public class UnholyConfig {
     }
 
     public static class Slops {
+        /**
+         * Surface spawning near players at night, independent of the vanilla monster cap (which crowds slops out).
+         * Every {@code surfaceSpawnIntervalTicks} each player rolls {@code surfaceSpawnChance}; forests spawn any category
+         * (unholy only in its biomes), open ground only single aggressive slops ({@code openGroundChance} on top).
+         */
+        public boolean surfaceSpawning = true;
+        public int surfaceSpawnIntervalTicks = 200;
+        public float surfaceSpawnChance = 0.5f;
+        public float openGroundChance = 0.5f;
+        public int surfaceSpawnMinDistance = 24;
+        public int surfaceSpawnMaxDistance = 48;
+        /** No new spawn while this many slops are within 64 blocks of the player. */
+        public int surfaceSpawnMaxNearby = 3;
         /** Billboard and hitbox size multiplier on top of the design sizes (applies to new spawns). */
         public float sizeMultiplier = 1.3f;
         /** Registration-time values (restart needed). Category shares 60/30/10 via spawn weights. */

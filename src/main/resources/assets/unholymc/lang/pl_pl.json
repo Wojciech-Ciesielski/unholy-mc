@@ -145,5 +145,10 @@
   "commands.unholymc.dark_corner.day": "Najbliższy ciemny zakątek jest nieaktywny (dzień) przez 5 minut - kopiec z węglem odbudowany",
   "commands.unholymc.dark_corner.located": "Najbliższy ciemny zakątek: %1$s. Najbliższy las Slendermana: %2$s",
   "commands.unholymc.dark_corner.not_found": "nic w pobliżu",
-  "block.unholymc.grave_cross": "Krzyż nagrobny"
+  "block.unholymc.grave_cross": "Krzyż nagrobny",
+  "commands.unholymc.tp.done": "Teleportowano do: %1$s (%2$s, %3$s, %4$s)",
+  "commands.unholymc.tp.not_found": "Nie znaleziono w pobliżu: %1$s (szukam tylko w wygenerowanych, załadowanych obszarach)",
+  "commands.unholymc.tp.dark_corner": "ciemnego zakątka",
+  "commands.unholymc.tp.slender_forest": "lasu Slendermana",
+  "commands.unholymc.tp.holy_pond": "bajorka wody święconej"
 }
